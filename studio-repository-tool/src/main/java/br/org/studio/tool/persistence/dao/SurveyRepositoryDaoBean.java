@@ -1,4 +1,4 @@
-package br.org.studio.tool.dao;
+package br.org.studio.tool.persistence.dao;
 
 import javax.ejb.Local;
 import javax.ejb.Stateless;

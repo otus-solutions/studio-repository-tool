@@ -1,6 +1,6 @@
 package br.org.studio.tool.repository.service;
 
-import br.org.studio.tool.dao.SurveyRepository;
+import br.org.studio.tool.persistence.dao.SurveyRepository;
 
 public class SurveyRepositoryBuilder {
 

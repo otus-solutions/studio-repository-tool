@@ -1,4 +1,4 @@
-package br.org.studio.tool.service;
+package br.org.studio.tool.repository.service;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.instanceOf;
@@ -8,6 +8,8 @@ import java.sql.SQLException;
 
 import org.hamcrest.Matchers;
 import org.junit.Test;
+
+import br.org.studio.tool.repository.service.Database;
 
 public class DatabaseTest {
 

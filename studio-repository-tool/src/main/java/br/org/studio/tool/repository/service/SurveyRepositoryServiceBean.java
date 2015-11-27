@@ -4,7 +4,7 @@ import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
-import br.org.studio.tool.dao.SurveyRepositoryDao;
+import br.org.studio.tool.persistence.dao.SurveyRepositoryDao;
 
 @Stateless
 @Local(SurveyRepositoryService.class)

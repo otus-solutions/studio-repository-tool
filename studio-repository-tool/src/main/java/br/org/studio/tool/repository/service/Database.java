@@ -1,4 +1,4 @@
-package br.org.studio.tool.service;
+package br.org.studio.tool.repository.service;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

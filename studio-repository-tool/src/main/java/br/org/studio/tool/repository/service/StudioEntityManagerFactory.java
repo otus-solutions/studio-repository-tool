@@ -1,9 +1,5 @@
-package br.org.studio.tool.repository;
+package br.org.studio.tool.repository.service;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,40 +36,6 @@ public class StudioEntityManagerFactory {
 		properties.put("hibernate.hbm2ddl.auto", "create");
 
 		return properties;
-	}
-
-	public Connection getConnection() {
-		try {
-			Class.forName("org.postgresql.Driver");
-			Connection connection = null;
-			connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "postgres");
-			if (connection.isClosed()) {
-				System.out.println("fechado");
-			} else {
-				System.out.println("aberto");
-			}
-			return connection;
-		} catch (Exception ex) {
-			System.out.println("ops");
-			return null;
-		}
-	}
-
-	public void createDatabase() throws SQLException {
-		Statement stmt = null;
-		String sql = "CREATE DATABASE novo_banco WITH OWNER = postgres ENCODING = 'UTF8' TABLESPACE = pg_default LC_COLLATE = 'pt_BR.UTF-8' LC_CTYPE = 'pt_BR.UTF-8' CONNECTION LIMIT = -1;";
-		try {
-			stmt = getConnection().createStatement();
-			stmt.execute(sql);
-			System.out.println(stmt.getWarnings());
-			System.out.println("Banco criado");
-		} catch (Exception e) {
-			System.out.println("ops");
-		} finally {
-			if (stmt != null) {
-				stmt.close();
-			}
-		}
 	}
 
 }

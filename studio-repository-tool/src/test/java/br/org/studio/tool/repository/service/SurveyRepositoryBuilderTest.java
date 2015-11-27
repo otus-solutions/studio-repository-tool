@@ -7,7 +7,8 @@ import static org.hamcrest.Matchers.instanceOf;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import br.org.studio.tool.dao.SurveyRepository;
+import br.org.studio.tool.persistence.dao.SurveyRepository;
+import br.org.studio.tool.repository.service.SurveyRepositoryBuilder;
 
 @Ignore
 public class SurveyRepositoryBuilderTest {
