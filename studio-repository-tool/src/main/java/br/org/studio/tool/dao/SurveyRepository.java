@@ -1,4 +1,4 @@
-package br.org.studio.tool.repository;
+package br.org.studio.tool.dao;
 
 import java.io.Serializable;
 

@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>studio-repository-tool</artifactId>
-	<packaging>jar</packaging>
+	<packaging>ejb</packaging>
 
 	<parent>
 		<groupId>br.org.studio</groupId>
@@ -38,6 +38,12 @@
 			<artifactId>cdi-api</artifactId>
 			<version>2.0-EDR1</version>
 			<scope>provided</scope>
+		</dependency>
+		<!-- PostgreSQL dependencies -->
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>9.4-1206-jdbc42</version>
 		</dependency>
 		<!-- Hibernate dependencies -->
 		<dependency>

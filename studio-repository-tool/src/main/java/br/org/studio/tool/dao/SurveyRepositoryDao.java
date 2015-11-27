@@ -1,4 +1,4 @@
-package br.org.studio.tool.repository;
+package br.org.studio.tool.dao;
 
 public interface SurveyRepositoryDao extends GenericDao {
 

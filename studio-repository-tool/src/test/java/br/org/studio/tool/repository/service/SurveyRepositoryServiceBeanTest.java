@@ -12,8 +12,8 @@ import org.mockito.Mock;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import br.org.studio.tool.repository.SurveyRepository;
-import br.org.studio.tool.repository.SurveyRepositoryDao;
+import br.org.studio.tool.dao.SurveyRepository;
+import br.org.studio.tool.dao.SurveyRepositoryDao;
 
 @Ignore
 @RunWith(PowerMockRunner.class)
