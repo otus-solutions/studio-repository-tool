@@ -15,27 +15,27 @@ public class HibernatePostgrePropertyTest {
 
 	@Test
 	public void the_DIALECT_property_must_be_equal_to_hibernate_dialect() {
-		assertThat(HibernatePostgreProperty.DIALECT.getValue(), equalTo(DIALECT));
+		assertThat(HibernateProperty.DIALECT.getValue(), equalTo(DIALECT));
 	}
 	
 	@Test
 	public void the_DEFAULT_SCHEMA_property_must_be_equal_to_hibernate_default_schema() {
-		assertThat(HibernatePostgreProperty.DEFAULT_SCHEMA.getValue(), equalTo(DEFAULT_SCHEMA));
+		assertThat(HibernateProperty.DEFAULT_SCHEMA.getValue(), equalTo(DEFAULT_SCHEMA));
 	}
 	
 	@Test
 	public void the_SHOW_SQL_property_must_be_equal_to_hibernate_show_sql() {
-		assertThat(HibernatePostgreProperty.SHOW_SQL.getValue(), equalTo(SHOW_SQL));
+		assertThat(HibernateProperty.SHOW_SQL.getValue(), equalTo(SHOW_SQL));
 	}
 	
 	@Test
 	public void the_AUTO_COMMIT_property_must_be_equal_to_hibernate_autocommit() {
-		assertThat(HibernatePostgreProperty.AUTOCOMMIT.getValue(), equalTo(AUTOCOMMIT));
+		assertThat(HibernateProperty.AUTOCOMMIT.getValue(), equalTo(AUTOCOMMIT));
 	}
 	
 	@Test
 	public void the_HBM2DLL_AUTO_property_must_be_equal_to_hibernate_hbm2dll_auto() {
-		assertThat(HibernatePostgreProperty.HBM2DLL_AUTO.getValue(), equalTo(HBM2DLL_AUTO));
+		assertThat(HibernateProperty.HBM2DLL_AUTO.getValue(), equalTo(HBM2DLL_AUTO));
 	}
 
 }

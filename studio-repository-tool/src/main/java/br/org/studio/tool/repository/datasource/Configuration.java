@@ -36,22 +36,22 @@ public class Configuration {
 	}
 
 	public void setDialect(String value) {
-		properties.put(HibernatePostgreProperty.DIALECT.getValue(), value);
+		properties.put(HibernateProperty.DIALECT.getValue(), value);
 	}
 
 	public void setDefaultSchema(String value) {
-		properties.put(HibernatePostgreProperty.DEFAULT_SCHEMA.getValue(), value);
+		properties.put(HibernateProperty.DEFAULT_SCHEMA.getValue(), value);
 	}
 
 	public void setShowSql(String value) {
-		properties.put(HibernatePostgreProperty.SHOW_SQL.getValue(), value);
+		properties.put(HibernateProperty.SHOW_SQL.getValue(), value);
 	}
 
 	public void setAutoCommit(String value) {
-		properties.put(HibernatePostgreProperty.AUTOCOMMIT.getValue(), value);
+		properties.put(HibernateProperty.AUTOCOMMIT.getValue(), value);
 	}
 
 	public void setHbm2DllAuto(String value) {
-		properties.put(HibernatePostgreProperty.HBM2DLL_AUTO.getValue(), value);
+		properties.put(HibernateProperty.HBM2DLL_AUTO.getValue(), value);
 	}
 }

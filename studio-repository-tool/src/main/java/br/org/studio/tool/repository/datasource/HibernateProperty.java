@@ -1,6 +1,6 @@
 package br.org.studio.tool.repository.datasource;
 
-public enum HibernatePostgreProperty {
+public enum HibernateProperty {
 
 	DIALECT("hibernate.dialect"), 
 	DEFAULT_SCHEMA("hibernate.default_schema"), 
@@ -10,7 +10,7 @@ public enum HibernatePostgreProperty {
 
 	private String value;
 
-	private HibernatePostgreProperty(String value) {
+	private HibernateProperty(String value) {
 		this.value = value;
 	}
 
