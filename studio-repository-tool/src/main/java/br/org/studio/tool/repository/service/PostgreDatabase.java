@@ -19,6 +19,7 @@ public class PostgreDatabase implements Database {
 	private String password;
 
 	private SQLWarning warnings;
+	private Connection connection;
 
 	public PostgreDatabase(String dbname) {
 		this.name = dbname;
@@ -32,7 +33,7 @@ public class PostgreDatabase implements Database {
 	@Override
 	public Connection getConnection() throws Exception {
 		Class.forName(DRIVER);
-		Connection connection = null;
+		connection = null;
 		connection = DriverManager.getConnection(JDBC_POSTGRES + getHost() + ":" + getPort() + "/postgres", getUser(), getPassword());
 
 		if (connection.isClosed()) {
@@ -70,9 +71,11 @@ public class PostgreDatabase implements Database {
 			statement.execute(sql);
 		} catch (Exception exception) {
 			warnings = statement.getWarnings();
+			connection.close();
 		} finally {
 			if (statement != null) {
 				statement.close();
+				connection.close();
 			}
 		}
 	}

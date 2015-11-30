@@ -50,8 +50,7 @@ public class RepositoryConfiguration {
 	public static RepositoryConfiguration forPostgre(String name, String host, String port, String user, String password) {
 		PostgresDatabaseBuilder builder = new PostgresDatabaseBuilder();
 		builder.withName(name).withHost(host).withPort(port).withUser(user).withPassword(password);
-		Database database = builder.build();
-		return new RepositoryConfiguration(database);
+		return new RepositoryConfiguration(builder.build());
 	}
 
 }

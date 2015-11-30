@@ -10,10 +10,14 @@ public class RepositoryFactory {
 
 	public static final String UNIT_NAME = "RepositoryPool";
 
+	// 1. cria entity manager
+	// 2. executa tarefa no banco
+	// 3. fecha entity manager
 	public void initializeRepository(RepositoryConfiguration repositoryConfig) {
 		Configuration configuration = buildPostgreConfiguration(repositoryConfig);
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory(UNIT_NAME, configuration.getProperties());
 		emf.createEntityManager();
+		emf.close();
 	}
 
 	private Configuration buildPostgreConfiguration(RepositoryConfiguration repositoryConfig) {
