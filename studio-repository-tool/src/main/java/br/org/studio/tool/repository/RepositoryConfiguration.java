@@ -1,7 +1,7 @@
 package br.org.studio.tool.repository;
 
 import br.org.studio.tool.repository.service.Database;
-import br.org.studio.tool.repository.service.PostgreDatabase;
+import br.org.studio.tool.repository.service.PostgresDatabaseBuilder;
 
 public class RepositoryConfiguration {
 
@@ -43,9 +43,14 @@ public class RepositoryConfiguration {
 		return database.getDialect();
 	}
 
-	// TODO: utilizar o builder dentro do método  
+	public Database getDatabase() {
+		return database;
+	}
+
 	public static RepositoryConfiguration forPostgre(String name, String host, String port, String user, String password) {
-		Database database = new PostgreDatabase(name, host, port, user, password);
+		PostgresDatabaseBuilder builder = new PostgresDatabaseBuilder();
+		builder.withName(name).withHost(host).withPort(port).withUser(user).withPassword(password);
+		Database database = builder.build();
 		return new RepositoryConfiguration(database);
 	}
 

@@ -9,7 +9,7 @@ public interface Database {
 
 	Connection getConnection() throws Exception;
 
-	void createDatabase(String databaseName) throws SQLException;
+	void createDatabase() throws SQLException;
 
 	void dropDatabase(String databaseName) throws SQLException;
 

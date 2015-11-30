@@ -34,6 +34,7 @@ public class RepositoryManagerFacadeTest {
 		whenNew(PostgreDatabase.class).withArguments(REPOSITORY_NAME).thenReturn(database);
 		whenNew(RepositoryFactory.class).withNoArguments().thenReturn(repositoryFactory);
 		when(repositoryConfiguration.getName()).thenReturn(REPOSITORY_NAME);
+		when(repositoryConfiguration.getDatabase()).thenReturn(database);
 	}
 
 	@Test
@@ -42,7 +43,7 @@ public class RepositoryManagerFacadeTest {
 
 		rmf.createRepository(repositoryConfiguration);
 
-		verify(database).createDatabase(REPOSITORY_NAME);
+		verify(database).createDatabase();
 	}
 
 	@Test

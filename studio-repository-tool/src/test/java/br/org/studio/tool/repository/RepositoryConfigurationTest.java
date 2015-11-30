@@ -7,6 +7,8 @@ import static org.hamcrest.Matchers.instanceOf;
 import org.junit.Before;
 import org.junit.Test;
 
+import br.org.studio.tool.repository.service.Database;
+
 public class RepositoryConfigurationTest {
 
 	private static final String USER = "postgres";
@@ -17,11 +19,16 @@ public class RepositoryConfigurationTest {
 	private static final String JDBC_POSTGRESQL = "jdbc:postgresql://";
 	private static final String CONNECTION_URL = JDBC_POSTGRESQL + HOST + ":" + PORT + "/" + NAME;
 	private static final Object DIALECT = "org.hibernate.dialect.PostgreSQLDialect";
+
 	private RepositoryConfiguration repositoryConfiguration;
 
 	@Before
 	public void setup() {
 		createRepositoryConfiguration();
+	}
+
+	private void createRepositoryConfiguration() {
+		repositoryConfiguration = RepositoryConfiguration.forPostgre(NAME, HOST, PORT, USER, PASSWORD);
 	}
 
 	@Test
@@ -54,18 +61,19 @@ public class RepositoryConfigurationTest {
 		assertThat(repositoryConfiguration.getPassword(), equalTo(PASSWORD));
 	}
 
-	private void createRepositoryConfiguration() {
-		repositoryConfiguration = RepositoryConfiguration.forPostgre(NAME, HOST, PORT, USER, PASSWORD);
-	}
-
 	@Test
 	public void getUrl_should_return_url() {
 		assertThat(repositoryConfiguration.getUrl(), equalTo(CONNECTION_URL));
 	}
-	
+
 	@Test
 	public void getDialect_should_return_dialect() {
 		assertThat(repositoryConfiguration.getDialect(), equalTo(DIALECT));
+	}
+
+	@Test
+	public void getDatabase_should_return_an_instance_of_Database() {
+		assertThat(repositoryConfiguration.getDatabase(), instanceOf(Database.class));
 	}
 
 }

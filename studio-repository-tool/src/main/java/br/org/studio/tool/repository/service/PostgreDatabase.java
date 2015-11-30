@@ -22,18 +22,6 @@ public class PostgreDatabase implements Database {
 
 	public PostgreDatabase(String dbname) {
 		this.name = dbname;
-		this.host = "localhost";
-		this.port = "5432";
-		this.user = "postgres";
-		this.password = "postgres";
-	}
-
-	public PostgreDatabase(String dbname, String host, String port, String user, String password) {
-		this.name = dbname;
-		this.host = host;
-		this.port = port;
-		this.user = user;
-		this.password = password;
 	}
 
 	@Override
@@ -55,10 +43,10 @@ public class PostgreDatabase implements Database {
 	}
 
 	@Override
-	public void createDatabase(String databaseName) throws SQLException {
+	public void createDatabase() throws SQLException {
 		StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append("CREATE DATABASE ");
-		stringBuilder.append(databaseName);
+		stringBuilder.append(name);
 		stringBuilder.append(" WITH OWNER = postgres");
 		stringBuilder.append(" ENCODING = 'UTF8' ");
 		stringBuilder.append(" TABLESPACE = pg_default ");
@@ -99,9 +87,17 @@ public class PostgreDatabase implements Database {
 		return host;
 	}
 
+	public void setHost(String host) {
+		this.host = host;
+	}
+
 	@Override
 	public String getPort() {
 		return port;
+	}
+
+	public void setPort(String port) {
+		this.port = port;
 	}
 
 	@Override
@@ -109,9 +105,17 @@ public class PostgreDatabase implements Database {
 		return user;
 	}
 
+	public void setUser(String user) {
+		this.user = user;
+	}
+
 	@Override
 	public String getPassword() {
 		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	@Override
