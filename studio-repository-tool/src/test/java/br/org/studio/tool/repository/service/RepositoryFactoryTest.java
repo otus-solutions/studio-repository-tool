@@ -2,11 +2,7 @@ package br.org.studio.tool.repository.service;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.powermock.api.mockito.PowerMockito.mockStatic;
-import static org.powermock.api.mockito.PowerMockito.verifyStatic;
 import static org.powermock.api.mockito.PowerMockito.whenNew;
-
-import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -20,71 +16,72 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import br.org.studio.tool.repository.RepositoryConfiguration;
-import br.org.studio.tool.repository.datasource.Configuration;
+import br.org.studio.tool.repository.persitence.PersistenceConfiguration;
+import br.org.studio.tool.repository.persitence.PersistenceConfigurationBuilder;
+import br.org.studio.tool.repository.persitence.PersistenceContext;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({ RepositoryFactory.class, Persistence.class })
 public class RepositoryFactoryTest {
 
 	@Mock
-	private Persistence persistence;
-	@Mock
-	private Configuration configuration;
+	private PersistenceContext persistenceContext;
 	@Mock
 	private EntityManagerFactory entityManagerFactory;
 	@Mock
 	private EntityManager entityManager;
+
+	@Mock
+	private PersistenceConfigurationBuilder configurationBuilder;
 	@Mock
 	private RepositoryConfiguration repositoryConfiguration;
-
-	private Map<String, String> properties;
+	@Mock
+	private PersistenceConfiguration configuration;
 
 	@Before
 	public void setup() throws Exception {
-		buildPropertieMap();
-		mockStatic(Persistence.class);
-		when(Persistence.createEntityManagerFactory(RepositoryFactory.UNIT_NAME, properties)).thenReturn(entityManagerFactory);
+		whenNew(PersistenceContext.class).withNoArguments().thenReturn(persistenceContext);
+		whenNew(PersistenceConfiguration.class).withNoArguments().thenReturn(configuration);
+		whenNew(PersistenceConfigurationBuilder.class).withArguments(repositoryConfiguration.getUrl()).thenReturn(configurationBuilder);
 
-		whenNew(Configuration.class).withNoArguments().thenReturn(configuration);
-		when(configuration.getProperties()).thenReturn(properties);
-
+		when(configurationBuilder.build()).thenReturn(configuration);
 		when(entityManagerFactory.createEntityManager()).thenReturn(entityManager);
 	}
 
 	@Test
-	public void initializeRepository_method_should_call_createEntityManagerFactory_from_Persistence() {
+	public void initialize_method_should_call_load_from_PersistenceContext() {
 		RepositoryFactory repositoryFactory = new RepositoryFactory();
 
-		repositoryFactory.initializeRepository(repositoryConfiguration);
+		repositoryFactory.initialize(repositoryConfiguration);
 
-		verifyStatic();
-		Persistence.createEntityManagerFactory(RepositoryFactory.UNIT_NAME, properties);
+		verify(persistenceContext).load(configuration);
 	}
 
 	@Test
-	public void initializeRepository_method_should_call_createEntityManager_from_EntityManagerFactory() {
+	public void initialize_method_should_call_close_from_PersistenceContext() {
 		RepositoryFactory repositoryFactory = new RepositoryFactory();
 
-		repositoryFactory.initializeRepository(repositoryConfiguration);
+		repositoryFactory.initialize(repositoryConfiguration);
 
-		verify(entityManagerFactory).createEntityManager();
+		verify(persistenceContext).close();
+	}
+	
+	@Test
+	public void load_method_should_call_load_from_PersistenceContext() {
+		RepositoryFactory repositoryFactory = new RepositoryFactory();
+
+		repositoryFactory.load(repositoryConfiguration);
+
+		verify(persistenceContext).load(configuration);
 	}
 
-	private void buildPropertieMap() {
-		Configuration configuration = new Configuration();
+	@Test
+	public void load_method_should_call_close_from_PersistenceContext() {
+		RepositoryFactory repositoryFactory = new RepositoryFactory();
 
-		configuration.setDriver("org.postgresql.Driver");
-		configuration.setUrl("jdbc:postgresql://localhost:5432/repository");
-		configuration.setUser("postgres");
-		configuration.setPassword("postgres");
+		repositoryFactory.load(repositoryConfiguration);
 
-		configuration.setDialect("org.hibernate.dialect.PostgreSQLDialect");
-		configuration.setDefaultSchema("public");
-		configuration.setShowSql("true");
-		configuration.setAutoCommit("true");
-		configuration.setHbm2DllAuto("create");
-
-		properties = configuration.getProperties();
+		verify(persistenceContext).close();
 	}
 
 }

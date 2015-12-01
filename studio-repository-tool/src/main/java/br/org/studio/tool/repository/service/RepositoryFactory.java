@@ -1,39 +1,42 @@
 package br.org.studio.tool.repository.service;
 
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-
 import br.org.studio.tool.repository.RepositoryConfiguration;
-import br.org.studio.tool.repository.datasource.Configuration;
+import br.org.studio.tool.repository.persitence.PersistenceConfiguration;
+import br.org.studio.tool.repository.persitence.PersistenceConfigurationBuilder;
+import br.org.studio.tool.repository.persitence.PersistenceContext;
 
 public class RepositoryFactory {
 
 	public static final String UNIT_NAME = "RepositoryPool";
 
-	// 1. cria entity manager
-	// 2. executa tarefa no banco
-	// 3. fecha entity manager
-	public void initializeRepository(RepositoryConfiguration repositoryConfig) {
-		Configuration configuration = buildPostgreConfiguration(repositoryConfig);
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory(UNIT_NAME, configuration.getProperties());
-		emf.createEntityManager();
-		emf.close();
+	protected static final String CREATE = "create";
+	protected static final String VALIDATE = "validate";
+
+	private PersistenceContext persistenceContext;
+
+	public RepositoryFactory() {
+		persistenceContext = new PersistenceContext();
 	}
 
-	private Configuration buildPostgreConfiguration(RepositoryConfiguration repositoryConfig) {
-		Configuration configuration = new Configuration();
+	public void initialize(RepositoryConfiguration repositoryConfig) {
+		PersistenceConfiguration configuration = buildPersistenceConfiguration(repositoryConfig, CREATE);
+		persistenceContext.load(configuration);
+		persistenceContext.close();
+	}
 
-		configuration.setDriver(repositoryConfig.getDriver());
-		configuration.setUrl(repositoryConfig.getUrl());
-		configuration.setUser(repositoryConfig.getUser());
-		configuration.setPassword(repositoryConfig.getPassword());
+	public void load(RepositoryConfiguration repositoryConfig) {
+		PersistenceConfiguration configuration = buildPersistenceConfiguration(repositoryConfig, VALIDATE);
+		persistenceContext.load(configuration);
+		persistenceContext.close();
+	}
 
-		configuration.setDialect(repositoryConfig.getDialect());
-		configuration.setDefaultSchema("public");
-		configuration.setShowSql("false");
-		configuration.setAutoCommit("true");
-		configuration.setHbm2DllAuto("create");
-
-		return configuration;
+	private PersistenceConfiguration buildPersistenceConfiguration(RepositoryConfiguration repositoryConfig, String hbm2dllAuto) {
+		PersistenceConfigurationBuilder builder = new PersistenceConfigurationBuilder(repositoryConfig.getUrl());
+		builder.withDriver(repositoryConfig.getDriver());
+		builder.withDialect(repositoryConfig.getDialect());
+		builder.withUser(repositoryConfig.getUser());
+		builder.withPassword(repositoryConfig.getPassword());
+		builder.withHbm2dllAuto(hbm2dllAuto);
+		return builder.build();
 	}
 }

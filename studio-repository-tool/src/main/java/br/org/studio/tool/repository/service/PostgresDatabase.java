@@ -10,8 +10,8 @@ import br.org.studio.tool.repository.RepositoryConfiguration;
 
 public class PostgresDatabase implements Database {
 
-	private static final String DRIVER = "org.postgresql.Driver";
-	private static final String DIALECT = "org.hibernate.dialect.PostgreSQLDialect";
+	public static final String DRIVER = "org.postgresql.Driver";
+	public static final String DIALECT = "org.hibernate.dialect.PostgreSQLDialect";
 	private static final String JDBC_POSTGRES = "jdbc:postgresql://";
 
 	private String name;

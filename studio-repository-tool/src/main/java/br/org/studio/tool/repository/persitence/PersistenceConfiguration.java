@@ -1,17 +1,20 @@
-package br.org.studio.tool.repository.datasource;
+package br.org.studio.tool.repository.persitence;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class Configuration {
+import br.org.studio.tool.repository.datasource.HibernateProperty;
+import br.org.studio.tool.repository.datasource.JpaProperty;
 
-	Map<String, String> properties = new HashMap<>();
+public class PersistenceConfiguration {
+
+	private Map<String, String> properties = new HashMap<>();
 
 	public void setProperties(Map<String, String> properties) {
 		this.properties = properties;
 	}
 
-	public Configuration() {
+	public PersistenceConfiguration() {
 		properties = new HashMap<>();
 	}
 

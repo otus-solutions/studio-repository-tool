@@ -1,4 +1,4 @@
-package br.org.studio.tool.repository.datasource;
+package br.org.studio.tool.repository.persitence;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasKey;
@@ -7,7 +7,9 @@ import static org.hamcrest.Matchers.hasValue;
 import org.junit.Before;
 import org.junit.Test;
 
-public class ConfigurationTest {
+import br.org.studio.tool.repository.persitence.PersistenceConfiguration;
+
+public class PersistenceConfigurationTest {
 
 	private static final String DRIVER_KEY = "javax.persistence.jdbc.driver";
 	private static final String URL_KEY = "javax.persistence.jdbc.url";
@@ -29,11 +31,11 @@ public class ConfigurationTest {
 	private static final String CONNECTION_AUTOCOMMIT = "true";
 	private static final String HBM2DLL_AUTO = "create";
 
-	private Configuration configuration;
+	private PersistenceConfiguration configuration;
 
 	@Before
 	public void setup() {
-		configuration = new Configuration();
+		configuration = new PersistenceConfiguration();
 	}
 
 	@Test

@@ -52,7 +52,7 @@ public class RepositoryManagerFacadeTest {
 
 		rmf.createRepository(repositoryConfiguration);
 
-		verify(repositoryFactory).initializeRepository(repositoryConfiguration);
+		verify(repositoryFactory).initialize(repositoryConfiguration);
 	}
 
 	@Test

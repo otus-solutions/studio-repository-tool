@@ -16,7 +16,7 @@ public class RepositoryManagerFacade {
 	public void createRepository(RepositoryConfiguration configuration) throws SQLException {
 		PostgresDatabase postgresql = new PostgresDatabase(configuration);
 		postgresql.createDatabase();
-		repositoryFactory.initializeRepository(configuration);
+		repositoryFactory.initialize(configuration);
 	}
 
 	public void deleteRepository(RepositoryConfiguration configuration) throws SQLException {
