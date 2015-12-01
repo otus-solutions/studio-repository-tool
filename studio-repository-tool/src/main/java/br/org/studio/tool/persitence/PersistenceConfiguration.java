@@ -1,10 +1,7 @@
-package br.org.studio.tool.repository.persitence;
+package br.org.studio.tool.persitence;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import br.org.studio.tool.repository.datasource.HibernateProperty;
-import br.org.studio.tool.repository.datasource.JpaProperty;
 
 public class PersistenceConfiguration {
 

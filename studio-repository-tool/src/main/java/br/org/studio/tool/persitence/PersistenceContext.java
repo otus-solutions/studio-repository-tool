@@ -1,4 +1,4 @@
-package br.org.studio.tool.repository.persitence;
+package br.org.studio.tool.persitence;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;

@@ -1,4 +1,4 @@
-package br.org.studio.tool.repository.database;
+package br.org.studio.tool.database;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -10,8 +10,8 @@ import java.sql.SQLException;
 import org.junit.Before;
 import org.junit.Test;
 
-import br.org.studio.tool.repository.RepositoryConfiguration;
-import br.org.studio.tool.repository.database.PostgresDatabase;
+import br.org.studio.tool.RepositoryConfiguration;
+import br.org.studio.tool.database.PostgresDatabase;
 
 public class PostgresDatabaseTest {
 

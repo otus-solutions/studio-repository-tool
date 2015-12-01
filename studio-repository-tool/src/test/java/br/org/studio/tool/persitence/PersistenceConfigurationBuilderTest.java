@@ -1,10 +1,13 @@
-package br.org.studio.tool.repository.persitence;
+package br.org.studio.tool.persitence;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.instanceOf;
 
 import org.hamcrest.Matchers;
 import org.junit.Test;
+
+import br.org.studio.tool.persitence.PersistenceConfiguration;
+import br.org.studio.tool.persitence.PersistenceConfigurationBuilder;
 
 public class PersistenceConfigurationBuilderTest {
 

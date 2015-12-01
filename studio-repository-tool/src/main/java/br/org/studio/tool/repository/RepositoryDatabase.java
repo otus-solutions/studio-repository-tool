@@ -1,8 +1,10 @@
-package br.org.studio.tool.repository.database;
+package br.org.studio.tool.repository;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLWarning;
+
+import br.org.studio.tool.database.Database;
 
 public class RepositoryDatabase implements Database {
 

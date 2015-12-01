@@ -1,4 +1,4 @@
-package br.org.studio.tool.repository.database;
+package br.org.studio.tool.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.sql.SQLWarning;
 import java.sql.Statement;
 
-import br.org.studio.tool.repository.RepositoryConfiguration;
+import br.org.studio.tool.RepositoryConfiguration;
 
 public class PostgresDatabase implements Database {
 

@@ -1,9 +1,9 @@
-package br.org.studio.tool.repository.database;
+package br.org.studio.tool.repository;
 
-import br.org.studio.tool.repository.RepositoryConfiguration;
-import br.org.studio.tool.repository.persitence.PersistenceConfiguration;
-import br.org.studio.tool.repository.persitence.PersistenceConfigurationBuilder;
-import br.org.studio.tool.repository.persitence.PersistenceContext;
+import br.org.studio.tool.RepositoryConfiguration;
+import br.org.studio.tool.persitence.PersistenceConfiguration;
+import br.org.studio.tool.persitence.PersistenceConfigurationBuilder;
+import br.org.studio.tool.persitence.PersistenceContext;
 
 public class Repository {
 

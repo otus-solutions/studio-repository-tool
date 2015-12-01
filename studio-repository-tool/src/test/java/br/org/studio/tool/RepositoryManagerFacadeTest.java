@@ -1,4 +1,4 @@
-package br.org.studio.tool.repository;
+package br.org.studio.tool;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.instanceOf;
@@ -15,9 +15,11 @@ import org.mockito.Mock;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import br.org.studio.tool.repository.database.PostgresDatabase;
-import br.org.studio.tool.repository.database.Repository;
-import br.org.studio.tool.repository.database.RepositoryUtils;
+import br.org.studio.tool.RepositoryConfiguration;
+import br.org.studio.tool.RepositoryManagerFacade;
+import br.org.studio.tool.database.PostgresDatabase;
+import br.org.studio.tool.repository.Repository;
+import br.org.studio.tool.repository.RepositoryUtils;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({ RepositoryManagerFacade.class })

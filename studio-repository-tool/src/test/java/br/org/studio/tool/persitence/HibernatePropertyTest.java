@@ -1,9 +1,11 @@
-package br.org.studio.tool.repository.datasource;
+package br.org.studio.tool.persitence;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
 import org.junit.Test;
+
+import br.org.studio.tool.persitence.HibernateProperty;
 
 public class HibernatePropertyTest {
 

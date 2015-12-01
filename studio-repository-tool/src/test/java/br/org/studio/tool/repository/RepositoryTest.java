@@ -1,4 +1,4 @@
-package br.org.studio.tool.repository.database;
+package br.org.studio.tool.repository;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -19,11 +19,11 @@ import org.mockito.Mock;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import br.org.studio.tool.repository.RepositoryConfiguration;
-import br.org.studio.tool.repository.database.Repository;
-import br.org.studio.tool.repository.persitence.PersistenceConfiguration;
-import br.org.studio.tool.repository.persitence.PersistenceConfigurationBuilder;
-import br.org.studio.tool.repository.persitence.PersistenceContext;
+import br.org.studio.tool.RepositoryConfiguration;
+import br.org.studio.tool.persitence.PersistenceConfiguration;
+import br.org.studio.tool.persitence.PersistenceConfigurationBuilder;
+import br.org.studio.tool.persitence.PersistenceContext;
+import br.org.studio.tool.repository.Repository;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({ Repository.class, Persistence.class, PersistenceContext.class })

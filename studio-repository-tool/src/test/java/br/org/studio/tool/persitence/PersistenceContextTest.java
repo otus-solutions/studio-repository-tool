@@ -1,4 +1,4 @@
-package br.org.studio.tool.repository.persitence;
+package br.org.studio.tool.persitence;
 
 import static org.mockito.Mockito.verify;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
@@ -11,6 +11,7 @@ import javax.persistence.Persistence;
 
 import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.Matchers.*;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,7 +19,9 @@ import org.mockito.Mock;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import br.org.studio.tool.repository.RepositoryConfiguration;
+import br.org.studio.tool.RepositoryConfiguration;
+import br.org.studio.tool.persitence.PersistenceConfiguration;
+import br.org.studio.tool.persitence.PersistenceContext;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(Persistence.class)

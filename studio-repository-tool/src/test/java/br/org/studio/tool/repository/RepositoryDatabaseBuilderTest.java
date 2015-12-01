@@ -1,4 +1,4 @@
-package br.org.studio.tool.repository.database;
+package br.org.studio.tool.repository;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -6,8 +6,8 @@ import static org.hamcrest.Matchers.instanceOf;
 
 import org.junit.Test;
 
-import br.org.studio.tool.repository.database.RepositoryDatabase;
-import br.org.studio.tool.repository.database.RepositoryDatabaseBuilder;
+import br.org.studio.tool.repository.RepositoryDatabase;
+import br.org.studio.tool.repository.RepositoryDatabaseBuilder;
 
 public class RepositoryDatabaseBuilderTest {
 

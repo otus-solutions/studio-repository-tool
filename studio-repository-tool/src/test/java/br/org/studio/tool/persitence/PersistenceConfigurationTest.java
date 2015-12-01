@@ -1,4 +1,4 @@
-package br.org.studio.tool.repository.persitence;
+package br.org.studio.tool.persitence;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasKey;
@@ -7,7 +7,7 @@ import static org.hamcrest.Matchers.hasValue;
 import org.junit.Before;
 import org.junit.Test;
 
-import br.org.studio.tool.repository.persitence.PersistenceConfiguration;
+import br.org.studio.tool.persitence.PersistenceConfiguration;
 
 public class PersistenceConfigurationTest {
 

@@ -1,4 +1,4 @@
-package br.org.studio.tool.repository.datasource;
+package br.org.studio.tool.persitence;
 
 public enum HibernateProperty {
 

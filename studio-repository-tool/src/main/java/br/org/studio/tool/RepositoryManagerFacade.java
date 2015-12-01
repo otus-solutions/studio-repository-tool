@@ -1,10 +1,10 @@
-package br.org.studio.tool.repository;
+package br.org.studio.tool;
 
 import java.sql.SQLException;
 
-import br.org.studio.tool.repository.database.PostgresDatabase;
-import br.org.studio.tool.repository.database.Repository;
-import br.org.studio.tool.repository.database.RepositoryUtils;
+import br.org.studio.tool.database.PostgresDatabase;
+import br.org.studio.tool.repository.Repository;
+import br.org.studio.tool.repository.RepositoryUtils;
 
 public class RepositoryManagerFacade {
 

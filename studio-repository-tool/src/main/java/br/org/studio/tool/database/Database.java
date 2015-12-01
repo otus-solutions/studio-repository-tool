@@ -1,4 +1,4 @@
-package br.org.studio.tool.repository.database;
+package br.org.studio.tool.database;
 
 import java.sql.Connection;
 
