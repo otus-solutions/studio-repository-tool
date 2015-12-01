@@ -2,26 +2,33 @@ package br.org.studio.tool.repository;
 
 import java.sql.SQLException;
 
-import br.org.studio.tool.repository.service.PostgresDatabase;
-import br.org.studio.tool.repository.service.RepositoryFactory;
+import br.org.studio.tool.repository.database.PostgresDatabase;
+import br.org.studio.tool.repository.database.Repository;
+import br.org.studio.tool.repository.database.RepositoryUtils;
 
 public class RepositoryManagerFacade {
 
-	private RepositoryFactory repositoryFactory;
-
-	public RepositoryManagerFacade() {
-		repositoryFactory = new RepositoryFactory();
-	}
+	private Repository repository;
 
 	public void createRepository(RepositoryConfiguration configuration) throws SQLException {
-		PostgresDatabase postgresql = new PostgresDatabase(configuration);
-		postgresql.createDatabase();
-		repositoryFactory.initialize(configuration);
+		usePostgresDatabase(configuration).createDatabase();
+
+		repository = new Repository(configuration);
+		repository.initialize();
 	}
 
 	public void deleteRepository(RepositoryConfiguration configuration) throws SQLException {
-		PostgresDatabase postgresql = new PostgresDatabase(configuration);
-		postgresql.dropDatabase();
+		usePostgresDatabase(configuration).dropDatabase();
+	}
+
+	public RepositoryUtils connectRepository(RepositoryConfiguration configuration) {
+		repository = new Repository(configuration);
+		repository.load();
+		return repository.getUtils();
+	}
+
+	private PostgresDatabase usePostgresDatabase(RepositoryConfiguration configuration) {
+		return new PostgresDatabase(configuration);
 	}
 
 }

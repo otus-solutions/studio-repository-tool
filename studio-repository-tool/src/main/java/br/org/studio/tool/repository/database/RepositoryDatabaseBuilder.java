@@ -1,4 +1,4 @@
-package br.org.studio.tool.repository.service;
+package br.org.studio.tool.repository.database;
 
 public class RepositoryDatabaseBuilder {
 

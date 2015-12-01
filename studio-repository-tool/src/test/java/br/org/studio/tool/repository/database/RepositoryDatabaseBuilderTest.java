@@ -1,10 +1,13 @@
-package br.org.studio.tool.repository.service;
+package br.org.studio.tool.repository.database;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
 
 import org.junit.Test;
+
+import br.org.studio.tool.repository.database.RepositoryDatabase;
+import br.org.studio.tool.repository.database.RepositoryDatabaseBuilder;
 
 public class RepositoryDatabaseBuilderTest {
 

@@ -1,13 +1,17 @@
-package br.org.studio.tool.repository.service;
+package br.org.studio.tool.repository.database;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.powermock.api.mockito.PowerMockito.mockStatic;
+import static org.powermock.api.mockito.PowerMockito.verifyStatic;
 import static org.powermock.api.mockito.PowerMockito.whenNew;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,13 +20,14 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import br.org.studio.tool.repository.RepositoryConfiguration;
+import br.org.studio.tool.repository.database.Repository;
 import br.org.studio.tool.repository.persitence.PersistenceConfiguration;
 import br.org.studio.tool.repository.persitence.PersistenceConfigurationBuilder;
 import br.org.studio.tool.repository.persitence.PersistenceContext;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({ RepositoryFactory.class, Persistence.class })
-public class RepositoryFactoryTest {
+@PrepareForTest({ Repository.class, Persistence.class, PersistenceContext.class })
+public class RepositoryTest {
 
 	@Mock
 	private PersistenceContext persistenceContext;
@@ -44,44 +49,47 @@ public class RepositoryFactoryTest {
 		whenNew(PersistenceConfiguration.class).withNoArguments().thenReturn(configuration);
 		whenNew(PersistenceConfigurationBuilder.class).withArguments(repositoryConfiguration.getUrl()).thenReturn(configurationBuilder);
 
+		mockStatic(PersistenceContext.class);
+		when(PersistenceContext.load(configuration)).thenReturn(persistenceContext);
 		when(configurationBuilder.build()).thenReturn(configuration);
 		when(entityManagerFactory.createEntityManager()).thenReturn(entityManager);
 	}
 
 	@Test
-	public void initialize_method_should_call_load_from_PersistenceContext() {
-		RepositoryFactory repositoryFactory = new RepositoryFactory();
+	public void a_Repository_instance_should_has_a_configuration() {
+		Repository repository = new Repository(repositoryConfiguration);
 
-		repositoryFactory.initialize(repositoryConfiguration);
-
-		verify(persistenceContext).load(configuration);
+		MatcherAssert.assertThat(repository.getConfiguration(), Matchers.instanceOf(RepositoryConfiguration.class));
 	}
 
 	@Test
-	public void initialize_method_should_call_close_from_PersistenceContext() {
-		RepositoryFactory repositoryFactory = new RepositoryFactory();
+	public void initialize_method_should_call_load_from_PersistenceContext() {
+		Repository repository = new Repository(repositoryConfiguration);
 
-		repositoryFactory.initialize(repositoryConfiguration);
+		repository.initialize();
+
+		verifyStatic();
+		PersistenceContext.load(configuration);
+	}
+
+	@Test
+	public void close_method_should_call_close_from_PersistenceContext() {
+		Repository repository = new Repository(repositoryConfiguration);
+		repository.initialize();
+
+		repository.close();
 
 		verify(persistenceContext).close();
 	}
-	
+
 	@Test
 	public void load_method_should_call_load_from_PersistenceContext() {
-		RepositoryFactory repositoryFactory = new RepositoryFactory();
+		Repository repository = new Repository(repositoryConfiguration);
 
-		repositoryFactory.load(repositoryConfiguration);
+		repository.load();
 
-		verify(persistenceContext).load(configuration);
-	}
-
-	@Test
-	public void load_method_should_call_close_from_PersistenceContext() {
-		RepositoryFactory repositoryFactory = new RepositoryFactory();
-
-		repositoryFactory.load(repositoryConfiguration);
-
-		verify(persistenceContext).close();
+		verifyStatic();
+		PersistenceContext.load(configuration);
 	}
 
 }

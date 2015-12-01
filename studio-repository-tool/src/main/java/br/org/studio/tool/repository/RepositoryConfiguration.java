@@ -1,7 +1,7 @@
 package br.org.studio.tool.repository;
 
-import br.org.studio.tool.repository.service.Database;
-import br.org.studio.tool.repository.service.RepositoryDatabaseBuilder;
+import br.org.studio.tool.repository.database.Database;
+import br.org.studio.tool.repository.database.RepositoryDatabaseBuilder;
 
 public class RepositoryConfiguration {
 

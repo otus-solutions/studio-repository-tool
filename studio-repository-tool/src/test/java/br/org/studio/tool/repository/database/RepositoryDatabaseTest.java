@@ -1,4 +1,4 @@
-package br.org.studio.tool.repository.service;
+package br.org.studio.tool.repository.database;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -10,6 +10,9 @@ import java.sql.SQLException;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
+
+import br.org.studio.tool.repository.database.RepositoryDatabase;
+import br.org.studio.tool.repository.database.RepositoryDatabaseBuilder;
 
 public class RepositoryDatabaseTest {
 

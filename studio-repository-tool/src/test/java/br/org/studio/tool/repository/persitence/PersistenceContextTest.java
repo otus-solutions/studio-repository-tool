@@ -9,6 +9,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import static org.hamcrest.MatcherAssert.*;
+import static org.hamcrest.Matchers.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -44,7 +46,6 @@ public class PersistenceContextTest {
 
 	private void buildRepositoryConfiguration() {
 		repositoryConfiguration = RepositoryConfiguration.forPostgre("postgres", "localhost", "5432", "postgres", "postgres");
-
 	}
 
 	private void buildPersistenceConfiguration() {
@@ -63,10 +64,13 @@ public class PersistenceContextTest {
 	}
 
 	@Test
-	public void load_method_should_call_createEntityManagerFactory_from_Persistence() {
-		PersistenceContext context = new PersistenceContext();
+	public void load_method_should_return_the_PersistenceContext_instance() {
+		assertThat(PersistenceContext.load(configuration), instanceOf(PersistenceContext.class));
+	}
 
-		context.load(configuration);
+	@Test
+	public void load_method_should_call_createEntityManagerFactory_from_Persistence() {
+		PersistenceContext.load(configuration);
 
 		verifyStatic();
 		Persistence.createEntityManagerFactory(UNIT_NAME, configuration.getProperties());
@@ -74,17 +78,14 @@ public class PersistenceContextTest {
 
 	@Test
 	public void load_method_should_call_createEntityManager_from_EntityManagerFactory() {
-		PersistenceContext context = new PersistenceContext();
-
-		context.load(configuration);
+		PersistenceContext.load(configuration);
 
 		verify(entityManagerFactory).createEntityManager();
 	}
 
 	@Test
 	public void close_method_should_call_close_from_EntityManager() {
-		PersistenceContext context = new PersistenceContext();
-		context.load(configuration);
+		PersistenceContext context = PersistenceContext.load(configuration);
 
 		context.close();
 

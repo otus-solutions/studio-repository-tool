@@ -1,4 +1,4 @@
-package br.org.studio.tool.repository.service;
+package br.org.studio.tool.repository.database;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import br.org.studio.tool.repository.RepositoryConfiguration;
+import br.org.studio.tool.repository.database.PostgresDatabase;
 
 public class PostgresDatabaseTest {
 

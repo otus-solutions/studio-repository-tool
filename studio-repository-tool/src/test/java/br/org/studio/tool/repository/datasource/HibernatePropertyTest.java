@@ -5,7 +5,7 @@ import static org.hamcrest.Matchers.equalTo;
 
 import org.junit.Test;
 
-public class HibernatePostgrePropertyTest {
+public class HibernatePropertyTest {
 
 	private static final String DIALECT = "hibernate.dialect";
 	private static final String DEFAULT_SCHEMA = "hibernate.default_schema";

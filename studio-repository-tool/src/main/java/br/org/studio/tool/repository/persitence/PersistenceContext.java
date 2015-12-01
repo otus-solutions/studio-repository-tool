@@ -8,10 +8,22 @@ public class PersistenceContext {
 
 	private static final String UNIT_NAME = "RepositoryPool";
 
+	private static PersistenceContext instance;
 	private EntityManagerFactory entityManagerFactory;
 	private EntityManager entityManager;
 
-	public void load(PersistenceConfiguration configuration) {
+	public static PersistenceContext load(PersistenceConfiguration configuration) {
+		if (instance == null) {
+			synchronized (PersistenceContext.class) {
+				instance = new PersistenceContext();
+			}
+		}
+
+		instance.loadEntityManager(configuration);
+		return instance;
+	}
+
+	private void loadEntityManager(PersistenceConfiguration configuration) {
 		entityManagerFactory = Persistence.createEntityManagerFactory(UNIT_NAME, configuration.getProperties());
 		producesEntityManager();
 	}
@@ -25,7 +37,6 @@ public class PersistenceContext {
 
 	public void close() {
 		entityManager.close();
-		entityManager = null;
 	}
 
 	private void producesEntityManager() {

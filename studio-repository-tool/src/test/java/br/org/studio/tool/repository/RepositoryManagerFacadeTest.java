@@ -1,5 +1,7 @@
 package br.org.studio.tool.repository;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.instanceOf;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.powermock.api.mockito.PowerMockito.whenNew;
@@ -13,8 +15,9 @@ import org.mockito.Mock;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import br.org.studio.tool.repository.service.PostgresDatabase;
-import br.org.studio.tool.repository.service.RepositoryFactory;
+import br.org.studio.tool.repository.database.PostgresDatabase;
+import br.org.studio.tool.repository.database.Repository;
+import br.org.studio.tool.repository.database.RepositoryUtils;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({ RepositoryManagerFacade.class })
@@ -25,16 +28,19 @@ public class RepositoryManagerFacadeTest {
 	@Mock
 	private PostgresDatabase database;
 	@Mock
-	private RepositoryFactory repositoryFactory;
+	private Repository repository;
+	@Mock
+	private RepositoryUtils repositoryUtils;
 	@Mock
 	private RepositoryConfiguration repositoryConfiguration;
 
 	@Before
 	public void setup() throws Exception {
 		whenNew(PostgresDatabase.class).withArguments(repositoryConfiguration).thenReturn(database);
-		whenNew(RepositoryFactory.class).withNoArguments().thenReturn(repositoryFactory);
+		whenNew(Repository.class).withArguments(repositoryConfiguration).thenReturn(repository);
 		when(repositoryConfiguration.getName()).thenReturn(REPOSITORY_NAME);
 		when(repositoryConfiguration.getDatabase()).thenReturn(database);
+		when(repository.getUtils()).thenReturn(repositoryUtils);
 	}
 
 	@Test
@@ -47,12 +53,12 @@ public class RepositoryManagerFacadeTest {
 	}
 
 	@Test
-	public void createRepository_method_should_call_initializeRepository_from_RepositoryFactory_object() throws SQLException {
+	public void createRepository_method_should_call_initializeRepository_from_Repository_object() throws SQLException {
 		RepositoryManagerFacade rmf = new RepositoryManagerFacade();
 
 		rmf.createRepository(repositoryConfiguration);
 
-		verify(repositoryFactory).initialize(repositoryConfiguration);
+		verify(repository).initialize();
 	}
 
 	@Test
@@ -62,6 +68,24 @@ public class RepositoryManagerFacadeTest {
 		rmf.deleteRepository(repositoryConfiguration);
 
 		verify(database).dropDatabase();
+	}
+
+	@Test
+	public void connectRepository_method_should_call_load_from_Repository_object() throws SQLException {
+		RepositoryManagerFacade rmf = new RepositoryManagerFacade();
+
+		rmf.connectRepository(repositoryConfiguration);
+
+		verify(repository).load();
+	}
+
+	@Test
+	public void connectRepository_method_should_return_an_instance_of_RepositoryUtils() throws SQLException {
+		RepositoryManagerFacade rmf = new RepositoryManagerFacade();
+
+		RepositoryUtils object = rmf.connectRepository(repositoryConfiguration);
+
+		assertThat(object, instanceOf(RepositoryUtils.class));
 	}
 
 }

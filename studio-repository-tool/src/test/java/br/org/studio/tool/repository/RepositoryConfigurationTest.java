@@ -7,7 +7,7 @@ import static org.hamcrest.Matchers.instanceOf;
 import org.junit.Before;
 import org.junit.Test;
 
-import br.org.studio.tool.repository.service.Database;
+import br.org.studio.tool.repository.database.Database;
 
 public class RepositoryConfigurationTest {
 
