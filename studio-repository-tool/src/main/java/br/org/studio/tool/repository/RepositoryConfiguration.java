@@ -1,7 +1,7 @@
 package br.org.studio.tool.repository;
 
 import br.org.studio.tool.repository.service.Database;
-import br.org.studio.tool.repository.service.PostgresDatabaseBuilder;
+import br.org.studio.tool.repository.service.RepositoryDatabaseBuilder;
 
 public class RepositoryConfiguration {
 
@@ -48,7 +48,7 @@ public class RepositoryConfiguration {
 	}
 
 	public static RepositoryConfiguration forPostgre(String name, String host, String port, String user, String password) {
-		PostgresDatabaseBuilder builder = new PostgresDatabaseBuilder();
+		RepositoryDatabaseBuilder builder = new RepositoryDatabaseBuilder();
 		builder.withName(name).withHost(host).withPort(port).withUser(user).withPassword(password);
 		return new RepositoryConfiguration(builder.build());
 	}

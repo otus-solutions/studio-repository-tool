@@ -13,7 +13,7 @@ import org.mockito.Mock;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import br.org.studio.tool.repository.service.PostgreDatabase;
+import br.org.studio.tool.repository.service.PostgresDatabase;
 import br.org.studio.tool.repository.service.RepositoryFactory;
 
 @RunWith(PowerMockRunner.class)
@@ -23,7 +23,7 @@ public class RepositoryManagerFacadeTest {
 	private static final String REPOSITORY_NAME = "db_name";
 
 	@Mock
-	private PostgreDatabase database;
+	private PostgresDatabase database;
 	@Mock
 	private RepositoryFactory repositoryFactory;
 	@Mock
@@ -31,7 +31,7 @@ public class RepositoryManagerFacadeTest {
 
 	@Before
 	public void setup() throws Exception {
-		whenNew(PostgreDatabase.class).withArguments(REPOSITORY_NAME).thenReturn(database);
+		whenNew(PostgresDatabase.class).withArguments(repositoryConfiguration).thenReturn(database);
 		whenNew(RepositoryFactory.class).withNoArguments().thenReturn(repositoryFactory);
 		when(repositoryConfiguration.getName()).thenReturn(REPOSITORY_NAME);
 		when(repositoryConfiguration.getDatabase()).thenReturn(database);
@@ -61,7 +61,7 @@ public class RepositoryManagerFacadeTest {
 
 		rmf.deleteRepository(repositoryConfiguration);
 
-		verify(database).dropDatabase(REPOSITORY_NAME);
+		verify(database).dropDatabase();
 	}
 
 }

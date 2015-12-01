@@ -6,7 +6,9 @@ import java.sql.SQLException;
 import java.sql.SQLWarning;
 import java.sql.Statement;
 
-public class PostgreDatabase implements Database {
+import br.org.studio.tool.repository.RepositoryConfiguration;
+
+public class PostgresDatabase implements Database {
 
 	private static final String DRIVER = "org.postgresql.Driver";
 	private static final String DIALECT = "org.hibernate.dialect.PostgreSQLDialect";
@@ -15,14 +17,19 @@ public class PostgreDatabase implements Database {
 	private String name;
 	private String host;
 	private String port;
-	private String user;
-	private String password;
+	private String user;	 // esse usuário deve ser fornecido pelo administrador do banco de dados
+	private String password; // essa senha deve ser fornecida pelo administrador do banco de dados
 
 	private SQLWarning warnings;
 	private Connection connection;
 
-	public PostgreDatabase(String dbname) {
-		this.name = dbname;
+	// TODO: retirar usuário e senha hardcode
+	public PostgresDatabase(RepositoryConfiguration configuration) {
+		this.name = configuration.getName();
+		this.host = configuration.getHost();
+		this.port = configuration.getPort();
+		this.password = "postgres"; 
+		this.user = "postgres";
 	}
 
 	@Override
@@ -33,8 +40,7 @@ public class PostgreDatabase implements Database {
 	@Override
 	public Connection getConnection() throws Exception {
 		Class.forName(DRIVER);
-		connection = null;
-		connection = DriverManager.getConnection(JDBC_POSTGRES + getHost() + ":" + getPort() + "/postgres", getUser(), getPassword());
+		connection = DriverManager.getConnection(getUrl(), getUser(), getPassword());
 
 		if (connection.isClosed()) {
 			throw new Exception();
@@ -43,7 +49,16 @@ public class PostgreDatabase implements Database {
 		return connection;
 	}
 
-	@Override
+	private String getUrlConnection() {
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append(JDBC_POSTGRES);
+		stringBuilder.append(getHost());
+		stringBuilder.append(":");
+		stringBuilder.append(getPort());
+		stringBuilder.append("/postgres");
+		return stringBuilder.toString();
+	}
+
 	public void createDatabase() throws SQLException {
 		StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append("CREATE DATABASE ");
@@ -58,9 +73,8 @@ public class PostgreDatabase implements Database {
 		executeStatement(sql);
 	}
 
-	@Override
-	public void dropDatabase(String databaseName) throws SQLException {
-		executeStatement("DROP DATABASE " + databaseName);
+	public void dropDatabase() throws SQLException {
+		executeStatement("DROP DATABASE " + name);
 	}
 
 	private void executeStatement(String sql) throws SQLException {
@@ -133,7 +147,7 @@ public class PostgreDatabase implements Database {
 
 	@Override
 	public String getUrl() {
-		return JDBC_POSTGRES + getHost() + ":" + getPort() + "/" + getName();
+		return getUrlConnection();
 	}
 
 }

@@ -2,6 +2,7 @@ package br.org.studio.tool.repository;
 
 import java.sql.SQLException;
 
+import br.org.studio.tool.repository.service.PostgresDatabase;
 import br.org.studio.tool.repository.service.RepositoryFactory;
 
 public class RepositoryManagerFacade {
@@ -13,12 +14,14 @@ public class RepositoryManagerFacade {
 	}
 
 	public void createRepository(RepositoryConfiguration configuration) throws SQLException {
-		configuration.getDatabase().createDatabase();
+		PostgresDatabase postgresql = new PostgresDatabase(configuration);
+		postgresql.createDatabase();
 		repositoryFactory.initializeRepository(configuration);
 	}
 
 	public void deleteRepository(RepositoryConfiguration configuration) throws SQLException {
-		configuration.getDatabase().dropDatabase(configuration.getName());
+		PostgresDatabase postgresql = new PostgresDatabase(configuration);
+		postgresql.dropDatabase();
 	}
 
 }

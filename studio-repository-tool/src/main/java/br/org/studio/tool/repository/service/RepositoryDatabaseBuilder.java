@@ -1,6 +1,6 @@
 package br.org.studio.tool.repository.service;
 
-public class PostgresDatabaseBuilder {
+public class RepositoryDatabaseBuilder {
 
 	private static final String PORT = "5432";
 	private static final String LOCALHOST = "localhost";
@@ -11,9 +11,9 @@ public class PostgresDatabaseBuilder {
 	private String port;
 	private String user;
 	private String password;
-	
-	public PostgreDatabase build() {
-		PostgreDatabase database = new PostgreDatabase(dbname);
+
+	public RepositoryDatabase build() {
+		RepositoryDatabase database = new RepositoryDatabase(dbname);
 
 		database.setHost(getHost());
 		database.setPort(getPort());
@@ -23,27 +23,27 @@ public class PostgresDatabaseBuilder {
 		return database;
 	}
 
-	public PostgresDatabaseBuilder withName(String dbname) {
+	public RepositoryDatabaseBuilder withName(String dbname) {
 		this.dbname = dbname;
 		return this;
 	}
 
-	public PostgresDatabaseBuilder withHost(String host) {
+	public RepositoryDatabaseBuilder withHost(String host) {
 		this.host = host;
 		return this;
 	}
 
-	public PostgresDatabaseBuilder withPort(String port) {
+	public RepositoryDatabaseBuilder withPort(String port) {
 		this.port = port;
 		return this;
 	}
 
-	public PostgresDatabaseBuilder withUser(String user) {
+	public RepositoryDatabaseBuilder withUser(String user) {
 		this.user = user;
 		return this;
 	}
 
-	public PostgresDatabaseBuilder withPassword(String password) {
+	public RepositoryDatabaseBuilder withPassword(String password) {
 		this.password = password;
 		return this;
 	}
@@ -71,7 +71,7 @@ public class PostgresDatabaseBuilder {
 			return user;
 		}
 	}
-	
+
 	private String getPassword() {
 		if (password == null || password.isEmpty()) {
 			return POSTGRES;
