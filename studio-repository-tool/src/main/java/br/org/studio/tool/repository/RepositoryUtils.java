@@ -1,10 +1,12 @@
 package br.org.studio.tool.repository;
 
+import br.org.studio.tool.repository.postgres.PostgresRepository;
+
 public class RepositoryUtils {
 
-	private Repository repository;
+	private PostgresRepository repository;
 
-	public RepositoryUtils(Repository repository) {
+	public RepositoryUtils(PostgresRepository repository) {
 		this.repository = repository;
 	}
 

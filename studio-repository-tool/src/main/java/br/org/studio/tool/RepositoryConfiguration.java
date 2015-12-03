@@ -1,56 +1,99 @@
 package br.org.studio.tool;
 
-import br.org.studio.tool.database.Database;
-import br.org.studio.tool.repository.RepositoryDatabaseBuilder;
+import br.org.studio.tool.database.HibernateDatabase;
+import br.org.studio.tool.database.postgres.PostgresDatabase;
+import br.org.studio.tool.repository.RepositoryConfigurationBuilder;
+import br.org.studio.tool.repository.RepositoryDatabase;
 
 public class RepositoryConfiguration {
 
-	private Database database;
+	private String name;
+	private String host;
+	private String port;
+	private String user;
+	private String password;
+	private RepositoryType repositoryType;
 
-	protected RepositoryConfiguration(Database database) {
-		this.database = database;
+	public RepositoryConfiguration(RepositoryType repositoryType) {
+		this.repositoryType = repositoryType;
 	}
 
 	public String getName() {
-		return database.getName();
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getHost() {
-		return database.getHost();
+		return host;
+	}
+
+	public void setHost(String host) {
+		this.host = host;
 	}
 
 	public String getPort() {
-		return database.getPort();
+		return port;
+	}
+
+	public void setPort(String port) {
+		this.port = port;
 	}
 
 	public String getUser() {
-		return database.getUser();
+		return user;
+	}
+
+	public void setUser(String user) {
+		this.user = user;
 	}
 
 	public String getPassword() {
-		return database.getPassword();
+		return password;
 	}
 
-	public String getUrl() {
-		return database.getUrl();
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public String getDriver() {
-		return database.getDriver();
+		return PostgresDatabase.DRIVER;
 	}
 
 	public String getDialect() {
-		return database.getDialect();
+		return PostgresDatabase.DIALECT;
 	}
 
-	public Database getDatabase() {
-		return database;
+	public RepositoryType getRepositoryType() {
+		return repositoryType;
+	}
+
+	public String getUrl() {
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append(PostgresDatabase.JDBC);
+		stringBuilder.append(getHost());
+		stringBuilder.append(":");
+		stringBuilder.append(getPort());
+		stringBuilder.append("/");
+		stringBuilder.append(getName());
+		return stringBuilder.toString();
+	}
+
+	public HibernateDatabase buildMetaDatabase() {
+		RepositoryDatabase repository = new RepositoryDatabase(getName());
+		repository.setHost(getHost());
+		repository.setPort(getPort());
+		repository.setUser(getUser());
+		repository.setPassword(getPassword());
+		return repository;
 	}
 
 	public static RepositoryConfiguration forPostgre(String name, String host, String port, String user, String password) {
-		RepositoryDatabaseBuilder builder = new RepositoryDatabaseBuilder();
+		RepositoryConfigurationBuilder builder = new RepositoryConfigurationBuilder();
 		builder.withName(name).withHost(host).withPort(port).withUser(user).withPassword(password);
-		return new RepositoryConfiguration(builder.build());
+		return builder.buildPostgresConfiguration();
 	}
 
 }

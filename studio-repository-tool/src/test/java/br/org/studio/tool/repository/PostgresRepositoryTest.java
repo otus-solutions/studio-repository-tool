@@ -1,5 +1,7 @@
 package br.org.studio.tool.repository;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.instanceOf;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
@@ -10,8 +12,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,34 +20,38 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import br.org.studio.tool.RepositoryConfiguration;
+import br.org.studio.tool.database.postgres.PostgresDatabase;
 import br.org.studio.tool.persitence.PersistenceConfiguration;
 import br.org.studio.tool.persitence.PersistenceConfigurationBuilder;
 import br.org.studio.tool.persitence.PersistenceContext;
-import br.org.studio.tool.repository.Repository;
+import br.org.studio.tool.repository.postgres.PostgresRepository;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({ Repository.class, Persistence.class, PersistenceContext.class })
-public class RepositoryTest {
+@PrepareForTest({ PostgresRepository.class, Persistence.class, PersistenceContext.class })
+public class PostgresRepositoryTest {
 
 	@Mock
 	private PersistenceContext persistenceContext;
 	@Mock
+	private PersistenceConfiguration configuration;
+	@Mock
 	private EntityManagerFactory entityManagerFactory;
 	@Mock
 	private EntityManager entityManager;
-
 	@Mock
 	private PersistenceConfigurationBuilder configurationBuilder;
+
 	@Mock
 	private RepositoryConfiguration repositoryConfiguration;
 	@Mock
-	private PersistenceConfiguration configuration;
+	private PostgresDatabase postgresql;
 
 	@Before
 	public void setup() throws Exception {
 		whenNew(PersistenceContext.class).withNoArguments().thenReturn(persistenceContext);
 		whenNew(PersistenceConfiguration.class).withNoArguments().thenReturn(configuration);
 		whenNew(PersistenceConfigurationBuilder.class).withArguments(repositoryConfiguration.getUrl()).thenReturn(configurationBuilder);
+		whenNew(PostgresDatabase.class).withArguments(repositoryConfiguration).thenReturn(postgresql);
 
 		mockStatic(PersistenceContext.class);
 		when(PersistenceContext.load(configuration)).thenReturn(persistenceContext);
@@ -57,14 +61,14 @@ public class RepositoryTest {
 
 	@Test
 	public void a_Repository_instance_should_has_a_configuration() {
-		Repository repository = new Repository(repositoryConfiguration);
+		PostgresRepository repository = new PostgresRepository(repositoryConfiguration);
 
-		MatcherAssert.assertThat(repository.getConfiguration(), Matchers.instanceOf(RepositoryConfiguration.class));
+		assertThat(repository.getConfiguration(), instanceOf(RepositoryConfiguration.class));
 	}
 
 	@Test
-	public void initialize_method_should_call_load_from_PersistenceContext() {
-		Repository repository = new Repository(repositoryConfiguration);
+	public void initialize_method_should_call_load_from_PersistenceContext() throws Exception {
+		PostgresRepository repository = new PostgresRepository(repositoryConfiguration);
 
 		repository.initialize();
 
@@ -73,8 +77,17 @@ public class RepositoryTest {
 	}
 
 	@Test
-	public void close_method_should_call_close_from_PersistenceContext() {
-		Repository repository = new Repository(repositoryConfiguration);
+	public void initialize_method_should_call_createDatabase_from_PostgresDatabase() throws Exception {
+		PostgresRepository repository = new PostgresRepository(repositoryConfiguration);
+
+		repository.initialize();
+
+		verify(postgresql).createDatabase();
+	}
+
+	@Test
+	public void close_method_should_call_close_from_PersistenceContext() throws Exception {
+		PostgresRepository repository = new PostgresRepository(repositoryConfiguration);
 		repository.initialize();
 
 		repository.close();
@@ -84,12 +97,21 @@ public class RepositoryTest {
 
 	@Test
 	public void load_method_should_call_load_from_PersistenceContext() {
-		Repository repository = new Repository(repositoryConfiguration);
+		PostgresRepository repository = new PostgresRepository(repositoryConfiguration);
 
 		repository.load();
 
 		verifyStatic();
 		PersistenceContext.load(configuration);
+	}
+
+	@Test
+	public void delete_method_should_call_dropDatabase_from_PostgresDatabase() throws Exception {
+		PostgresRepository repository = new PostgresRepository(repositoryConfiguration);
+
+		repository.delete();
+
+		verify(postgresql).dropDatabase();
 	}
 
 }

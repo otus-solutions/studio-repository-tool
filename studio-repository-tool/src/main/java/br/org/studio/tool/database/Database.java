@@ -20,8 +20,6 @@ public interface Database {
 
 	String getDriver();
 
-	String getDialect();
-
 	String getUrl();
 
 }

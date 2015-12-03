@@ -11,8 +11,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 
+import br.org.studio.tool.RepositoryConfiguration;
 import br.org.studio.tool.repository.RepositoryDatabase;
-import br.org.studio.tool.repository.RepositoryDatabaseBuilder;
+import br.org.studio.tool.repository.RepositoryConfigurationBuilder;
 
 public class RepositoryDatabaseTest {
 
@@ -35,8 +36,9 @@ public class RepositoryDatabaseTest {
 		// mockStatic(DriverManager.class);
 		// when(DriverManager.getConnection(CONNECTION_URL, POSTGRES, POSTGRES)).thenReturn(connection);
 
-		RepositoryDatabaseBuilder builder = new RepositoryDatabaseBuilder();
-		database = builder.withHost(LOCALHOST).withName(POSTGRES).withPort(DEFAULT_PORT).withUser(POSTGRES).withPassword(POSTGRES).build();
+		RepositoryConfigurationBuilder builder = new RepositoryConfigurationBuilder();
+		RepositoryConfiguration configuration = builder.withHost(LOCALHOST).withName(POSTGRES).withPort(DEFAULT_PORT).withUser(POSTGRES).withPassword(POSTGRES).buildPostgresConfiguration();
+		database = (RepositoryDatabase) configuration.buildMetaDatabase();
 	}
 
 	@Test

@@ -1,6 +1,6 @@
 package br.org.studio.tool.persitence;
 
-import br.org.studio.tool.database.PostgresDatabase;
+import br.org.studio.tool.database.postgres.PostgresDatabase;
 
 public class PersistenceConfigurationBuilder {
 

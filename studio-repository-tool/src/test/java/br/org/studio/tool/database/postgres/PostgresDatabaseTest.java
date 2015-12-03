@@ -1,4 +1,4 @@
-package br.org.studio.tool.database;
+package br.org.studio.tool.database.postgres;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -11,7 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import br.org.studio.tool.RepositoryConfiguration;
-import br.org.studio.tool.database.PostgresDatabase;
+import br.org.studio.tool.database.postgres.PostgresDatabase;
 
 public class PostgresDatabaseTest {
 
@@ -89,7 +89,7 @@ public class PostgresDatabaseTest {
 	}
 
 	@Test
-	public void hasError_method_should_return_false_when_database_is_created_successfully() throws SQLException {
+	public void hasError_method_should_return_false_when_database_is_created_successfully() throws Exception {
 		database.createDatabase();
 
 		assertThat(database.hasError(), equalTo(false));
@@ -97,7 +97,7 @@ public class PostgresDatabaseTest {
 	}
 
 	@Test
-	public void hasError_method_should_return_false_when_database_is_dropped_successfully() throws SQLException {
+	public void hasError_method_should_return_false_when_database_is_dropped_successfully() throws Exception {
 		database.createDatabase();
 
 		database.dropDatabase();

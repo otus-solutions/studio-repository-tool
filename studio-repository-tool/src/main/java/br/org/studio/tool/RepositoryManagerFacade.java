@@ -1,34 +1,45 @@
 package br.org.studio.tool;
 
-import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
-import br.org.studio.tool.database.PostgresDatabase;
 import br.org.studio.tool.repository.Repository;
 import br.org.studio.tool.repository.RepositoryUtils;
+import br.org.studio.tool.repository.mongodb.MongoRepository;
+import br.org.studio.tool.repository.postgres.PostgresRepository;
 
 public class RepositoryManagerFacade {
 
-	private Repository repository;
+	private Map<String, Repository> repositories;
 
-	public void createRepository(RepositoryConfiguration configuration) throws SQLException {
-		usePostgresDatabase(configuration).createDatabase();
-
-		repository = new Repository(configuration);
-		repository.initialize();
+	public RepositoryManagerFacade() {
+		repositories = new HashMap<>();
 	}
 
-	public void deleteRepository(RepositoryConfiguration configuration) throws SQLException {
-		usePostgresDatabase(configuration).dropDatabase();
+	public void createRepository(RepositoryConfiguration configuration) throws Exception {
+		Repository repository = getRepository(configuration);
+		repository.initialize();
+
+		repositories.put(configuration.getName(), repository);
+	}
+
+	public void deleteRepository(RepositoryConfiguration configuration) throws Exception {
+		repositories.get(configuration.getName()).delete();
 	}
 
 	public RepositoryUtils connectRepository(RepositoryConfiguration configuration) {
-		repository = new Repository(configuration);
+		Repository repository = repositories.get(configuration.getName());
 		repository.load();
 		return repository.getUtils();
 	}
 
-	private PostgresDatabase usePostgresDatabase(RepositoryConfiguration configuration) {
-		return new PostgresDatabase(configuration);
+	private Repository getRepository(RepositoryConfiguration configuration) {
+		if (RepositoryType.POSTGRESQL.equals(configuration.getRepositoryType())) {
+			return new PostgresRepository(configuration);
+		} else if (RepositoryType.MONGODB.equals(configuration.getRepositoryType())) {
+			return new MongoRepository(configuration);
+		}
+		return null;
 	}
 
 }

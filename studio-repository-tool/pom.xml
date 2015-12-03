@@ -13,6 +13,12 @@
 	<name>studio-repository-tool</name>
 
 	<dependencies>
+		<!-- MongoDB dependencies -->
+		<dependency>
+			<groupId>org.mongodb</groupId>
+			<artifactId>mongo-java-driver</artifactId>
+			<version>3.1.1</version>
+		</dependency>
 		<!-- PostgreSQL dependencies -->
 		<dependency>
 			<groupId>org.postgresql</groupId>

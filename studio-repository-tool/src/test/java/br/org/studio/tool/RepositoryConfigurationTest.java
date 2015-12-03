@@ -7,9 +7,6 @@ import static org.hamcrest.Matchers.instanceOf;
 import org.junit.Before;
 import org.junit.Test;
 
-import br.org.studio.tool.RepositoryConfiguration;
-import br.org.studio.tool.database.Database;
-
 public class RepositoryConfigurationTest {
 
 	private static final String USER = "postgres";
@@ -56,6 +53,11 @@ public class RepositoryConfigurationTest {
 	public void an_instance_of_RepositoryConfiguration_should_has_a_db_user() {
 		assertThat(repositoryConfiguration.getUser(), equalTo(USER));
 	}
+	
+	@Test
+	public void an_instance_of_RepositoryConfiguration_should_has_a_db_type() {
+		assertThat(repositoryConfiguration.getRepositoryType(), instanceOf(RepositoryType.class));
+	}
 
 	@Test
 	public void an_instance_of_RepositoryConfiguration_should_has_a_user_password() {
@@ -70,11 +72,6 @@ public class RepositoryConfigurationTest {
 	@Test
 	public void getDialect_should_return_dialect() {
 		assertThat(repositoryConfiguration.getDialect(), equalTo(DIALECT));
-	}
-
-	@Test
-	public void getDatabase_should_return_an_instance_of_Database() {
-		assertThat(repositoryConfiguration.getDatabase(), instanceOf(Database.class));
 	}
 
 }

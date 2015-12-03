@@ -4,13 +4,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLWarning;
 
-import br.org.studio.tool.database.Database;
+import br.org.studio.tool.database.HibernateDatabase;
+import br.org.studio.tool.database.postgres.PostgresDatabase;
 
-public class RepositoryDatabase implements Database {
-
-	private static final String DRIVER = "org.postgresql.Driver";
-	private static final String DIALECT = "org.hibernate.dialect.PostgreSQLDialect";
-	private static final String JDBC_POSTGRES = "jdbc:postgresql://";
+public class RepositoryDatabase implements HibernateDatabase {
 
 	private String name;
 	private String host;
@@ -32,7 +29,7 @@ public class RepositoryDatabase implements Database {
 
 	@Override
 	public Connection getConnection() throws Exception {
-		Class.forName(DRIVER);
+		Class.forName(PostgresDatabase.DRIVER);
 		connection = DriverManager.getConnection(getUrl(), getUser(), getPassword());
 
 		if (connection.isClosed()) {
@@ -44,7 +41,7 @@ public class RepositoryDatabase implements Database {
 
 	private String getUrlConnection() {
 		StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder.append(JDBC_POSTGRES);
+		stringBuilder.append(PostgresDatabase.JDBC);
 		stringBuilder.append(getHost());
 		stringBuilder.append(":");
 		stringBuilder.append(getPort());
@@ -96,12 +93,12 @@ public class RepositoryDatabase implements Database {
 
 	@Override
 	public String getDriver() {
-		return DRIVER;
+		return PostgresDatabase.DRIVER;
 	}
 
 	@Override
 	public String getDialect() {
-		return DIALECT;
+		return PostgresDatabase.DIALECT;
 	}
 
 	@Override
