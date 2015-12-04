@@ -5,15 +5,12 @@ import org.bson.Document;
 import br.org.studio.tool.base.repository.Repository;
 import br.org.studio.tool.base.repository.RepositoryUtils;
 import br.org.studio.tool.base.repository.configuration.RepositoryConfiguration;
-import br.org.studio.tool.mongodb.database.MongoClientFactory;
+import br.org.studio.tool.mongodb.database.MongoDatabase;
 
-import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
 
 public class MongoRepository implements Repository {
-	
-	private MongoClient client;
+
 	private RepositoryConfiguration configuration;
 	private MongoDatabase database;
 
@@ -28,13 +25,12 @@ public class MongoRepository implements Repository {
 
 	@Override
 	public void initialize() {
-		client = MongoClientFactory.createClient();
-		database = client.getDatabase(configuration.getName());
+		database = new MongoDatabase(configuration);
 		insertMetaInformation();
 	}
 
 	private void insertMetaInformation() {
-		MongoCollection<Document> info = database.getCollection("info");
+		MongoCollection<Document> info = database.get().getCollection("info");
 
 		Document document = new Document();
 		document.append("name", configuration.getName());
@@ -54,8 +50,7 @@ public class MongoRepository implements Repository {
 
 	@Override
 	public void close() {
-		if (client != null)
-			client.close();
+		database.close();
 	}
 
 	@Override

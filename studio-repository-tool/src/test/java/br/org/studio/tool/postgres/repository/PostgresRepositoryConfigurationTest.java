@@ -9,7 +9,6 @@ import org.junit.Test;
 
 import br.org.studio.tool.base.repository.RepositoryType;
 import br.org.studio.tool.base.repository.configuration.RepositoryConfiguration;
-import br.org.studio.tool.postgres.PostgresRepositoryConfiguration;
 
 public class PostgresRepositoryConfigurationTest {
 

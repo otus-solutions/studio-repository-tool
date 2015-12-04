@@ -24,7 +24,6 @@ import br.org.studio.tool.base.persitence.PersistenceConfigurationBuilder;
 import br.org.studio.tool.base.persitence.PersistenceContext;
 import br.org.studio.tool.base.repository.configuration.RepositoryConfiguration;
 import br.org.studio.tool.postgres.database.PostgresDatabase;
-import br.org.studio.tool.postgres.repository.PostgresRepository;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({ PostgresRepository.class, Persistence.class, PersistenceContext.class, PersistenceConfiguration.class })
@@ -50,7 +49,7 @@ public class PostgresRepositoryTest {
 	public void setup() throws Exception {
 		whenNew(PersistenceContext.class).withNoArguments().thenReturn(persistenceContext);
 		whenNew(PersistenceConfiguration.class).withNoArguments().thenReturn(configuration);
-		whenNew(PersistenceConfigurationBuilder.class).withArguments(repositoryConfiguration.getUrl()).thenReturn(configurationBuilder);
+		whenNew(PersistenceConfigurationBuilder.class).withNoArguments().thenReturn(configurationBuilder);
 		whenNew(PostgresDatabase.class).withArguments(repositoryConfiguration).thenReturn(postgresql);
 
 		mockStatic(PersistenceContext.class);

@@ -13,7 +13,6 @@ import org.mockito.Mock;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import br.org.studio.tool.RepositoryManagerFacade;
 import br.org.studio.tool.base.repository.RepositoryType;
 import br.org.studio.tool.base.repository.RepositoryUtils;
 import br.org.studio.tool.base.repository.configuration.RepositoryConfiguration;
@@ -42,7 +41,6 @@ public class RepositoryManagerFacadeTest {
 
 		when(repositoryConfiguration.getName()).thenReturn(REPOSITORY_NAME);
 		when(repositoryConfiguration.getRepositoryType()).thenReturn(RepositoryType.POSTGRESQL);
-		when(repositoryConfiguration.buildMetaDatabase()).thenReturn(database);
 		when(repository.getUtils()).thenReturn(repositoryUtils);
 	}
 

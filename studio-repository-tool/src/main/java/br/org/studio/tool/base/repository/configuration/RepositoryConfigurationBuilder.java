@@ -1,7 +1,7 @@
 package br.org.studio.tool.base.repository.configuration;
 
-import br.org.studio.tool.mongodb.MongoRepositoryConfiguration;
-import br.org.studio.tool.postgres.PostgresRepositoryConfiguration;
+import br.org.studio.tool.mongodb.repository.MongoRepositoryConfiguration;
+import br.org.studio.tool.postgres.repository.PostgresRepositoryConfiguration;
 
 public class RepositoryConfigurationBuilder {
 

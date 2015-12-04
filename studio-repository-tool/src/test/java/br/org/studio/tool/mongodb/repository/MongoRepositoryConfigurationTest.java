@@ -6,11 +6,15 @@ import static org.hamcrest.Matchers.instanceOf;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
+import br.org.studio.tool.base.database.DatabaseUrl;
 import br.org.studio.tool.base.repository.RepositoryType;
 import br.org.studio.tool.base.repository.configuration.RepositoryConfiguration;
-import br.org.studio.tool.mongodb.MongoRepositoryConfiguration;
 
+@RunWith(MockitoJUnitRunner.class)
 public class MongoRepositoryConfigurationTest {
 
 	private static final String USER = "postgres";
@@ -22,6 +26,9 @@ public class MongoRepositoryConfigurationTest {
 	private static final String CONNECTION_URL = MONGO_PROTOCOL + HOST + ":" + PORT + "/" + NAME;
 
 	private RepositoryConfiguration repositoryConfiguration;
+
+	@Mock
+	private DatabaseUrl databaseUrl;
 
 	@Before
 	public void setup() {
@@ -68,7 +75,7 @@ public class MongoRepositoryConfigurationTest {
 	}
 
 	@Test
-	public void getUrl_should_return_url() {
+	public void getUrl_method_should_return_an_url() {
 		assertThat(repositoryConfiguration.getUrl(), equalTo(CONNECTION_URL));
 	}
 

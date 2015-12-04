@@ -5,7 +5,7 @@ import static org.hamcrest.Matchers.equalTo;
 
 import org.junit.Test;
 
-import br.org.studio.tool.base.persitence.JpaProperty;
+import br.org.studio.tool.base.persitence.PersistenceProperty;
 
 public class JpaPropertyTest {
 
@@ -16,22 +16,22 @@ public class JpaPropertyTest {
 
 	@Test
 	public void the_URL_property_must_be_equal_to_jdb_url() {
-		assertThat(JpaProperty.URL.getValue(), equalTo(URL));
+		assertThat(PersistenceProperty.URL.getValue(), equalTo(URL));
 	}
 
 	@Test
 	public void the_DRIVER_property_must_be_equal_to_jdbc_driver() {
-		assertThat(JpaProperty.DRIVER.getValue(), equalTo(DRIVER));
+		assertThat(PersistenceProperty.DRIVER.getValue(), equalTo(DRIVER));
 	}
 
 	@Test
 	public void the_USER_property_must_be_equal_to_jdbc_user() {
-		assertThat(JpaProperty.USER.getValue(), equalTo(USER));
+		assertThat(PersistenceProperty.USER.getValue(), equalTo(USER));
 	}
 
 	@Test
 	public void the_PASSWORD_property_must_be_equal_to_jdbc_password() {
-		assertThat(JpaProperty.PASSWORD.getValue(), equalTo(PASSWORD));
+		assertThat(PersistenceProperty.PASSWORD.getValue(), equalTo(PASSWORD));
 	}
 
 }

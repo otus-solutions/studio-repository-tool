@@ -1,12 +1,8 @@
 package br.org.studio.tool.base.database;
 
-import java.sql.Connection;
-
 public interface Database {
 
 	Boolean hasError();
-
-	Connection getConnection() throws Exception;
 
 	String getName();
 

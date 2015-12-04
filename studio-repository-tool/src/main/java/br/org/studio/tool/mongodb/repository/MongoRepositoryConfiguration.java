@@ -1,26 +1,14 @@
-package br.org.studio.tool.mongodb;
+package br.org.studio.tool.mongodb.repository;
 
 import br.org.studio.tool.base.repository.RepositoryType;
 import br.org.studio.tool.base.repository.configuration.RepositoryConfiguration;
 import br.org.studio.tool.base.repository.configuration.RepositoryConfigurationBuilder;
-import br.org.studio.tool.mongodb.database.MongoDatabase;
+import br.org.studio.tool.mongodb.database.MongoDatabaseUrl;
 
 public class MongoRepositoryConfiguration extends RepositoryConfiguration {
 
 	public MongoRepositoryConfiguration() {
-		super(RepositoryType.MONGODB);
-	}
-
-	@Override
-	public String getUrl() {
-		StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder.append(MongoDatabase.PROTOCOL);
-		stringBuilder.append(getHost());
-		stringBuilder.append(":");
-		stringBuilder.append(getPort());
-		stringBuilder.append("/");
-		stringBuilder.append(getName());
-		return stringBuilder.toString();
+		super(RepositoryType.MONGODB, new MongoDatabaseUrl());
 	}
 
 	public static RepositoryConfiguration create(String name, String host, String port, String user, String password) {

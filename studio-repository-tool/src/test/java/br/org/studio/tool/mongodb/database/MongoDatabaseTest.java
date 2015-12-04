@@ -4,21 +4,17 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
 
-import java.sql.Connection;
-
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import br.org.studio.tool.base.repository.configuration.RepositoryConfiguration;
-import br.org.studio.tool.mongodb.MongoRepositoryConfiguration;
-import br.org.studio.tool.mongodb.database.MongoDatabase;
+import br.org.studio.tool.mongodb.repository.MongoRepositoryConfiguration;
 
 public class MongoDatabaseTest {
 
 	private static final String MONGO_PROTOCOL = "mongodb://";
 	private static final String HOST = "localhost";
-	private static final String PORT = "5432";
+	private static final String PORT = "27017";
 	private static final String NAME = "repository_name";
 	private static final String CONNECTION_URL = MONGO_PROTOCOL + HOST + ":" + PORT + "/" + NAME;
 
@@ -84,13 +80,11 @@ public class MongoDatabaseTest {
 		assertThat(database.getUrl(), equalTo(CONNECTION_URL));
 	}
 
-	@Ignore
 	@Test
-	public void getConnection_method_should_return_an_instance_of_Connection_when_database_exist() throws Exception {
-		Connection connection = database.getConnection();
+	public void getConnection_method_should_return_an_instance_of_MongoDatabase_when_database_exist() throws Exception {
+		com.mongodb.client.MongoDatabase mongo = database.get();
 
-		assertThat(connection, instanceOf(Connection.class));
-		connection.close();
+		assertThat(mongo, instanceOf(com.mongodb.client.MongoDatabase.class));
 	}
 
 }

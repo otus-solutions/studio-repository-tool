@@ -1,52 +1,43 @@
 package br.org.studio.tool.base.database;
 
-import java.sql.Connection;
-
 import br.org.studio.tool.base.repository.configuration.RepositoryConfiguration;
 
 public abstract class MetaDatabase implements Database {
 
-	protected String name;
-	protected String host;
-	protected String port;
-	protected String user;
-	protected String password;
-
-	protected Object connection;
-
+	private RepositoryConfiguration configuration;
 	private Object warnings;
 
 	public MetaDatabase(RepositoryConfiguration configuration) {
-		this.name = configuration.getName();
-		this.host = configuration.getHost();
-		this.port = configuration.getPort();
-		this.user = configuration.getUser();
-		this.password = configuration.getPassword();
+		this.configuration = configuration;
+	}
+
+	protected RepositoryConfiguration getConfiguration() {
+		return configuration;
 	}
 
 	@Override
 	public String getName() {
-		return name;
+		return configuration.getName();
 	}
 
 	@Override
 	public String getHost() {
-		return host;
+		return configuration.getHost();
 	}
 
 	@Override
 	public String getPort() {
-		return port;
+		return configuration.getPort();
 	}
 
 	@Override
 	public String getUser() {
-		return user;
+		return configuration.getUser();
 	}
 
 	@Override
 	public String getPassword() {
-		return password;
+		return configuration.getPassword();
 	}
 
 	@Override
@@ -59,12 +50,11 @@ public abstract class MetaDatabase implements Database {
 	}
 
 	@Override
+	public String getUrl() {
+		return configuration.getUrl();
+	}
+
+	@Override
 	public abstract String getDriver();
-
-	@Override
-	public abstract String getUrl();
-
-	@Override
-	public abstract Connection getConnection() throws Exception;
 
 }

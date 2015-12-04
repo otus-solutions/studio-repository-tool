@@ -10,8 +10,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import br.org.studio.tool.base.repository.configuration.RepositoryConfiguration;
-import br.org.studio.tool.postgres.PostgresRepositoryConfiguration;
 import br.org.studio.tool.postgres.database.PostgresDatabase;
+import br.org.studio.tool.postgres.repository.PostgresRepositoryConfiguration;
 
 public class PostgresDatabaseTest {
 

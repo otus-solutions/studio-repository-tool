@@ -24,6 +24,7 @@ public abstract class GenericDaoBean<T> implements GenericDao<T> {
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public T retrieve(Object id) {
 		return (T) entityManager.find(entityClass, id);
 	}

@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import br.org.studio.tool.base.repository.configuration.RepositoryConfiguration;
-import br.org.studio.tool.postgres.database.PostgresDatabase;
 
 public class PersistenceConfiguration {
 
@@ -26,19 +25,19 @@ public class PersistenceConfiguration {
 	}
 
 	public void setDriver(String value) {
-		properties.put(JpaProperty.DRIVER.getValue(), value);
+		properties.put(PersistenceProperty.DRIVER.getValue(), value);
 	}
 
 	public void setUrl(String value) {
-		properties.put(JpaProperty.URL.getValue(), value);
+		properties.put(PersistenceProperty.URL.getValue(), value);
 	}
 
 	public void setUser(String value) {
-		properties.put(JpaProperty.USER.getValue(), value);
+		properties.put(PersistenceProperty.USER.getValue(), value);
 	}
 
 	public void setPassword(String value) {
-		properties.put(JpaProperty.PASSWORD.getValue(), value);
+		properties.put(PersistenceProperty.PASSWORD.getValue(), value);
 	}
 
 	public void setDialect(String value) {
@@ -62,23 +61,22 @@ public class PersistenceConfiguration {
 	}
 
 	public static PersistenceConfiguration forCreate(RepositoryConfiguration repositoryConfig) {
-		PersistenceConfigurationBuilder builder = new PersistenceConfigurationBuilder(repositoryConfig.getUrl());
-		builder.withDriver(PostgresDatabase.DRIVER);
-		builder.withDialect(PostgresDatabase.DIALECT);
-		builder.withUser(repositoryConfig.getUser());
-		builder.withPassword(repositoryConfig.getPassword());
-		builder.withHbm2dllAuto(CREATE);
-		return builder.build();
+		return getBuilder(repositoryConfig, CREATE).build();
 	}
-	
+
 	public static PersistenceConfiguration forValidate(RepositoryConfiguration repositoryConfig) {
-		PersistenceConfigurationBuilder builder = new PersistenceConfigurationBuilder(repositoryConfig.getUrl());
-		builder.withDriver(PostgresDatabase.DRIVER);
-		builder.withDialect(PostgresDatabase.DIALECT);
-		builder.withUser(repositoryConfig.getUser());
-		builder.withPassword(repositoryConfig.getPassword());
-		builder.withHbm2dllAuto(VALIDATE);
-		return builder.build();
+		return getBuilder(repositoryConfig, VALIDATE).build();
+	}
+
+	private static PersistenceConfigurationBuilder getBuilder(RepositoryConfiguration repositoryConfig, String hbm2dllAuto) {
+		PersistenceConfigurationBuilder build = new PersistenceConfigurationBuilder();
+		build.withUrl(repositoryConfig.getUrl());
+		build.withDriver(repositoryConfig.getDriver());
+		build.withDialect(repositoryConfig.getDialect());
+		build.withUser(repositoryConfig.getUser());
+		build.withPassword(repositoryConfig.getPassword());
+		build.withHbm2dllAuto(hbm2dllAuto);
+		return build;
 	}
 
 }

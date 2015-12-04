@@ -16,10 +16,6 @@ public class PersistenceConfigurationBuilder {
 	private String dialect;
 	private String hbm2dllAuto;
 
-	public PersistenceConfigurationBuilder(String url) {
-		this.url = url;
-	}
-
 	public PersistenceConfiguration build() {
 		PersistenceConfiguration configuration = new PersistenceConfiguration();
 

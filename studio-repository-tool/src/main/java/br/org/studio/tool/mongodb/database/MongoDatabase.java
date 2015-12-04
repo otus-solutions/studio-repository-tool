@@ -1,16 +1,21 @@
 package br.org.studio.tool.mongodb.database;
 
-import java.sql.Connection;
-
 import br.org.studio.tool.base.database.MetaDatabase;
 import br.org.studio.tool.base.repository.configuration.RepositoryConfiguration;
+
+import com.mongodb.MongoClient;
 
 public class MongoDatabase extends MetaDatabase {
 
 	public static final String PROTOCOL = "mongodb://";
 
+	private MongoClient client;
+	private com.mongodb.client.MongoDatabase database;
+
 	public MongoDatabase(RepositoryConfiguration configuration) {
 		super(configuration);
+		client = MongoClientFactory.createClient();
+		database = client.getDatabase(configuration.getName());
 	}
 
 	@Override
@@ -19,25 +24,17 @@ public class MongoDatabase extends MetaDatabase {
 	}
 
 	@Override
-	public String getUrl() {
-		StringBuilder builder = new StringBuilder();
-		builder.append(PROTOCOL);
-		builder.append(getHost());
-		builder.append(":");
-		builder.append(getPort());
-		builder.append("/");
-		builder.append(getName());
-		return builder.toString();
-	}
-
-	@Override
 	public String getDriver() {
 		return null;
 	}
 
-	@Override
-	public Connection getConnection() throws Exception {
-		return null;
+	public void close() {
+		if (client != null)
+			client.close();
+	}
+
+	public com.mongodb.client.MongoDatabase get() {
+		return database;
 	}
 
 }

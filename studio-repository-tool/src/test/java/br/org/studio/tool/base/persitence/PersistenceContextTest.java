@@ -21,7 +21,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 import br.org.studio.tool.base.persitence.PersistenceConfiguration;
 import br.org.studio.tool.base.persitence.PersistenceContext;
 import br.org.studio.tool.base.repository.configuration.RepositoryConfiguration;
-import br.org.studio.tool.postgres.PostgresRepositoryConfiguration;
+import br.org.studio.tool.postgres.repository.PostgresRepositoryConfiguration;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(Persistence.class)

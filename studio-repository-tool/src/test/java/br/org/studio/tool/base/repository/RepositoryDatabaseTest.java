@@ -11,9 +11,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 
-import br.org.studio.tool.base.repository.RepositoryDatabase;
 import br.org.studio.tool.base.repository.configuration.RepositoryConfiguration;
-import br.org.studio.tool.base.repository.configuration.RepositoryConfigurationBuilder;
+import br.org.studio.tool.postgres.repository.PostgresRepositoryConfiguration;
 
 public class RepositoryDatabaseTest {
 
@@ -32,13 +31,8 @@ public class RepositoryDatabaseTest {
 
 	@Before
 	public void setup() throws SQLException {
-		// TODO: Corrigir esse teste para testar com um nome de base diferente de postgres
-		// mockStatic(DriverManager.class);
-		// when(DriverManager.getConnection(CONNECTION_URL, POSTGRES, POSTGRES)).thenReturn(connection);
-
-		RepositoryConfigurationBuilder builder = new RepositoryConfigurationBuilder();
-		RepositoryConfiguration configuration = builder.withHost(LOCALHOST).withDatabaseName(POSTGRES).withPort(DEFAULT_PORT).withUser(POSTGRES).withPassword(POSTGRES).buildForPostgres();
-		database = (RepositoryDatabase) configuration.buildMetaDatabase();
+		RepositoryConfiguration configuration = PostgresRepositoryConfiguration.create(POSTGRES, LOCALHOST, DEFAULT_PORT, POSTGRES, POSTGRES);
+		database = new RepositoryDatabase(configuration);
 	}
 
 	@Test

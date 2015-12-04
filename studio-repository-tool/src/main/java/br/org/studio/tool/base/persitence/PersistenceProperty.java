@@ -1,6 +1,6 @@
 package br.org.studio.tool.base.persitence;
 
-public enum JpaProperty {
+public enum PersistenceProperty {
 
 	URL("javax.persistence.jdbc.url"),
 	DRIVER("javax.persistence.jdbc.driver"),
@@ -9,7 +9,7 @@ public enum JpaProperty {
 
 	private String value;
 
-	private JpaProperty(String value) {
+	private PersistenceProperty(String value) {
 		this.value = value;
 	}
 

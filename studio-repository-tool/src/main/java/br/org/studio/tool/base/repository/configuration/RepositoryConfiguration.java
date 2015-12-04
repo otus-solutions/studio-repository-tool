@@ -1,45 +1,47 @@
 package br.org.studio.tool.base.repository.configuration;
 
-import br.org.studio.tool.base.database.HibernateDatabase;
-import br.org.studio.tool.base.repository.RepositoryDatabase;
+import br.org.studio.tool.base.database.DatabaseUrl;
 import br.org.studio.tool.base.repository.RepositoryType;
 import br.org.studio.tool.postgres.database.PostgresDatabase;
 
 public abstract class RepositoryConfiguration {
 
-	private String name;
-	private String host;
-	private String port;
 	private String user;
 	private String password;
 	private RepositoryType repositoryType;
+	protected DatabaseUrl databaseUrl;
 
-	protected RepositoryConfiguration(RepositoryType repositoryType) {
+	protected RepositoryConfiguration(RepositoryType repositoryType, DatabaseUrl databaseUrl) {
 		this.repositoryType = repositoryType;
+		this.databaseUrl = databaseUrl;
+	}
+
+	public void setDatabaseUrl(DatabaseUrl databaseUrl) {
+		this.databaseUrl = databaseUrl;
 	}
 
 	public String getName() {
-		return name;
+		return databaseUrl.getDbName();
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		databaseUrl.setDbName(name);
 	}
 
 	public String getHost() {
-		return host;
+		return databaseUrl.getHost();
 	}
 
 	public void setHost(String host) {
-		this.host = host;
+		databaseUrl.setHost(host);
 	}
 
 	public String getPort() {
-		return port;
+		return databaseUrl.getPort();
 	}
 
 	public void setPort(String port) {
-		this.port = port;
+		databaseUrl.setPort(port);
 	}
 
 	public String getUser() {
@@ -70,16 +72,8 @@ public abstract class RepositoryConfiguration {
 		return repositoryType;
 	}
 
-	// TODO: limpar isso
-	public HibernateDatabase buildMetaDatabase() {
-		RepositoryDatabase repository = new RepositoryDatabase(getName());
-		repository.setHost(getHost());
-		repository.setPort(getPort());
-		repository.setUser(getUser());
-		repository.setPassword(getPassword());
-		return repository;
+	public String getUrl() {
+		return databaseUrl.getUrl();
 	}
-
-	public abstract String getUrl();
 
 }

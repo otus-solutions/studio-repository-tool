@@ -1,14 +1,15 @@
-package br.org.studio.tool.postgres;
+package br.org.studio.tool.postgres.repository;
 
 import br.org.studio.tool.base.repository.RepositoryType;
 import br.org.studio.tool.base.repository.configuration.RepositoryConfiguration;
 import br.org.studio.tool.base.repository.configuration.RepositoryConfigurationBuilder;
 import br.org.studio.tool.postgres.database.PostgresDatabase;
+import br.org.studio.tool.postgres.database.PostgresDatabaseUrl;
 
 public class PostgresRepositoryConfiguration extends RepositoryConfiguration {
 
 	public PostgresRepositoryConfiguration() {
-		super(RepositoryType.POSTGRESQL);
+		super(RepositoryType.POSTGRESQL, new PostgresDatabaseUrl());
 	}
 
 	public String getDriver() {
@@ -17,17 +18,6 @@ public class PostgresRepositoryConfiguration extends RepositoryConfiguration {
 
 	public String getDialect() {
 		return PostgresDatabase.DIALECT;
-	}
-
-	public String getUrl() {
-		StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder.append(PostgresDatabase.PROTOCOL);
-		stringBuilder.append(getHost());
-		stringBuilder.append(":");
-		stringBuilder.append(getPort());
-		stringBuilder.append("/");
-		stringBuilder.append(getName());
-		return stringBuilder.toString();
 	}
 
 	public static RepositoryConfiguration create(String name, String host, String port, String user, String password) {
