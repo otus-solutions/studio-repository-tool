@@ -13,9 +13,12 @@ import org.mockito.Mock;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import br.org.studio.tool.database.postgres.PostgresDatabase;
-import br.org.studio.tool.repository.RepositoryUtils;
-import br.org.studio.tool.repository.postgres.PostgresRepository;
+import br.org.studio.tool.RepositoryManagerFacade;
+import br.org.studio.tool.base.repository.RepositoryType;
+import br.org.studio.tool.base.repository.RepositoryUtils;
+import br.org.studio.tool.base.repository.configuration.RepositoryConfiguration;
+import br.org.studio.tool.postgres.database.PostgresDatabase;
+import br.org.studio.tool.postgres.repository.PostgresRepository;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({ RepositoryManagerFacade.class })

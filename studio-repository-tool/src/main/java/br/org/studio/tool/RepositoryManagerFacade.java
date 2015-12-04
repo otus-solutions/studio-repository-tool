@@ -3,10 +3,12 @@ package br.org.studio.tool;
 import java.util.HashMap;
 import java.util.Map;
 
-import br.org.studio.tool.repository.Repository;
-import br.org.studio.tool.repository.RepositoryUtils;
-import br.org.studio.tool.repository.mongodb.MongoRepository;
-import br.org.studio.tool.repository.postgres.PostgresRepository;
+import br.org.studio.tool.base.repository.Repository;
+import br.org.studio.tool.base.repository.RepositoryType;
+import br.org.studio.tool.base.repository.RepositoryUtils;
+import br.org.studio.tool.base.repository.configuration.RepositoryConfiguration;
+import br.org.studio.tool.mongodb.repository.MongoRepository;
+import br.org.studio.tool.postgres.repository.PostgresRepository;
 
 public class RepositoryManagerFacade {
 
@@ -36,6 +38,7 @@ public class RepositoryManagerFacade {
 	private Repository getRepository(RepositoryConfiguration configuration) {
 		if (RepositoryType.POSTGRESQL.equals(configuration.getRepositoryType())) {
 			return new PostgresRepository(configuration);
+
 		} else if (RepositoryType.MONGODB.equals(configuration.getRepositoryType())) {
 			return new MongoRepository(configuration);
 		}
