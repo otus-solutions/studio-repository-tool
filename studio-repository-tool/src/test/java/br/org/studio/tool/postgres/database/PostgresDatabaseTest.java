@@ -10,7 +10,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import br.org.studio.tool.base.repository.configuration.RepositoryConfiguration;
-import br.org.studio.tool.postgres.database.PostgresDatabase;
 import br.org.studio.tool.postgres.repository.PostgresRepositoryConfiguration;
 
 public class PostgresDatabaseTest {
@@ -24,10 +23,11 @@ public class PostgresDatabaseTest {
 	private static final String CONNECTION_URL = JDBC_POSTGRESQL + LOCALHOST + ":" + DEFAULT_PORT + "/" + POSTGRES;
 
 	private PostgresDatabase database;
+	private RepositoryConfiguration configuration;
 
 	@Before
 	public void setup() {
-		RepositoryConfiguration configuration = createRepositoryConfiguration();
+		configuration = createRepositoryConfiguration();
 		database = new PostgresDatabase(configuration);
 	}
 
@@ -90,7 +90,7 @@ public class PostgresDatabaseTest {
 
 	@Test
 	public void hasError_method_should_return_false_when_database_is_created_successfully() throws Exception {
-		database.createDatabase();
+		database.createDatabase(configuration.getName());
 
 		assertThat(database.hasError(), equalTo(false));
 		database.dropDatabase();
@@ -98,7 +98,7 @@ public class PostgresDatabaseTest {
 
 	@Test
 	public void hasError_method_should_return_false_when_database_is_dropped_successfully() throws Exception {
-		database.createDatabase();
+		database.createDatabase(configuration.getName());
 
 		database.dropDatabase();
 

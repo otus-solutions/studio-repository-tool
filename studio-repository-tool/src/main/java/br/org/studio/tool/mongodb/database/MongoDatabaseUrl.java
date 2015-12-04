@@ -6,7 +6,7 @@ public class MongoDatabaseUrl extends DatabaseUrl {
 
 	@Override
 	public String getProtocol() {
-		return MongoDatabase.PROTOCOL;
+		return StudioMongoDatabase.PROTOCOL;
 	}
 
 }

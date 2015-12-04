@@ -1,18 +1,14 @@
 package br.org.studio.tool.mongodb.repository;
 
-import org.bson.Document;
-
 import br.org.studio.tool.base.repository.Repository;
 import br.org.studio.tool.base.repository.RepositoryUtils;
 import br.org.studio.tool.base.repository.configuration.RepositoryConfiguration;
-import br.org.studio.tool.mongodb.database.MongoDatabase;
-
-import com.mongodb.client.MongoCollection;
+import br.org.studio.tool.mongodb.database.StudioMongoDatabase;
 
 public class MongoRepository implements Repository {
 
 	private RepositoryConfiguration configuration;
-	private MongoDatabase database;
+	private StudioMongoDatabase database;
 
 	public MongoRepository(RepositoryConfiguration configuration) {
 		this.configuration = configuration;
@@ -25,19 +21,7 @@ public class MongoRepository implements Repository {
 
 	@Override
 	public void initialize() {
-		database = new MongoDatabase(configuration);
-		insertMetaInformation();
-	}
-
-	private void insertMetaInformation() {
-		MongoCollection<Document> info = database.get().getCollection("info");
-
-		Document document = new Document();
-		document.append("name", configuration.getName());
-		document.append("host", configuration.getHost());
-		document.append("port", configuration.getPort());
-
-		info.insertOne(document);
+		database = new StudioMongoDatabase(configuration);
 	}
 
 	@Override
@@ -58,7 +42,7 @@ public class MongoRepository implements Repository {
 		return null;
 	}
 
-	public MongoDatabase getDatabase() {
+	public StudioMongoDatabase getDatabase() {
 		return database;
 	}
 

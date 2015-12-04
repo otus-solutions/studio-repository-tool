@@ -17,6 +17,7 @@ public class PostgresRepository implements Repository {
 
 	public PostgresRepository(RepositoryConfiguration configuration) {
 		this.configuration = configuration;
+		configuration.setName("postgres");
 		postgresql = new PostgresDatabase(configuration);
 	}
 
@@ -27,7 +28,7 @@ public class PostgresRepository implements Repository {
 
 	@Override
 	public void initialize() throws Exception {
-		postgresql.createDatabase();
+		postgresql.createDatabase(configuration.getName());
 
 		PersistenceConfiguration persistenceConfiguration = PersistenceConfiguration.forCreate(configuration);
 		persistenceContext = PersistenceContext.load(persistenceConfiguration);

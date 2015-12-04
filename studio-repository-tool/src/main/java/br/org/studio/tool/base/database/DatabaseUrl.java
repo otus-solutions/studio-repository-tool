@@ -6,12 +6,16 @@ public abstract class DatabaseUrl {
 	private String port;
 	private String name;
 
+	public DatabaseUrl() {
+		setDbName("");
+	}
+
 	public String getHost() {
 		return host;
 	}
 
 	public void setHost(String host) {
-		this.host = host;
+		this.host = host.trim();
 	}
 
 	public String getPort() {
@@ -19,7 +23,7 @@ public abstract class DatabaseUrl {
 	}
 
 	public void setPort(String port) {
-		this.port = port;
+		this.port = port.trim();
 	}
 
 	public String getDbName() {
@@ -27,7 +31,8 @@ public abstract class DatabaseUrl {
 	}
 
 	public void setDbName(String name) {
-		this.name = name;
+		if (name != null)
+			this.name = name.trim();
 	}
 
 	public String getUrl() {

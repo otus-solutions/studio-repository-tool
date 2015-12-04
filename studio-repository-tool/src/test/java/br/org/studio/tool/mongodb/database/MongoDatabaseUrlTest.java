@@ -8,12 +8,12 @@ import org.junit.Test;
 
 import br.org.studio.tool.base.database.DatabaseUrl;
 
-public class MongoDataabseUrlTest {
+public class MongoDatabaseUrlTest {
 
 	private static final String LOCALHOST = "localhost";
 	private static final String DEFAULT_PORT = "27017";
 	private static final String DBNAME = "postgres";
-	private static final String CONNECTION_URL = MongoDatabase.PROTOCOL + LOCALHOST + ":" + DEFAULT_PORT + "/" + DBNAME;
+	private static final String CONNECTION_URL = StudioMongoDatabase.PROTOCOL + LOCALHOST + ":" + DEFAULT_PORT + "/" + DBNAME;
 
 	private DatabaseUrl url;
 
@@ -27,7 +27,7 @@ public class MongoDataabseUrlTest {
 
 	@Test
 	public void getProtocol_method_should_return_a_value_equal_to_PostgresDatabase_PROTOCOL() {
-		assertThat(url.getProtocol(), equalTo(MongoDatabase.PROTOCOL));
+		assertThat(url.getProtocol(), equalTo(StudioMongoDatabase.PROTOCOL));
 	}
 
 	@Test

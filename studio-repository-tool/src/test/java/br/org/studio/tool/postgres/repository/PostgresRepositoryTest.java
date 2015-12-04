@@ -29,6 +29,8 @@ import br.org.studio.tool.postgres.database.PostgresDatabase;
 @PrepareForTest({ PostgresRepository.class, Persistence.class, PersistenceContext.class, PersistenceConfiguration.class })
 public class PostgresRepositoryTest {
 
+	private static final String CLIENT_DB_NAME = "client_db_name";
+	
 	@Mock
 	private PersistenceContext persistenceContext;
 	@Mock
@@ -61,6 +63,7 @@ public class PostgresRepositoryTest {
 
 		when(configurationBuilder.build()).thenReturn(configuration);
 		when(entityManagerFactory.createEntityManager()).thenReturn(entityManager);
+		when(repositoryConfiguration.getName()).thenReturn(CLIENT_DB_NAME);
 	}
 
 	@Test
@@ -86,7 +89,7 @@ public class PostgresRepositoryTest {
 
 		repository.initialize();
 
-		verify(postgresql).createDatabase();
+		verify(postgresql).createDatabase(repositoryConfiguration.getName());
 	}
 
 	@Test

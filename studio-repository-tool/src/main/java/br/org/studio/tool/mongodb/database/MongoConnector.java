@@ -4,22 +4,21 @@ public class MongoConnector {
 
 	private static final String LOCALHOST = "127.0.0.1";
 	private static final String DEFAULT_PORT = "27017";
-	private static final String PROTOCOL = "mongodb://";
 
-	private String host;
-	private String port;
+	private MongoDatabaseUrl databaseUrl;
 
 	private MongoConnector(String host, String port) {
-		this.host = host;
-		this.port = port;
+		databaseUrl = new MongoDatabaseUrl();
+		databaseUrl.setHost(host);
+		databaseUrl.setPort(port);
 	}
 
 	public String getHost() {
-		return host;
+		return databaseUrl.getHost();
 	}
 
 	public String getPort() {
-		return port;
+		return databaseUrl.getPort();
 	}
 
 	public static MongoConnector localhostConnector() {
@@ -31,7 +30,8 @@ public class MongoConnector {
 	}
 
 	public String getUri() {
-		return PROTOCOL + getHost() + ":" + getPort();
+		int lastDash = databaseUrl.getUrl().lastIndexOf("/");
+		return databaseUrl.getUrl().substring(0, lastDash);
 	}
 
 }

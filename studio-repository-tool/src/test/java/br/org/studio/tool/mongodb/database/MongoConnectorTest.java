@@ -46,7 +46,7 @@ public class MongoConnectorTest {
 	}
 
 	@Test
-	public void getUri_should_an_String_with_connection_uri_info() {
+	public void getUri_method__should_return_an_string_with_connection_uri_info() {
 		MongoConnector connector = MongoConnector.externalHostConnector(EXTERNAL_HOST, EXTERNAL_PORT);
 
 		assertThat(connector.getUri(), equalTo(URI));

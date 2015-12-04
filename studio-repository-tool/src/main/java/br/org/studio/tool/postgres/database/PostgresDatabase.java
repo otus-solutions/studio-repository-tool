@@ -9,21 +9,14 @@ public class PostgresDatabase extends HibernateDatabase {
 	public static final String DIALECT = "org.hibernate.dialect.PostgreSQLDialect";
 	public static final String PROTOCOL = "jdbc:postgresql://";
 
-	private static final String POSTGRES = "postgres";
-
 	public PostgresDatabase(RepositoryConfiguration configuration) {
 		super(configuration);
 	}
 
-	@Override
-	public String getName() {
-		return POSTGRES;
-	}
-
-	public void createDatabase() throws Exception {
+	public void createDatabase(String databaseName) throws Exception {
 		StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append("CREATE DATABASE ");
-		stringBuilder.append(getName());
+		stringBuilder.append(databaseName);
 		stringBuilder.append(" WITH OWNER = postgres");
 		stringBuilder.append(" ENCODING = 'UTF8' ");
 		stringBuilder.append(" TABLESPACE = pg_default ");
