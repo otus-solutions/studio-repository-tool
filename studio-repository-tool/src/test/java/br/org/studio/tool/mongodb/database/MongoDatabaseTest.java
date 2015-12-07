@@ -22,6 +22,7 @@ import br.org.studio.tool.mongodb.repository.MongoRepositoryConfiguration;
 
 import com.mongodb.MongoClient;
 import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
 @Ignore
@@ -43,12 +44,20 @@ public class MongoDatabaseTest {
 	private MongoClient mongoClient;
 	@Mock
 	private MongoDatabase mongoDatabase;
+	@Mock
+	private MongoCollection<Document> collection;
+	@Mock
+	private FindIterable<Document> iterable;
+	@Mock
+	private Document document;
 
 	@Before
 	public void setup() {
 		mockStatic(MongoClientFactory.class);
 		when(MongoClientFactory.createClient()).thenReturn(mongoClient);
 		when(mongoClient.getDatabase(NAME)).thenReturn(mongoDatabase);
+		when(mongoDatabase.getCollection(MetaInformation.COLLECTION.getValue())).thenReturn(collection);
+		when(database.get().getCollection(MetaInformation.COLLECTION.getValue()).find()).thenReturn(iterable);
 
 		configuration = createRepositoryConfiguration();
 		database = new StudioMongoDatabase(configuration);
@@ -117,19 +126,19 @@ public class MongoDatabaseTest {
 
 	@Test
 	public void a_new_MongoDatabase_instance_should_has_a_collection_info_with_the_name_of_database() {
-		FindIterable<Document> info = database.get().getCollection("info").find().limit(1);
+		FindIterable<Document> info = database.get().getCollection(MetaInformation.COLLECTION.getValue()).find().limit(1);
 		assertThat(info.first().get("name"), equalTo(NAME));
 	}
 
 	@Test
 	public void a_new_MongoDatabase_instance_should_has_a_collection_info_with_the_host_of_database() {
-		FindIterable<Document> info = database.get().getCollection("info").find().limit(1);
+		FindIterable<Document> info = database.get().getCollection(MetaInformation.COLLECTION.getValue()).find().limit(1);
 		assertThat(info.first().get("host"), equalTo(HOST));
 	}
 
 	@Test
 	public void a_new_MongoDatabase_instance_should_has_a_collection_info_with_the_port_of_database() {
-		FindIterable<Document> info = database.get().getCollection("info").find().limit(1);
+		FindIterable<Document> info = database.get().getCollection(MetaInformation.COLLECTION.getValue()).find().limit(1);
 		assertThat(info.first().get("port"), equalTo(PORT));
 	}
 

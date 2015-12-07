@@ -2,8 +2,8 @@ package br.org.studio.tool.mongodb.database;
 
 public class MongoConnector {
 
-	private static final String LOCALHOST = "127.0.0.1";
-	private static final String DEFAULT_PORT = "27017";
+	public static final String LOCALHOST = "127.0.0.1";
+	public static final String DEFAULT_PORT = "27017";
 
 	private MongoDatabaseUrl databaseUrl;
 

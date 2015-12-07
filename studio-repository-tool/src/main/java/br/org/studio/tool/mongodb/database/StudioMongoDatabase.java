@@ -1,10 +1,13 @@
 package br.org.studio.tool.mongodb.database;
 
+import java.util.Map;
+
 import org.bson.Document;
 
 import br.org.studio.tool.base.database.MetaDatabase;
 import br.org.studio.tool.base.repository.configuration.RepositoryConfiguration;
 
+import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
@@ -21,6 +24,7 @@ public class StudioMongoDatabase extends MetaDatabase {
 		client = MongoClientFactory.createClient();
 		database = client.getDatabase(configuration.getName());
 		createMetaInformation();
+		createAdminUser();
 	}
 
 	@Override
@@ -51,6 +55,16 @@ public class StudioMongoDatabase extends MetaDatabase {
 		document.append(MetaInformation.PORT.getValue(), getPort());
 
 		info.insertOne(document);
+	}
+
+	private void createAdminUser() {
+		Map<String, Object> commandArguments = new BasicDBObject();
+		commandArguments.put("createUser", "admin");
+		commandArguments.put("pwd", "admin");
+		String[] roles = { "dbOwner" };
+		commandArguments.put("roles", roles);
+		BasicDBObject command = new BasicDBObject(commandArguments);
+		database.runCommand(command);
 	}
 
 }
