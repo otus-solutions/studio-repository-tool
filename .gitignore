@@ -7,4 +7,5 @@
 **/.idea
 *.iml
 *.swp
-*.orig
+env.properties
+
