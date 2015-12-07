@@ -7,7 +7,7 @@
 		<groupId>br.org.studio</groupId>
 		<artifactId>studio-repository-tool-root</artifactId>
 		<version>0.0.2-SNAPSHOT</version>
-		<relativePath>../studio-repository-tool-root/pom.xml</relativePath>
+		<relativePath>../studio-repository-tool-root</relativePath>
 	</parent>
 
 	<name>studio-repository-tool</name>
