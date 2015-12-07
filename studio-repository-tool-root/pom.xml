@@ -10,11 +10,6 @@
 	<properties>
 		<endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
-		<wildfly-hostname>localhost</wildfly-hostname>
-		<wildfly-port>9990</wildfly-port>
-		<wildfly-username>admin</wildfly-username>
-		<wildfly-password>admin</wildfly-password>
 	</properties>
 
 	<scm>
@@ -73,22 +68,6 @@
 				<configuration>
 					<source>1.8</source>
 					<target>1.8</target>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-ejb-plugin</artifactId>
-				<version>2.3</version>
-				<configuration>
-					<archive>
-						<manifest>
-							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-						</manifest>
-						<manifestEntries>
-							<git-SHA-1>${buildNumber}</git-SHA-1>
-						</manifestEntries>
-					</archive>
-					<ejbVersion>3.1</ejbVersion>
 				</configuration>
 			</plugin>
 			<plugin>
