@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import br.org.studio.tool.base.repository.Repository;
-import br.org.studio.tool.base.repository.RepositoryUtils;
 import br.org.studio.tool.base.repository.configuration.RepositoryConfiguration;
 import br.org.studio.tool.mongodb.repository.MongoRepository;
 
@@ -27,10 +26,9 @@ public class RepositoryManagerFacade {
         repositories.get(configuration.getName()).delete();
     }
 
-    public RepositoryUtils connectRepository(RepositoryConfiguration configuration) {
+    public void connectRepository(RepositoryConfiguration configuration) {
         Repository repository = repositories.get(configuration.getName());
         repository.load();
-        return repository.getUtils();
     }
 
     private Repository getRepository(RepositoryConfiguration configuration) {

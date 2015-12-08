@@ -21,6 +21,9 @@ import com.mongodb.client.MongoIterable;
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({ MongoClientFactory.class })
 public class MongoMonitorTest {
+    
+    private static final String LOCALHOST = "localhost";
+    private static final String PORT = "27107";
 
 	@Mock
 	private MongoClient mongoClient;
@@ -32,7 +35,7 @@ public class MongoMonitorTest {
 	@Before
 	public void setup() {
 		mockStatic(MongoClientFactory.class);
-		when(MongoClientFactory.createClient()).thenReturn(mongoClient);
+		when(MongoClientFactory.createClient(LOCALHOST, PORT)).thenReturn(mongoClient);
 		when(mongoClient.listDatabases()).thenReturn(databases);
 		when(mongoClient.listDatabaseNames()).thenReturn(databaseNames);
 	}

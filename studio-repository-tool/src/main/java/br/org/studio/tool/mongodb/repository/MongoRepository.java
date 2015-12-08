@@ -1,49 +1,46 @@
 package br.org.studio.tool.mongodb.repository;
 
 import br.org.studio.tool.base.repository.Repository;
-import br.org.studio.tool.base.repository.RepositoryUtils;
 import br.org.studio.tool.base.repository.configuration.RepositoryConfiguration;
 import br.org.studio.tool.mongodb.database.StudioMongoDatabase;
 
 public class MongoRepository implements Repository {
 
-	private RepositoryConfiguration configuration;
-	private StudioMongoDatabase database;
+    private RepositoryConfiguration configuration;
+    private StudioMongoDatabase database;
 
-	public MongoRepository(RepositoryConfiguration configuration) {
-		this.configuration = configuration;
-	}
+    public MongoRepository(RepositoryConfiguration configuration) {
+        this.configuration = configuration;
+        database = new StudioMongoDatabase(configuration);
+    }
 
-	@Override
-	public RepositoryConfiguration getConfiguration() {
-		return configuration;
-	}
+    @Override
+    public RepositoryConfiguration getConfiguration() {
+        return configuration;
+    }
 
-	@Override
-	public void initialize() {
-		database = new StudioMongoDatabase(configuration);
-	}
+    @Override
+    public void initialize() {
+        database.create();
+    }
 
-	@Override
-	public void load() {
-	}
+    @Override
+    public void load() {
+        database.load();
+    }
 
-	@Override
-	public void delete() throws Exception {
-	}
+    @Override
+    public void delete() throws Exception {
+        database.drop();
+    }
 
-	@Override
-	public void close() {
-		database.close();
-	}
+    @Override
+    public void close() {
+        database.close();
+    }
 
-	@Override
-	public RepositoryUtils getUtils() {
-		return null;
-	}
-
-	public StudioMongoDatabase getDatabase() {
-		return database;
-	}
+    public StudioMongoDatabase getDatabase() {
+        return database;
+    }
 
 }
