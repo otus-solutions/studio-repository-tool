@@ -4,9 +4,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.powermock.api.mockito.PowerMockito.whenNew;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -33,8 +33,8 @@ public class MongoRepositoryTest {
 
 	@Before
 	public void setup() throws Exception {
+		whenNew(StudioMongoDatabase.class).withArguments(repositoryConfiguration).thenReturn(database);
 		when(repositoryConfiguration.getName()).thenReturn(DBNAME);
-
 		repository = new MongoRepository(repositoryConfiguration);
 	}
 
@@ -52,7 +52,6 @@ public class MongoRepositoryTest {
 	public void initialize_method_should_calls() {
 	}
 
-	@Ignore
 	@Test
 	public void close_method_should_call_close_from_MongoDatabase() {
 		repository.initialize();

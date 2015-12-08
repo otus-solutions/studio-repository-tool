@@ -2,6 +2,7 @@ package br.org.studio.tool.base.persitence;
 
 import br.org.studio.tool.postgres.database.PostgresDatabase;
 
+// TODO Este builder está dependente do postgres. Deve ser corrigido. 
 public class PersistenceConfigurationBuilder {
 
 	private static final String POSTGRES = "postgres";

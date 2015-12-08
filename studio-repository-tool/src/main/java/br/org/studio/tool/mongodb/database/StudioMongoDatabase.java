@@ -23,8 +23,6 @@ public class StudioMongoDatabase extends MetaDatabase {
 		super(configuration);
 		client = MongoClientFactory.createClient();
 		database = client.getDatabase(configuration.getName());
-		createMetaInformation();
-		createAdminUser();
 	}
 
 	@Override
@@ -37,12 +35,17 @@ public class StudioMongoDatabase extends MetaDatabase {
 		return null;
 	}
 
+	public void create() {
+		createMetaInformation();
+		createAdminUser();
+	}
+
 	public void close() {
 		if (client != null)
 			client.close();
 	}
 
-	public MongoDatabase get() {
+	public MongoDatabase getConnection() {
 		return database;
 	}
 
