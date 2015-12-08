@@ -47,6 +47,8 @@ public class StudioMongoDatabase extends MetaDatabase {
     }
 
     public void drop() {
+        if (client == null)
+            load();
         client.dropDatabase(configuration.getName());
     }
 

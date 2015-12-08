@@ -116,7 +116,21 @@ public class StudioMongoDatabaseTest {
     }
 
     @Test
-    public void load_method_should_call_createClient_from_MongoClientFactory() {
+    public void a_new_MongoDatabase_instance_should_call_getDatabase_method_from_MongoClient() {
+        studioDatabase.load();
+
+        verify(client).getDatabase(NAME);
+    }
+
+    @Test
+    public void create_method__should_call_getCollection_method_from_MongoDatabase() {
+        studioDatabase.create();
+
+        verify(database, Mockito.times(2)).getCollection(INFO_COLLECTION_NAME);
+    }
+
+    @Test
+    public void load_method_should_call_createClient_method_from_MongoClientFactory() {
         studioDatabase.load();
 
         verifyStatic();
@@ -124,26 +138,19 @@ public class StudioMongoDatabaseTest {
     }
 
     @Test
-    public void a_new_MongoDatabase_instance_should_cal_getDatabase_from_MongoClient() {
-        studioDatabase.load();
-
-        verify(client).getDatabase(NAME);
-    }
-
-    @Test
-    public void create_should_call_getCollection_from_MongoDatabase() {
-        studioDatabase.create();
-
-        verify(database, Mockito.times(2)).getCollection(INFO_COLLECTION_NAME);
-    }
-
-    @Test
-    public void close_method_should_call_close_from_MongoClient() {
+    public void close_method_should_call_close_method_from_MongoClient() {
         studioDatabase.load();
 
         studioDatabase.close();
 
         verify(client).close();
+    }
+
+    @Test
+    public void drop_method_should_call_dropDatabase_method_from_MongoClientFactory() {
+        studioDatabase.drop();
+
+        verify(client).dropDatabase(NAME);
     }
 
 }
