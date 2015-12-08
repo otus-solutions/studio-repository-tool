@@ -27,12 +27,12 @@ public class StudioMongoDatabase extends MetaDatabase {
 
 	@Override
 	public Boolean hasError() {
-		return null;
+		return false;
 	}
 
 	@Override
 	public String getDriver() {
-		return null;
+		return "mongodb";
 	}
 
 	public void create() {
