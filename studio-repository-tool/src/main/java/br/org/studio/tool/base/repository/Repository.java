@@ -14,6 +14,4 @@ public interface Repository {
 
     void delete() throws Exception;
 
-    RepositoryUtils getUtils();
-
 }

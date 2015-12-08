@@ -20,27 +20,30 @@ import com.mongodb.MongoClientURI;
 @PrepareForTest({ MongoClientFactory.class, MongoConnector.class })
 public class MongoClientFactoryTest {
 
-	@Mock
-	public MongoConnector connector;
-	@Mock
-	public MongoClientURI clientUri;
-	@Mock
-	private MongoClient mongoClient;
+    private static final String LOCALHOST = "localhost";
+    private static final String PORT = "27107";
 
-	@Before
-	public void setup() throws Exception {
-		mockStatic(MongoConnector.class);
-		when(MongoConnector.localhostConnector()).thenReturn(connector);
+    @Mock
+    public MongoConnector connector;
+    @Mock
+    public MongoClientURI clientUri;
+    @Mock
+    private MongoClient mongoClient;
 
-		whenNew(MongoClientURI.class).withArguments(connector.getUri()).thenReturn(clientUri);
-		whenNew(MongoClient.class).withArguments(clientUri).thenReturn(mongoClient);
-	}
+    @Before
+    public void setup() throws Exception {
+        mockStatic(MongoConnector.class);
+        when(MongoConnector.getConnector(LOCALHOST, PORT)).thenReturn(connector);
 
-	@Test
-	public void createClient_method_should_return_an_instance_of_MongoClient() {
-		mongoClient = MongoClientFactory.createClient();
+        whenNew(MongoClientURI.class).withArguments(connector.getUri()).thenReturn(clientUri);
+        whenNew(MongoClient.class).withArguments(clientUri).thenReturn(mongoClient);
+    }
 
-		verify(connector, times(2)).getUri();
-	}
+    @Test
+    public void createClient_method_should_return_an_instance_of_MongoClient() {
+        mongoClient = MongoClientFactory.createClient(LOCALHOST, PORT);
+
+        verify(connector, times(2)).getUri();
+    }
 
 }

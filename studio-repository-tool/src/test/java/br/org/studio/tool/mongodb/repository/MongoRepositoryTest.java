@@ -22,43 +22,60 @@ import br.org.studio.tool.mongodb.database.StudioMongoDatabase;
 @PrepareForTest({ MongoRepository.class, MongoClientFactory.class })
 public class MongoRepositoryTest {
 
-	private static final String DBNAME = "dbname";
+    private static final String DBNAME = "dbname";
 
-	@Mock
-	private RepositoryConfiguration repositoryConfiguration;
-	@Mock
-	private StudioMongoDatabase database;
+    @Mock
+    private RepositoryConfiguration repositoryConfiguration;
+    @Mock
+    private StudioMongoDatabase database;
 
-	private MongoRepository repository;
+    private MongoRepository repository;
 
-	@Before
-	public void setup() throws Exception {
-		whenNew(StudioMongoDatabase.class).withArguments(repositoryConfiguration).thenReturn(database);
-		when(repositoryConfiguration.getName()).thenReturn(DBNAME);
-		repository = new MongoRepository(repositoryConfiguration);
-	}
+    @Before
+    public void setup() throws Exception {
+        whenNew(StudioMongoDatabase.class).withArguments(repositoryConfiguration).thenReturn(database);
+        when(repositoryConfiguration.getName()).thenReturn(DBNAME);
+        repository = new MongoRepository(repositoryConfiguration);
+    }
 
-	@Test
-	public void a_MongoRepository_should_be_an_instance_of_Repository() {
-		assertThat(repository, instanceOf(Repository.class));
-	}
+    @Test
+    public void a_MongoRepository_should_be_an_instance_of_Repository() {
+        assertThat(repository, instanceOf(Repository.class));
+    }
 
-	@Test
-	public void a_MongoRepository_instance_should_has_a_configuration() {
-		assertThat(repository.getConfiguration(), instanceOf(RepositoryConfiguration.class));
-	}
+    @Test
+    public void a_MongoRepository_instance_should_has_a_configuration() {
+        assertThat(repository.getConfiguration(), instanceOf(RepositoryConfiguration.class));
+    }
 
-	@Test
-	public void initialize_method_should_calls() {
-	}
+    @Test
+    public void initialize_method_should_call_create_method_from_StudioMongoDatabase() {
+        repository.initialize();
 
-	@Test
-	public void close_method_should_call_close_from_MongoDatabase() {
-		repository.initialize();
+        verify(database).create();
+    }
 
-		repository.close();
+    @Test
+    public void load_method_should_call_load_method_from_StudioMongoDatabase() {
+        repository.load();
 
-		verify(database).close();
-	}
+        verify(database).load();
+    }
+
+    @Test
+    public void delete_method_should_call_drop_method_from_StudioMongoDatabase() throws Exception {
+        repository.delete();
+
+        verify(database).drop();
+    }
+
+    @Test
+    public void close_method_should_call_close_from_MongoDatabase() {
+        repository.initialize();
+
+        repository.close();
+
+        verify(database).close();
+    }
 
 }
