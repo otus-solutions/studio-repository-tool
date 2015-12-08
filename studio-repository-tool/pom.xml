@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>br.org.studio</groupId>
 		<artifactId>studio-repository-tool-root</artifactId>
-		<version>0.0.3-SNAPSHOT</version>
+		<version>0.1.3-SNAPSHOT</version>
 		<relativePath>../studio-repository-tool-root</relativePath>
 	</parent>
 
