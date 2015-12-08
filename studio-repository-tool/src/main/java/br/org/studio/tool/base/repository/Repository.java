@@ -2,19 +2,18 @@ package br.org.studio.tool.base.repository;
 
 import br.org.studio.tool.base.repository.configuration.RepositoryConfiguration;
 
-
 public interface Repository {
 
-	RepositoryConfiguration getConfiguration();
+    RepositoryConfiguration getConfiguration();
 
-	void initialize() throws Exception;
+    void initialize() throws Exception;
 
-	void load();
+    void load();
 
-	void close();
+    void close();
 
-	void delete() throws Exception;
+    void delete() throws Exception;
 
-	RepositoryUtils getUtils();
+    RepositoryUtils getUtils();
 
 }

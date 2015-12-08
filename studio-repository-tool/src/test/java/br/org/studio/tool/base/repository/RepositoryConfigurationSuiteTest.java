@@ -5,10 +5,9 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 import br.org.studio.tool.mongodb.repository.MongoRepositoryConfigurationTest;
-import br.org.studio.tool.postgres.repository.PostgresRepositoryConfigurationTest;
 
 @RunWith(Suite.class)
-@SuiteClasses({ PostgresRepositoryConfigurationTest.class, MongoRepositoryConfigurationTest.class })
+@SuiteClasses({ MongoRepositoryConfigurationTest.class })
 public class RepositoryConfigurationSuiteTest {
 
 }
