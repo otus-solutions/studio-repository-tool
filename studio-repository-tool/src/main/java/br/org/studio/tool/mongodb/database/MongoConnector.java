@@ -2,7 +2,6 @@ package br.org.studio.tool.mongodb.database;
 
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
-import com.mongodb.MongoSocketOpenException;
 
 public class MongoConnector {
 
@@ -32,11 +31,7 @@ public class MongoConnector {
     }
 
     public MongoClient createClient() {
-        try {
-            return new MongoClient(new MongoClientURI(getUri()));
-        } catch (MongoSocketOpenException exception) {
-            return null;
-        }
+        return new MongoClient(new MongoClientURI(getUri()));
     }
 
     public Boolean testConnection() {

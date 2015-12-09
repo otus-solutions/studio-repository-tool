@@ -84,7 +84,7 @@ public class MongoConnectorTest {
         assertThat(testResult, equalTo(true));
     }
 
-    @Test
+    @Test(expected = MongoSocketOpenException.class)
     @SuppressWarnings("unchecked")
     public void testConnection_method_should_return_true_when_db_server_is_not_accessible() throws Exception {
         whenNew(MongoClient.class).withArguments(clientUri).thenThrow(MongoSocketOpenException.class);
@@ -102,7 +102,7 @@ public class MongoConnectorTest {
         assertThat(connector.createClient(), instanceOf(MongoClient.class));
     }
 
-    @Test
+    @Test(expected = MongoSocketOpenException.class)
     @SuppressWarnings("unchecked")
     public void createClient_method_should_return_null_when_db_server_is_not_accessible() throws Exception {
         whenNew(MongoClient.class).withArguments(clientUri).thenThrow(MongoSocketOpenException.class);
