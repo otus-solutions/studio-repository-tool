@@ -22,7 +22,7 @@ public class MongoDatabaseUrlTest {
 		url = new MongoDatabaseUrl();
 		url.setHost(LOCALHOST);
 		url.setPort(DEFAULT_PORT);
-		url.setDbName(DBNAME);
+		url.setDatabaseName(DBNAME);
 	}
 
 	@Test

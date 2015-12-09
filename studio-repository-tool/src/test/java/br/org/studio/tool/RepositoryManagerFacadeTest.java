@@ -38,7 +38,7 @@ public class RepositoryManagerFacadeTest {
         whenNew(StudioMongoDatabase.class).withArguments(repositoryConfiguration).thenReturn(database);
         whenNew(MongoRepository.class).withArguments(repositoryConfiguration).thenReturn(repository);
 
-        when(repositoryConfiguration.getName()).thenReturn(REPOSITORY_NAME);
+        when(repositoryConfiguration.getDatabaseName()).thenReturn(REPOSITORY_NAME);
         when(repositoryConfiguration.getRepositoryType()).thenReturn(RepositoryType.POSTGRESQL);
     }
 

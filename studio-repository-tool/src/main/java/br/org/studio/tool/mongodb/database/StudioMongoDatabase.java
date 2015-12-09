@@ -24,7 +24,7 @@ public class StudioMongoDatabase extends MetaDatabase {
     public StudioMongoDatabase(RepositoryConfiguration configuration) {
         super(configuration);
         this.configuration = configuration;
-        connector = MongoConnector.getConnector(configuration.getHost(), configuration.getPort());
+        connector = MongoConnector.getConnector(configuration.getHostName(), configuration.getPort());
     }
 
     @Override
@@ -49,13 +49,13 @@ public class StudioMongoDatabase extends MetaDatabase {
 
     public void load() {
         client = connector.createClient();
-        database = client.getDatabase(configuration.getName());
+        database = client.getDatabase(configuration.getDatabaseName());
     }
 
     public void drop() {
         if (client == null)
             load();
-        client.dropDatabase(configuration.getName());
+        client.dropDatabase(configuration.getDatabaseName());
     }
 
     public void close() {
@@ -71,9 +71,11 @@ public class StudioMongoDatabase extends MetaDatabase {
         MongoCollection<Document> info = database.getCollection(MetaInformation.COLLECTION.getValue());
 
         Document document = new Document();
+        document.append(MetaInformation.REPOSITORY.getValue(), getName());
         document.append(MetaInformation.DBNAME.getValue(), getName());
         document.append(MetaInformation.HOST.getValue(), getHost());
         document.append(MetaInformation.PORT.getValue(), getPort());
+        document.append(MetaInformation.DESCRIPTION.getValue(), getName());
 
         info.insertOne(document);
     }

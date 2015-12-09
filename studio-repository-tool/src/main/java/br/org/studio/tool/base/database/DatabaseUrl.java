@@ -7,7 +7,7 @@ public abstract class DatabaseUrl {
 	private String name;
 
 	public DatabaseUrl() {
-		setDbName("");
+		setDatabaseName("");
 	}
 
 	public String getHost() {
@@ -26,11 +26,11 @@ public abstract class DatabaseUrl {
 		this.port = port.trim();
 	}
 
-	public String getDbName() {
+	public String getDatabaseName() {
 		return name;
 	}
 
-	public void setDbName(String name) {
+	public void setDatabaseName(String name) {
 		if (name != null)
 			this.name = name.trim();
 	}
@@ -42,7 +42,7 @@ public abstract class DatabaseUrl {
 		stringBuilder.append(":");
 		stringBuilder.append(getPort());
 		stringBuilder.append("/");
-		stringBuilder.append(getDbName());
+		stringBuilder.append(getDatabaseName());
 		return stringBuilder.toString();
 	}
 

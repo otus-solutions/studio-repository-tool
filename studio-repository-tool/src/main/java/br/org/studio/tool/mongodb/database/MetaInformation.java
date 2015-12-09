@@ -5,7 +5,9 @@ public enum MetaInformation {
 	COLLECTION("database_info"), 
 	HOST("host"), 
 	PORT("port"), 
-	DBNAME("name");
+	DBNAME("name"), 
+	REPOSITORY("repository_name"), 
+	DESCRIPTION("repository_description");
 
 	private String value;
 

@@ -1,8 +1,8 @@
 package br.org.studio.tool.mongodb.repository;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.instanceOf;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.powermock.api.mockito.PowerMockito.whenNew;
@@ -15,6 +15,7 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import br.org.studio.tool.base.repository.Repository;
+import br.org.studio.tool.base.repository.RepositoryDescriptor;
 import br.org.studio.tool.base.repository.configuration.RepositoryConfiguration;
 import br.org.studio.tool.mongodb.database.StudioMongoDatabase;
 
@@ -34,7 +35,7 @@ public class MongoRepositoryTest {
     @Before
     public void setup() throws Exception {
         whenNew(StudioMongoDatabase.class).withArguments(repositoryConfiguration).thenReturn(database);
-        when(repositoryConfiguration.getName()).thenReturn(DBNAME);
+        when(repositoryConfiguration.getDatabaseName()).thenReturn(DBNAME);
         repository = new MongoRepository(repositoryConfiguration);
     }
 
@@ -44,8 +45,8 @@ public class MongoRepositoryTest {
     }
 
     @Test
-    public void a_MongoRepository_instance_should_has_a_configuration() {
-        assertThat(repository.getConfiguration(), instanceOf(RepositoryConfiguration.class));
+    public void a_MongoRepository_instance_should_has_a_descriptor() {
+        assertThat(repository.getDescriptor(), instanceOf(RepositoryDescriptor.class));
     }
 
     @Test

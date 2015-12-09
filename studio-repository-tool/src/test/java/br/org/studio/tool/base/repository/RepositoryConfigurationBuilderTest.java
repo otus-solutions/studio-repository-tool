@@ -35,7 +35,7 @@ public class RepositoryConfigurationBuilderTest {
         builder.withDatabaseName(DBNAME);
         RepositoryConfiguration configuration = builder.buildForMongo();
 
-        assertThat(configuration.getName(), equalTo(DBNAME));
+        assertThat(configuration.getDatabaseName(), equalTo(DBNAME));
     }
 
     @Test
@@ -45,7 +45,7 @@ public class RepositoryConfigurationBuilderTest {
         builder.withHost(HOST);
         RepositoryConfiguration configuration = builder.buildForMongo();
 
-        assertThat(configuration.getHost(), equalTo(HOST));
+        assertThat(configuration.getHostName(), equalTo(HOST));
     }
 
     @Test
@@ -54,7 +54,7 @@ public class RepositoryConfigurationBuilderTest {
 
         RepositoryConfiguration configuration = builder.buildForMongo();
 
-        assertThat(configuration.getHost(), equalTo(LOCALHOST));
+        assertThat(configuration.getHostName(), equalTo(LOCALHOST));
     }
 
     @Test
@@ -103,8 +103,8 @@ public class RepositoryConfigurationBuilderTest {
         builder.withDatabaseName(DBNAME).withHost(HOST).withPort(PORT).withUser(USER).withPassword(PASSWORD);
         RepositoryConfiguration configuration = builder.buildForMongo();
 
-        assertThat(configuration.getName(), equalTo(DBNAME));
-        assertThat(configuration.getHost(), equalTo(HOST));
+        assertThat(configuration.getDatabaseName(), equalTo(DBNAME));
+        assertThat(configuration.getHostName(), equalTo(HOST));
         assertThat(configuration.getPort(), equalTo(PORT));
         assertThat(configuration.getUser(), equalTo(USER));
         assertThat(configuration.getPassword(), equalTo(PASSWORD));
@@ -117,8 +117,8 @@ public class RepositoryConfigurationBuilderTest {
         builder.withDatabaseName(DBNAME);
         RepositoryConfiguration configuration = builder.buildForMongo();
 
-        assertThat(configuration.getName(), equalTo(DBNAME));
-        assertThat(configuration.getHost(), equalTo(LOCALHOST));
+        assertThat(configuration.getDatabaseName(), equalTo(DBNAME));
+        assertThat(configuration.getHostName(), equalTo(LOCALHOST));
         assertThat(configuration.getPort(), equalTo(DEFAULT_PORT));
     }
 
