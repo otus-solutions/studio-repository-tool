@@ -1,16 +1,17 @@
 package br.org.studio.tool;
 
 import br.org.studio.tool.base.repository.Repository;
+import br.org.studio.tool.base.repository.RepositoryDescriptor;
 import br.org.studio.tool.base.repository.configuration.RepositoryConfiguration;
 import br.org.studio.tool.mongodb.repository.MongoRepository;
 
 public class RepositoryManagerFacade {
 
-    private Repository getRepository(RepositoryConfiguration configuration) {
-        return new MongoRepository(configuration);
+    private Repository getRepository(RepositoryDescriptor configuration) {
+        return new MongoRepository((RepositoryConfiguration) configuration);
     }
 
-    public Repository createRepository(RepositoryConfiguration configuration) {
+    public Repository createRepository(RepositoryDescriptor configuration) {
         Repository repository = getRepository(configuration);
 
         if (repository.isAccessible()) {
@@ -21,7 +22,7 @@ public class RepositoryManagerFacade {
         }
     }
 
-    public void deleteRepository(RepositoryConfiguration configuration) {
+    public void deleteRepository(RepositoryDescriptor configuration) {
         Repository repository = getRepository(configuration);
 
         if (repository.isAccessible()) {
@@ -29,7 +30,7 @@ public class RepositoryManagerFacade {
         }
     }
 
-    public Repository connectRepository(RepositoryConfiguration configuration) {
+    public Repository connectRepository(RepositoryDescriptor configuration) {
         Repository repository = getRepository(configuration);
 
         if (repository.isAccessible()) {
@@ -40,7 +41,7 @@ public class RepositoryManagerFacade {
         }
     }
 
-    public Boolean isRepositoryAccessible(RepositoryConfiguration configuration) {
+    public Boolean isRepositoryAccessible(RepositoryDescriptor configuration) {
         Repository repository = getRepository(configuration);
         return repository.isAccessible();
     }
