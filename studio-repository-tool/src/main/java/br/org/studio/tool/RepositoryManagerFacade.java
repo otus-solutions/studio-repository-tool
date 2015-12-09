@@ -1,38 +1,43 @@
 package br.org.studio.tool;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import br.org.studio.tool.base.repository.Repository;
 import br.org.studio.tool.base.repository.configuration.RepositoryConfiguration;
 import br.org.studio.tool.mongodb.repository.MongoRepository;
 
 public class RepositoryManagerFacade {
 
-    private Map<String, Repository> repositories;
-
-    public RepositoryManagerFacade() {
-        repositories = new HashMap<>();
-    }
-
     private Repository getRepository(RepositoryConfiguration configuration) {
         return new MongoRepository(configuration);
     }
 
-    public void createRepository(RepositoryConfiguration configuration) throws Exception {
+    public Repository createRepository(RepositoryConfiguration configuration) {
         Repository repository = getRepository(configuration);
-        repository.initialize();
 
-        repositories.put(configuration.getName(), repository);
+        if (repository.isAccessible()) {
+            repository.initialize();
+            return repository;
+        } else {
+            return null;
+        }
     }
 
-    public void deleteRepository(RepositoryConfiguration configuration) throws Exception {
-        repositories.get(configuration.getName()).delete();
+    public void deleteRepository(RepositoryConfiguration configuration) {
+        Repository repository = getRepository(configuration);
+
+        if (repository.isAccessible()) {
+            repository.delete();
+        }
     }
 
-    public void connectRepository(RepositoryConfiguration configuration) {
-        Repository repository = repositories.get(configuration.getName());
-        repository.load();
+    public Repository connectRepository(RepositoryConfiguration configuration) {
+        Repository repository = getRepository(configuration);
+
+        if (repository.isAccessible()) {
+            repository.load();
+            return repository;
+        } else {
+            return null;
+        }
     }
 
     public Boolean isRepositoryAccessible(RepositoryConfiguration configuration) {

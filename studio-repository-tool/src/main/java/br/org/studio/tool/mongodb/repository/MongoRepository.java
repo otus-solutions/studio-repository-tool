@@ -30,7 +30,7 @@ public class MongoRepository implements Repository {
     }
 
     @Override
-    public void delete() throws Exception {
+    public void delete() {
         database.drop();
     }
 

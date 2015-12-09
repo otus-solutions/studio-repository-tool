@@ -6,13 +6,13 @@ public interface Repository {
 
     RepositoryConfiguration getConfiguration();
 
-    void initialize() throws Exception;
+    void initialize();
 
     void load();
 
     void close();
 
-    void delete() throws Exception;
+    void delete();
 
     Boolean isAccessible();
 
