@@ -15,7 +15,7 @@ public class MongoRepository implements Repository {
     }
 
     @Override
-    public RepositoryConfiguration getConfiguration() {
+    public RepositoryConfiguration getDescriptor() {
         return configuration;
     }
 

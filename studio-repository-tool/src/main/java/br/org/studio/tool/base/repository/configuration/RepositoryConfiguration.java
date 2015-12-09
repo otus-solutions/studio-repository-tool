@@ -1,13 +1,16 @@
 package br.org.studio.tool.base.repository.configuration;
 
 import br.org.studio.tool.base.database.DatabaseUrl;
+import br.org.studio.tool.base.repository.RepositoryDescriptor;
 import br.org.studio.tool.base.repository.RepositoryType;
 
-public abstract class RepositoryConfiguration {
+public abstract class RepositoryConfiguration implements RepositoryDescriptor {
 
+    private String repositoryName;
     private String user;
     private String password;
     private RepositoryType repositoryType;
+    private String description;
     protected DatabaseUrl databaseUrl;
 
     protected RepositoryConfiguration(RepositoryType repositoryType, DatabaseUrl databaseUrl) {
@@ -19,22 +22,25 @@ public abstract class RepositoryConfiguration {
         this.databaseUrl = databaseUrl;
     }
 
-    public String getName() {
-        return databaseUrl.getDbName();
+    @Override
+    public String getDatabaseName() {
+        return databaseUrl.getDatabaseName();
     }
 
-    public void setName(String name) {
-        databaseUrl.setDbName(name);
+    public void setDatabaseName(String name) {
+        databaseUrl.setDatabaseName(name);
     }
 
-    public String getHost() {
+    @Override
+    public String getHostName() {
         return databaseUrl.getHost();
     }
 
-    public void setHost(String host) {
+    public void setHostName(String host) {
         databaseUrl.setHost(host);
     }
 
+    @Override
     public String getPort() {
         return databaseUrl.getPort();
     }
@@ -43,6 +49,7 @@ public abstract class RepositoryConfiguration {
         databaseUrl.setPort(port);
     }
 
+    @Override
     public String getUser() {
         return user;
     }
@@ -51,6 +58,7 @@ public abstract class RepositoryConfiguration {
         this.user = user;
     }
 
+    @Override
     public String getPassword() {
         return password;
     }
@@ -59,12 +67,30 @@ public abstract class RepositoryConfiguration {
         this.password = password;
     }
 
-    public RepositoryType getRepositoryType() {
-        return repositoryType;
+    @Override
+    public String getRepositoryName() {
+        return repositoryName;
+    }
+
+    public void setRepositoryName(String name) {
+        repositoryName = name;
+    }
+
+    @Override
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getUrl() {
         return databaseUrl.getUrl();
+    }
+
+    public RepositoryType getRepositoryType() {
+        return repositoryType;
     }
 
 }

@@ -16,6 +16,7 @@ import org.mockito.Mockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
+import br.org.studio.tool.base.repository.DefaultRepositoryDescriptor;
 import br.org.studio.tool.base.repository.configuration.RepositoryConfiguration;
 import br.org.studio.tool.mongodb.repository.MongoRepositoryConfiguration;
 
@@ -32,11 +33,16 @@ public class StudioMongoDatabaseTest {
     private static final String MONGO_PROTOCOL = "mongodb://";
     private static final String HOST = "localhost";
     private static final String PORT = "27017";
-    private static final String NAME = "repository_name";
-    private static final String CONNECTION_URL = MONGO_PROTOCOL + HOST + ":" + PORT + "/" + NAME;
+    private static final String USER = "user";
+    private static final String PASSWORD = "password";
+    private static final String REPOSITORY_NAME = "Repository Name";
+    private static final String DESCRIPTION = "Repository description.";
+    private static final String DBNAME = "repository_name";
+    private static final String CONNECTION_URL = MONGO_PROTOCOL + HOST + ":" + PORT + "/" + DBNAME;
 
     private StudioMongoDatabase studioDatabase;
     private RepositoryConfiguration configuration;
+    private DefaultRepositoryDescriptor descriptor;
 
     @Mock
     private MongoClient client;
@@ -58,19 +64,30 @@ public class StudioMongoDatabaseTest {
         mockStatic(MongoConnector.class);
         when(MongoConnector.getConnector(HOST, PORT)).thenReturn(connector);
         when(connector.createClient()).thenReturn(client);
-        when(client.getDatabase(NAME)).thenReturn(database);
+        when(client.getDatabase(DBNAME)).thenReturn(database);
         when(database.getCollection(MetaInformation.COLLECTION.getValue())).thenReturn(collection);
 
-        configuration = createRepositoryConfiguration();
+        createRepositoryConfiguration();
         studioDatabase = new StudioMongoDatabase(configuration);
 
-        /* Mocked database behaviours */
         when(database.getCollection(MetaInformation.COLLECTION.getValue()).find()).thenReturn(iterable);
         when(iterable.limit(1)).thenReturn(info);
     }
 
-    private RepositoryConfiguration createRepositoryConfiguration() {
-        return MongoRepositoryConfiguration.create(NAME, HOST, PORT, NAME, NAME);
+    private void createRepositoryConfiguration() {
+        createDescriptor();
+        configuration = MongoRepositoryConfiguration.create(descriptor);
+    }
+
+    private void createDescriptor() {
+        descriptor = new DefaultRepositoryDescriptor();
+        descriptor.setRepositoryName(REPOSITORY_NAME);
+        descriptor.setHostName(HOST);
+        descriptor.setPort(PORT);
+        descriptor.setDatabaseName(DBNAME);
+        descriptor.setUser(USER);
+        descriptor.setPassword(PASSWORD);
+        descriptor.setDescription(DESCRIPTION);
     }
 
     @Test
@@ -94,13 +111,13 @@ public class StudioMongoDatabaseTest {
     }
 
     @Test
-    public void an_instance_of_StudioMongoDatabase_should_has_an_name() {
-        assertThat(studioDatabase.getName(), equalTo(NAME));
+    public void an_instance_of_StudioMongoDatabase_should_has_a_database_name() {
+        assertThat(studioDatabase.getName(), equalTo(DBNAME));
     }
 
     @Test
     public void an_instance_of_StudioMongoDatabase_should_has_an_user() {
-        assertThat(studioDatabase.getUser(), equalTo(NAME));
+        assertThat(studioDatabase.getUser(), equalTo(USER));
     }
 
     @Test
@@ -121,7 +138,7 @@ public class StudioMongoDatabaseTest {
     public void a_new_MongoDatabase_instance_should_call_getDatabase_method_from_MongoClient() {
         studioDatabase.load();
 
-        verify(client).getDatabase(NAME);
+        verify(client).getDatabase(DBNAME);
     }
 
     @Test
@@ -151,20 +168,20 @@ public class StudioMongoDatabaseTest {
     public void drop_method_should_call_dropDatabase_method_from_MongoClientFactory() {
         studioDatabase.drop();
 
-        verify(client).dropDatabase(NAME);
+        verify(client).dropDatabase(DBNAME);
     }
 
     @Test
     public void isAccessible_method_should_return_true_when_db_server_is_accessible() {
         when(connector.testConnection()).thenReturn(true);
-        
+
         assertThat(studioDatabase.isAccessible(), equalTo(true));
     }
-    
+
     @Test
     public void isAccessible_method_should_return_false_when_db_server_is_not_accessible() {
         when(connector.testConnection()).thenReturn(false);
-        
+
         assertThat(studioDatabase.isAccessible(), equalTo(false));
     }
 

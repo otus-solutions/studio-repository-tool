@@ -4,7 +4,7 @@ import br.org.studio.tool.base.repository.configuration.RepositoryConfiguration;
 
 public interface Repository {
 
-    RepositoryConfiguration getConfiguration();
+    RepositoryConfiguration getDescriptor();
 
     void initialize();
 

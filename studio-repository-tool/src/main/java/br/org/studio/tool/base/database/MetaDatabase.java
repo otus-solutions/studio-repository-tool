@@ -17,12 +17,12 @@ public abstract class MetaDatabase implements Database {
 
 	@Override
 	public String getName() {
-		return configuration.getName();
+		return configuration.getDatabaseName();
 	}
 
 	@Override
 	public String getHost() {
-		return configuration.getHost();
+		return configuration.getHostName();
 	}
 
 	@Override

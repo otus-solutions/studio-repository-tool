@@ -12,17 +12,21 @@ public class RepositoryConfigurationBuilder {
     private String port;
     private String user;
     private String password;
+    private String repositoryName;
+    private String description;
 
     public RepositoryConfiguration buildForMongo() {
         return build(new MongoRepositoryConfiguration());
     }
 
     private RepositoryConfiguration build(RepositoryConfiguration configuration) {
-        configuration.setName(dbname);
-        configuration.setHost(getHost());
+        configuration.setDatabaseName(dbname);
+        configuration.setHostName(getHost());
         configuration.setPort(getPort());
         configuration.setUser(getUser());
         configuration.setPassword(getPassword());
+        configuration.setRepositoryName(getRepositoryName());
+        configuration.setDescription(getDescription());
 
         return configuration;
     }
@@ -49,6 +53,16 @@ public class RepositoryConfigurationBuilder {
 
     public RepositoryConfigurationBuilder withPassword(String password) {
         this.password = password;
+        return this;
+    }
+
+    public RepositoryConfigurationBuilder withRepositoryName(String repositoryName) {
+        this.repositoryName = repositoryName;
+        return this;
+    }
+
+    public RepositoryConfigurationBuilder withDescription(String description) {
+        this.description = description;
         return this;
     }
 
@@ -81,6 +95,22 @@ public class RepositoryConfigurationBuilder {
             return null;
         } else {
             return password;
+        }
+    }
+
+    private String getRepositoryName() {
+        if (repositoryName == null || repositoryName.isEmpty()) {
+            return null;
+        } else {
+            return repositoryName;
+        }
+    }
+
+    private String getDescription() {
+        if (description == null || description.isEmpty()) {
+            return null;
+        } else {
+            return description;
         }
     }
 
