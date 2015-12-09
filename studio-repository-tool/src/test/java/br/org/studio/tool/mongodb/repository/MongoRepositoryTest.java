@@ -2,6 +2,7 @@ package br.org.studio.tool.mongodb.repository;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.instanceOf;
+import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.powermock.api.mockito.PowerMockito.whenNew;
@@ -15,11 +16,10 @@ import org.powermock.modules.junit4.PowerMockRunner;
 
 import br.org.studio.tool.base.repository.Repository;
 import br.org.studio.tool.base.repository.configuration.RepositoryConfiguration;
-import br.org.studio.tool.mongodb.database.MongoClientFactory;
 import br.org.studio.tool.mongodb.database.StudioMongoDatabase;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({ MongoRepository.class, MongoClientFactory.class })
+@PrepareForTest({ MongoRepository.class })
 public class MongoRepositoryTest {
 
     private static final String DBNAME = "dbname";
@@ -76,6 +76,20 @@ public class MongoRepositoryTest {
         repository.close();
 
         verify(database).close();
+    }
+
+    @Test
+    public void isAccessible_method_should_return_false_when_server_is_accessible() {
+        when(database.isAccessible()).thenReturn(true);
+
+        assertThat(repository.isAccessible(), equalTo(true));
+    }
+
+    @Test
+    public void isAccessible_method_should_return_true_when_server_is_accessible() {
+        when(database.isAccessible()).thenReturn(false);
+
+        assertThat(repository.isAccessible(), equalTo(false));
     }
 
 }

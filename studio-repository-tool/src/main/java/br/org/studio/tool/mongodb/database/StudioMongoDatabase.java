@@ -17,12 +17,14 @@ public class StudioMongoDatabase extends MetaDatabase {
     public static final String PROTOCOL = "mongodb://";
 
     private MongoClient client;
+    private MongoConnector connector;
     private MongoDatabase database;
     private RepositoryConfiguration configuration;
 
     public StudioMongoDatabase(RepositoryConfiguration configuration) {
         super(configuration);
         this.configuration = configuration;
+        connector = MongoConnector.getConnector(configuration.getHost(), configuration.getPort());
     }
 
     @Override
@@ -35,6 +37,10 @@ public class StudioMongoDatabase extends MetaDatabase {
         return "mongodb";
     }
 
+    public Boolean isAccessible() {
+        return connector.testConnection();
+    }
+
     public void create() {
         load();
         createMetaInformation();
@@ -42,7 +48,7 @@ public class StudioMongoDatabase extends MetaDatabase {
     }
 
     public void load() {
-        client = MongoClientFactory.createClient(configuration.getHost(), configuration.getPort());
+        client = connector.createClient();
         database = client.getDatabase(configuration.getName());
     }
 

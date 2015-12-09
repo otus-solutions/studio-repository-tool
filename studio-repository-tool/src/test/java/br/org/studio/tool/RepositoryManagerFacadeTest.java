@@ -66,5 +66,14 @@ public class RepositoryManagerFacadeTest {
 
         verify(repository).load();
     }
+    
+    @Test
+    public void isRepositoryAccessible_method_should_call_isAccessible_from_Repository_object() throws Exception {
+        RepositoryManagerFacade rmf = new RepositoryManagerFacade();
+
+        rmf.isRepositoryAccessible(repositoryConfiguration);
+
+        verify(repository).isAccessible();
+    }
 
 }

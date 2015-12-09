@@ -5,7 +5,6 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.mockito.Mockito.verify;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
-import static org.powermock.api.mockito.PowerMockito.verifyStatic;
 import static org.powermock.api.mockito.PowerMockito.when;
 
 import org.bson.Document;
@@ -26,7 +25,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({ MongoClientFactory.class })
+@PrepareForTest({ MongoConnector.class })
 public class StudioMongoDatabaseTest {
 
     private static final String INFO_COLLECTION_NAME = "database_info";
@@ -42,6 +41,8 @@ public class StudioMongoDatabaseTest {
     @Mock
     private MongoClient client;
     @Mock
+    private MongoConnector connector;
+    @Mock
     private MongoDatabase database;
     @Mock
     private MongoCollection<Document> collection;
@@ -54,8 +55,9 @@ public class StudioMongoDatabaseTest {
 
     @Before
     public void setup() {
-        mockStatic(MongoClientFactory.class);
-        when(MongoClientFactory.createClient(HOST, PORT)).thenReturn(client);
+        mockStatic(MongoConnector.class);
+        when(MongoConnector.getConnector(HOST, PORT)).thenReturn(connector);
+        when(connector.createClient()).thenReturn(client);
         when(client.getDatabase(NAME)).thenReturn(database);
         when(database.getCollection(MetaInformation.COLLECTION.getValue())).thenReturn(collection);
 
@@ -133,8 +135,7 @@ public class StudioMongoDatabaseTest {
     public void load_method_should_call_createClient_method_from_MongoClientFactory() {
         studioDatabase.load();
 
-        verifyStatic();
-        MongoClientFactory.createClient(HOST, PORT);
+        verify(connector).createClient();
     }
 
     @Test
@@ -151,6 +152,20 @@ public class StudioMongoDatabaseTest {
         studioDatabase.drop();
 
         verify(client).dropDatabase(NAME);
+    }
+
+    @Test
+    public void isAccessible_method_should_return_true_when_db_server_is_accessible() {
+        when(connector.testConnection()).thenReturn(true);
+        
+        assertThat(studioDatabase.isAccessible(), equalTo(true));
+    }
+    
+    @Test
+    public void isAccessible_method_should_return_false_when_db_server_is_not_accessible() {
+        when(connector.testConnection()).thenReturn(false);
+        
+        assertThat(studioDatabase.isAccessible(), equalTo(false));
     }
 
 }

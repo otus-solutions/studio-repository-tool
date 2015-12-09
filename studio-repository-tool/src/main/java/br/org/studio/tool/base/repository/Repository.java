@@ -14,4 +14,6 @@ public interface Repository {
 
     void delete() throws Exception;
 
+    Boolean isAccessible();
+
 }

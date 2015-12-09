@@ -15,6 +15,10 @@ public class RepositoryManagerFacade {
         repositories = new HashMap<>();
     }
 
+    private Repository getRepository(RepositoryConfiguration configuration) {
+        return new MongoRepository(configuration);
+    }
+
     public void createRepository(RepositoryConfiguration configuration) throws Exception {
         Repository repository = getRepository(configuration);
         repository.initialize();
@@ -31,8 +35,9 @@ public class RepositoryManagerFacade {
         repository.load();
     }
 
-    private Repository getRepository(RepositoryConfiguration configuration) {
-        return new MongoRepository(configuration);
+    public Boolean isRepositoryAccessible(RepositoryConfiguration configuration) {
+        Repository repository = getRepository(configuration);
+        return repository.isAccessible();
     }
 
 }

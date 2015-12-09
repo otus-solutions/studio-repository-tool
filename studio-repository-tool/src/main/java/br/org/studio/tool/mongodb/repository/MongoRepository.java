@@ -39,8 +39,9 @@ public class MongoRepository implements Repository {
         database.close();
     }
 
-    public StudioMongoDatabase getDatabase() {
-        return database;
+    @Override
+    public Boolean isAccessible() {
+        return database.isAccessible();
     }
 
 }
