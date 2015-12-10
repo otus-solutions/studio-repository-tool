@@ -71,11 +71,11 @@ public class StudioMongoDatabase extends MetaDatabase {
         MongoCollection<Document> info = database.getCollection(MetaInformation.COLLECTION.getValue());
 
         Document document = new Document();
-        document.append(MetaInformation.REPOSITORY.getValue(), getName());
+        document.append(MetaInformation.REPOSITORY.getValue(), configuration.getRepositoryName());
         document.append(MetaInformation.DBNAME.getValue(), getName());
         document.append(MetaInformation.HOST.getValue(), getHost());
         document.append(MetaInformation.PORT.getValue(), getPort());
-        document.append(MetaInformation.DESCRIPTION.getValue(), getName());
+        document.append(MetaInformation.DESCRIPTION.getValue(), configuration.getDescription());
 
         info.insertOne(document);
     }
