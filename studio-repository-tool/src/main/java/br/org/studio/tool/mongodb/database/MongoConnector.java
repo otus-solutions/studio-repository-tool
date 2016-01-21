@@ -3,6 +3,9 @@ package br.org.studio.tool.mongodb.database;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 
+import java.io.IOException;
+import java.net.Socket;
+
 public class MongoConnector {
 
     private MongoDatabaseUrl databaseUrl;
@@ -35,17 +38,14 @@ public class MongoConnector {
     }
 
     public Boolean testConnection() {
-        MongoClient client = createClient();
-        Boolean result = null;
+        try {
+            Socket socket = new Socket(databaseUrl.getHost(), Integer.valueOf(databaseUrl.getPort()));
+            socket.close();
 
-        if (client != null) {
-            client.close();
-            result = true;
-        } else {
-            result = false;
+            return Boolean.TRUE;
+
+        } catch (IOException e) {
+            return Boolean.FALSE;
         }
-
-        return result;
     }
-
 }

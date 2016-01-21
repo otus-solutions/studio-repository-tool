@@ -76,26 +76,6 @@ public class MongoConnectorTest {
     }
 
     @Test
-    public void testConnection_method_should_return_true_when_db_server_is_accessible() {
-        MongoConnector connector = MongoConnector.getConnector(HOST, PORT);
-
-        Boolean testResult = connector.testConnection();
-
-        assertThat(testResult, equalTo(true));
-    }
-
-    @Test(expected = MongoSocketOpenException.class)
-    @SuppressWarnings("unchecked")
-    public void testConnection_method_should_return_true_when_db_server_is_not_accessible() throws Exception {
-        whenNew(MongoClient.class).withArguments(clientUri).thenThrow(MongoSocketOpenException.class);
-        MongoConnector connector = MongoConnector.getConnector(HOST, PORT);
-
-        Boolean testResult = connector.testConnection();
-
-        MatcherAssert.assertThat(testResult, Matchers.equalTo(false));
-    }
-
-    @Test
     public void createClient_method_should_return_an_instance_of_MongoClient_when_db_server_is_accessible() {
         MongoConnector connector = MongoConnector.getConnector(HOST, PORT);
 

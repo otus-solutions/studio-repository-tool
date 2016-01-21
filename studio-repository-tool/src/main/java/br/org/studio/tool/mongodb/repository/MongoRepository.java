@@ -4,6 +4,9 @@ import br.org.studio.tool.base.repository.Repository;
 import br.org.studio.tool.base.repository.configuration.RepositoryConfiguration;
 import br.org.studio.tool.mongodb.database.StudioMongoDatabase;
 
+import java.io.IOException;
+import java.net.Socket;
+
 public class MongoRepository implements Repository {
 
     private RepositoryConfiguration configuration;
@@ -43,5 +46,4 @@ public class MongoRepository implements Repository {
     public Boolean isAccessible() {
         return database.isAccessible();
     }
-
 }
