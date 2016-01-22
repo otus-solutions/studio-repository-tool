@@ -7,10 +7,12 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.powermock.api.mockito.PowerMockito.whenNew;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
@@ -19,6 +21,9 @@ import br.org.studio.tool.base.repository.RepositoryType;
 import br.org.studio.tool.base.repository.configuration.RepositoryConfiguration;
 import br.org.studio.tool.mongodb.database.StudioMongoDatabase;
 import br.org.studio.tool.mongodb.repository.MongoRepository;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({ RepositoryManagerFacade.class })
@@ -112,4 +117,47 @@ public class RepositoryManagerFacadeTest {
         verify(repository).isAccessible();
     }
 
+    @Test
+    public void existRepository_method_should_be_call_getDatabaseNames(){
+        List<String> databaseNames = new ArrayList<>();
+        databaseNames.add("Database");
+
+        Mockito.when(repository.getDatabaseNames()).thenReturn(databaseNames);
+        when(repository.isAccessible()).thenReturn(true);
+        RepositoryManagerFacade rmf = new RepositoryManagerFacade();
+
+        rmf.existRepository(repositoryConfiguration);
+
+        verify(repository).getDatabaseNames();
+    }
+
+    @Test
+    public void existRepository_method_should_be_return_true_when_finding_database(){
+        List<String> databaseNames = new ArrayList<>();
+        databaseNames.add("db_name");
+
+        Mockito.when(repository.getDatabaseNames()).thenReturn(databaseNames);
+        when(repository.isAccessible()).thenReturn(true);
+        RepositoryManagerFacade rmf = new RepositoryManagerFacade();
+
+        Boolean result = rmf.existRepository(repositoryConfiguration);
+
+        verify(repository).getDatabaseNames();
+        Assert.assertTrue(result);
+    }
+
+    @Test
+    public void existRepository_method_should_be_return_false_when_dont_finding_database(){
+        List<String> databaseNames = new ArrayList<>();
+        databaseNames.add("db_name_dont_find");
+
+        Mockito.when(repository.getDatabaseNames()).thenReturn(databaseNames);
+        when(repository.isAccessible()).thenReturn(true);
+        RepositoryManagerFacade rmf = new RepositoryManagerFacade();
+
+        Boolean result = rmf.existRepository(repositoryConfiguration);
+
+        verify(repository).getDatabaseNames();
+        Assert.assertFalse(result);
+    }
 }

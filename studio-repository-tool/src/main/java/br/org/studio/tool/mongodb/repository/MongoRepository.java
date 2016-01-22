@@ -3,9 +3,9 @@ package br.org.studio.tool.mongodb.repository;
 import br.org.studio.tool.base.repository.Repository;
 import br.org.studio.tool.base.repository.configuration.RepositoryConfiguration;
 import br.org.studio.tool.mongodb.database.StudioMongoDatabase;
+import com.mongodb.client.MongoCursor;
 
-import java.io.IOException;
-import java.net.Socket;
+import java.util.List;
 
 public class MongoRepository implements Repository {
 
@@ -45,5 +45,10 @@ public class MongoRepository implements Repository {
     @Override
     public Boolean isAccessible() {
         return database.isAccessible();
+    }
+
+    @Override
+    public List<String> getDatabaseNames() {
+        return database.getDatabaseNames();
     }
 }

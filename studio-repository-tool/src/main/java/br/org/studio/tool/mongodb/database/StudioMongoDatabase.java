@@ -1,7 +1,10 @@
 package br.org.studio.tool.mongodb.database;
 
+import java.util.List;
 import java.util.Map;
 
+import com.mongodb.client.ListDatabasesIterable;
+import com.mongodb.client.MongoCursor;
 import org.bson.Document;
 
 import br.org.studio.tool.base.database.MetaDatabase;
@@ -90,4 +93,7 @@ public class StudioMongoDatabase extends MetaDatabase {
         database.runCommand(command);
     }
 
+    public List<String> getDatabaseNames() {
+        return client.getDatabaseNames();
+    }
 }

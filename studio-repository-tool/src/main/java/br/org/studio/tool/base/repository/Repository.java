@@ -1,6 +1,7 @@
 package br.org.studio.tool.base.repository;
 
 import br.org.studio.tool.base.repository.configuration.RepositoryConfiguration;
+import java.util.List;
 
 public interface Repository {
 
@@ -16,4 +17,5 @@ public interface Repository {
 
     Boolean isAccessible();
 
+    List<String> getDatabaseNames();
 }

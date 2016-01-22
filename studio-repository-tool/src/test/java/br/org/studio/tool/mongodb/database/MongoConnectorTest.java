@@ -90,5 +90,4 @@ public class MongoConnectorTest {
 
         assertThat(connector.createClient(), nullValue());
     }
-
 }

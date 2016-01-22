@@ -5,6 +5,8 @@ import br.org.studio.tool.base.repository.RepositoryDescriptor;
 import br.org.studio.tool.base.repository.configuration.RepositoryConfiguration;
 import br.org.studio.tool.mongodb.repository.MongoRepository;
 
+import java.util.List;
+
 public class RepositoryManagerFacade {
 
     private Repository getRepository(RepositoryDescriptor configuration) {
@@ -43,7 +45,19 @@ public class RepositoryManagerFacade {
 
     public Boolean isRepositoryAccessible(RepositoryDescriptor configuration) {
         Repository repository = getRepository(configuration);
-        return repository.isAccessible();
+
+        Boolean result = repository.isAccessible();
+
+        return result;
+    }
+
+    public Boolean existRepository(RepositoryDescriptor configuration){
+        Repository repository = connectRepository(configuration);
+
+        List<String> databaseNames = repository.getDatabaseNames();
+        Boolean result = databaseNames.stream().filter(databaseName -> databaseName.equals(configuration.getDatabaseName())).findFirst().isPresent();
+
+        return result;
     }
 
 }
