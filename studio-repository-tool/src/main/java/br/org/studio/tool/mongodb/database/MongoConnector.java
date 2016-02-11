@@ -1,10 +1,12 @@
 package br.org.studio.tool.mongodb.database;
 
-import com.mongodb.MongoClient;
-import com.mongodb.MongoClientURI;
-
 import java.io.IOException;
 import java.net.Socket;
+import java.util.Arrays;
+
+import com.mongodb.MongoClient;
+import com.mongodb.MongoCredential;
+import com.mongodb.ServerAddress;
 
 public class MongoConnector {
 
@@ -27,15 +29,14 @@ public class MongoConnector {
     public String getPort() {
         return databaseUrl.getPort();
     }
-
-    public String getUri() {
-        int lastDash = databaseUrl.getUrl().lastIndexOf("/");
-        return databaseUrl.getUrl().substring(0, lastDash);
+    
+    public MongoClient createClient(MongoCredential credential) {
+        return new MongoClient(createServerAddress(), Arrays.asList(credential));
     }
 
-    public MongoClient createClient() {
-        return new MongoClient(new MongoClientURI(getUri()));
-    }
+	public ServerAddress createServerAddress() {
+		return new ServerAddress(getHost(), Integer.parseInt(getPort()));
+	}
 
     public Boolean testConnection() {
         try {

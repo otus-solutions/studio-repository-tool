@@ -21,6 +21,7 @@ import br.org.studio.tool.base.repository.configuration.RepositoryConfiguration;
 import br.org.studio.tool.mongodb.repository.MongoRepositoryConfiguration;
 
 import com.mongodb.MongoClient;
+import com.mongodb.MongoCredential;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
@@ -58,12 +59,14 @@ public class StudioMongoDatabaseTest {
     private Document document;
     @Mock
     private FindIterable<Document> info;
+	private MongoCredential credential;
 
     @Before
     public void setup() {
+    	credential = MongoCredential.createCredential(USER, "admin", PASSWORD.toCharArray());
         mockStatic(MongoConnector.class);
         when(MongoConnector.getConnector(HOST, PORT)).thenReturn(connector);
-        when(connector.createClient()).thenReturn(client);
+        when(connector.createClient(credential)).thenReturn(client);
         when(client.getDatabase(DBNAME)).thenReturn(database);
         when(database.getCollection(MetaInformation.COLLECTION.getValue())).thenReturn(collection);
 
@@ -152,7 +155,7 @@ public class StudioMongoDatabaseTest {
     public void load_method_should_call_createClient_method_from_MongoClientFactory() {
         studioDatabase.load();
 
-        verify(connector).createClient();
+        verify(connector).createClient(credential);
     }
 
     @Test

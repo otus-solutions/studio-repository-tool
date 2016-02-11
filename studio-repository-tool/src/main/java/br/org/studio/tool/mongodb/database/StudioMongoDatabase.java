@@ -3,8 +3,6 @@ package br.org.studio.tool.mongodb.database;
 import java.util.List;
 import java.util.Map;
 
-import com.mongodb.client.ListDatabasesIterable;
-import com.mongodb.client.MongoCursor;
 import org.bson.Document;
 
 import br.org.studio.tool.base.database.MetaDatabase;
@@ -12,12 +10,15 @@ import br.org.studio.tool.base.repository.configuration.RepositoryConfiguration;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClient;
+import com.mongodb.MongoCredential;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
 public class StudioMongoDatabase extends MetaDatabase {
 
     public static final String PROTOCOL = "mongodb://";
+    public static final String DB_ADMIN = "admin";
+    
 
     private MongoClient client;
     private MongoConnector connector;
@@ -51,9 +52,13 @@ public class StudioMongoDatabase extends MetaDatabase {
     }
 
     public void load() {
-        client = connector.createClient();
+        client = connector.createClient(createCredential());
         database = client.getDatabase(configuration.getDatabaseName());
     }
+
+	private MongoCredential createCredential() {
+		return MongoCredential.createCredential(configuration.getUser(), DB_ADMIN, configuration.getPassword().toCharArray());
+	}
 
     public void drop() {
         if (client == null)
