@@ -9,6 +9,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import static org.hamcrest.CoreMatchers.*;
 import org.mockito.Mock;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
@@ -61,29 +62,31 @@ public class MongoConnectorTest {
     public void getUri_method__should_return_an_string_with_connection_uri_info() {
         MongoConnector connector = MongoConnector.getConnector(HOST, PORT);
 
-        assertThat(connector.createServerAddress(), equalTo(URI));
+        assertThat(connector.getUri(), equalTo(URI));
     }
 
-//    @Test
-//    public void getUri_should_an_String_that_contains_the_host_info() {
-//        MongoConnector connector = MongoConnector.getConnector(HOST, PORT);
-//
-//        assertThat(connector.getUri(), containsString(HOST));
-//    }
-//
-//    @Test
-//    public void getUri_should_an_String_that_contains_the_port_info() {
-//        MongoConnector connector = MongoConnector.getConnector(HOST, PORT);
-//
-//        assertThat(connector.getUri(), containsString(PORT));
-//    }
-//
-//    @Test
-//    public void createClient_method_should_return_an_instance_of_MongoClient_when_db_server_is_accessible() {
-//        MongoConnector connector = MongoConnector.getConnector(HOST, PORT);
-//
-//        assertThat(connector.createClient(), instanceOf(MongoClient.class));
-//    }
+    @Test
+    public void getUri_should_an_String_that_contains_the_host_info() {
+        MongoConnector connector = MongoConnector.getConnector(HOST, PORT);
+
+        assertThat(connector.getUri(), containsString(HOST));
+    }
+
+    @Test
+    public void getUri_should_an_String_that_contains_the_port_info() {
+        MongoConnector connector = MongoConnector.getConnector(HOST, PORT);
+
+        assertThat(connector.getUri(), containsString(PORT));
+    }
+
+    /*@Test
+    public void createClient_method_should_return_an_instance_of_MongoClient_when_db_server_is_accessible() {
+        MongoConnector connector = MongoConnector.getConnector(HOST, PORT);
+
+        assertThat(connector.createClient(credential), instanceOf(MongoClient.class));
+        
+    }*/
+   
 //
 //    @Test(expected = MongoSocketOpenException.class)
 //    @SuppressWarnings("unchecked")

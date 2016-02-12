@@ -30,6 +30,10 @@ public class MongoConnector {
         return databaseUrl.getPort();
     }
     
+    public String getUri() {
+    	return databaseUrl.getUrl();
+    }
+    
     public MongoClient createClient(MongoCredential credential) {
         return new MongoClient(createServerAddress(), Arrays.asList(credential));
     }
