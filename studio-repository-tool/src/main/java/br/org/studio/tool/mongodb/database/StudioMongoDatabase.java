@@ -93,22 +93,13 @@ public class StudioMongoDatabase extends MetaDatabase {
 
     private void createAdminUser() {
         Map<String, Object> commandArguments = new BasicDBObject();
-        commandArguments.put("createUser", "admin");
-        commandArguments.put("pwd", "admin");
+        commandArguments.put("createUser", USER_ADMIN);
+        commandArguments.put("pwd", PASSWORD_ADMIN);
         String[] roles = { "dbOwner" };
         commandArguments.put("roles", roles);
         BasicDBObject command = new BasicDBObject(commandArguments);
         database.runCommand(command);
     }
-    
-	public void createX() {
-		Document document = new Document()
-				.append("createUser", USER_ADMIN)
-				.append("pwd", PASSWORD_ADMIN)
-				.append("roles", Collections.singletonList(new Document("role", "dbOwner").append("db", configuration.getDatabaseName())));
-		
-		 database.runCommand(document);
-	}
 
     public List<String> getDatabaseNames() {
         return client.getDatabaseNames();
