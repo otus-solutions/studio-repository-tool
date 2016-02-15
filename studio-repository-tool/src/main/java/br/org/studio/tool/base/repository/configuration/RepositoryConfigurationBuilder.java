@@ -4,7 +4,7 @@ import br.org.studio.tool.mongodb.repository.MongoRepositoryConfiguration;
 
 public class RepositoryConfigurationBuilder {
 
-    private static final String PORT = "27107";
+    private static final String PORT = "27017";
     private static final String LOCALHOST = "localhost";
 
     private String dbname;
