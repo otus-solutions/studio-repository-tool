@@ -15,7 +15,7 @@ public class RepositoryConfigurationBuilderTest {
     private static final String HOST = "myHost";
     private static final String LOCALHOST = "localhost";
     private static final String PORT = "1123";
-    private static final String DEFAULT_PORT = "27107";
+    private static final String DEFAULT_PORT = "27017";
     private static final String USER = "user";
     private static final String PASSWORD = "password";
 

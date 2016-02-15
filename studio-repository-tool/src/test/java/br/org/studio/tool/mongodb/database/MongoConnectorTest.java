@@ -10,6 +10,7 @@ import static org.powermock.api.mockito.PowerMockito.whenNew;
 import java.util.List;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -97,9 +98,8 @@ public class MongoConnectorTest {
 		assertThat(client, instanceOf(MongoClient.class));
 	}
 
-	/*
-	
 	@Test(expected = MongoSocketOpenException.class)
+	@Ignore
 	@SuppressWarnings("unchecked")
 	public void createClient_method_should_return_null_when_db_server_is_not_accessible() throws Exception {
 		whenNew(MongoClient.class).withArguments(clientUri).thenThrow(MongoSocketOpenException.class);
@@ -107,5 +107,4 @@ public class MongoConnectorTest {
 
 		assertThat(connector.createClient(credential), nullValue());
 	}
-	*/
 }
