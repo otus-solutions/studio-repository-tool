@@ -1,12 +1,10 @@
 package br.org.studio.tool.mongodb.database;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
 import org.bson.Document;
-
-import br.org.studio.tool.base.database.MetaDatabase;
-import br.org.studio.tool.base.repository.configuration.RepositoryConfiguration;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClient;
@@ -14,10 +12,15 @@ import com.mongodb.MongoCredential;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
+import br.org.studio.tool.base.database.MetaDatabase;
+import br.org.studio.tool.base.repository.configuration.RepositoryConfiguration;
+
 public class StudioMongoDatabase extends MetaDatabase {
 
     public static final String PROTOCOL = "mongodb://";
     public static final String DB_ADMIN = "admin";
+    public static final String USER_ADMIN = "admin";
+    public static final String PASSWORD_ADMIN = "admin";
     
 
     private MongoClient client;
@@ -90,8 +93,8 @@ public class StudioMongoDatabase extends MetaDatabase {
 
     private void createAdminUser() {
         Map<String, Object> commandArguments = new BasicDBObject();
-        commandArguments.put("createUser", "admin");
-        commandArguments.put("pwd", "admin");
+        commandArguments.put("createUser", USER_ADMIN);
+        commandArguments.put("pwd", PASSWORD_ADMIN);
         String[] roles = { "dbOwner" };
         commandArguments.put("roles", roles);
         BasicDBObject command = new BasicDBObject(commandArguments);
