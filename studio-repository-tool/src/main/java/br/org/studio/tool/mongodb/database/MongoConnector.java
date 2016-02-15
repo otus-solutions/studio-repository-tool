@@ -35,7 +35,9 @@ public class MongoConnector {
     }
     
     public MongoClient createClient(MongoCredential credential) {
-        return new MongoClient(createServerAddress(), Arrays.asList(credential));
+    	ServerAddress address = new ServerAddress(getHost(), Integer.parseInt(getPort()));
+    	
+        return new MongoClient(address, Arrays.asList(credential));
     }
 
 	public ServerAddress createServerAddress() {

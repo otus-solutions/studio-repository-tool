@@ -41,7 +41,7 @@ public abstract class DatabaseUrl {
 		stringBuilder.append(getHost());
 		stringBuilder.append(":");
 		stringBuilder.append(getPort());
-		//stringBuilder.append("/");
+		stringBuilder.append("/");
 		stringBuilder.append(getDatabaseName());
 		return stringBuilder.toString();
 	}
