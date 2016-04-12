@@ -79,16 +79,21 @@ public class StudioMongoDatabase extends MetaDatabase {
     }
 
     private void createMetaInformation() {
-        MongoCollection<Document> info = database.getCollection(MetaInformation.COLLECTION.getValue());
+        //MongoCollection<Document> info = documentatabase.getCollection(MetaInformation.COLLECTION.getValue());
 
+        //MongoCollection<Document> info = documentdatabase.getCollection()
         Document document = new Document();
-        document.append(MetaInformation.REPOSITORY.getValue(), configuration.getRepositoryName());
+        /*document.append(MetaInformation.REPOSITORY.getValue(), configuration.getRepositoryName());
         document.append(MetaInformation.DBNAME.getValue(), getName());
         document.append(MetaInformation.HOST.getValue(), getHost());
         document.append(MetaInformation.PORT.getValue(), getPort());
         document.append(MetaInformation.DESCRIPTION.getValue(), configuration.getDescription());
-
-        info.insertOne(document);
+        */
+        //document.append()
+        //info.insertOne(document);
+        
+        //user.email
+        
     }
 
     private void createAdminUser() {
