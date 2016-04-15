@@ -2,75 +2,83 @@ package br.org.studio.tool.base.repository;
 
 public class DefaultRepositoryDescriptor implements RepositoryDescriptor {
 
-    private String repositoryName;
-    private String databasName;
-    private String hostName;
-    private String port;
-    private String user;
-    private String password;
-    private String description;
+	private String repositoryName;
+	private String databasName;
+	private String hostName;
+	private String port;
+	private String user;
+	private String password;
+	private String description;
 
-    @Override
-    public String getRepositoryName() {
-        return repositoryName;
-    }
+	private static final String DB_HOST_NAME = "localhost";
+	private static final String DB_PORT = "27017";
 
-    public void setRepositoryName(String repositoryName) {
-        this.repositoryName = repositoryName;
-    }
+	public DefaultRepositoryDescriptor() {
+		this.hostName = DB_HOST_NAME;
+		this.port = DB_PORT;
+	}
 
-    @Override
-    public String getDatabaseName() {
-        return databasName;
-    }
+	@Override
+	public String getRepositoryName() {
+		return repositoryName;
+	}
 
-    public void setDatabaseName(String databasName) {
-        this.databasName = databasName;
-    }
+	public void setRepositoryName(String repositoryName) {
+		this.repositoryName = repositoryName;
+	}
 
-    @Override
-    public String getHostName() {
-        return hostName;
-    }
+	@Override
+	public String getDatabaseName() {
+		return databasName;
+	}
 
-    public void setHostName(String hostName) {
-        this.hostName = hostName;
-    }
+	public void setDatabaseName(String databasName) {
+		this.databasName = databasName;
+	}
 
-    @Override
-    public String getPort() {
-        return port;
-    }
+	@Override
+	public String getHostName() {
+		return hostName;
+	}
 
-    public void setPort(String port) {
-        this.port = port;
-    }
+	public void setHostName(String hostName) {
+		this.hostName = hostName;
+	}
 
-    @Override
-    public String getUser() {
-        return user;
-    }
+	@Override
+	public String getPort() {
+		return port;
+	}
 
-    public void setUser(String user) {
-        this.user = user;
-    }
+	public void setPort(String port) {
+		this.port = port;
+	}
 
-    @Override
-    public String getPassword() {
-        return password;
-    }
+	@Override
+	public String getUser() {
+		return user;
+	}
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+	public void setUser(String user) {
+		this.user = user;
+	}
 
-    @Override
-    public String getDescription() {
-        return description;
-    }
+	@Override
+	public String getPassword() {
+		return password;
+	}
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	@Override
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
 }
