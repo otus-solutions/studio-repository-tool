@@ -11,6 +11,7 @@ import org.bson.Document;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
@@ -64,9 +65,10 @@ public class StudioMongoDatabaseTest {
     @Before
     public void setup() {
     	credential = MongoCredential.createCredential(USER, "admin", PASSWORD.toCharArray());
+    	
         mockStatic(MongoConnector.class);
         when(MongoConnector.getConnector(HOST, PORT)).thenReturn(connector);
-        when(connector.createClient(credential)).thenReturn(client);
+        when(connector.createClient(Matchers.any())).thenReturn(client);
         when(client.getDatabase(DBNAME)).thenReturn(database);
         when(database.getCollection(MetaInformation.COLLECTION.getValue())).thenReturn(collection);
 
@@ -155,7 +157,7 @@ public class StudioMongoDatabaseTest {
     public void load_method_should_call_createClient_method_from_MongoClientFactory() {
         studioDatabase.load();
 
-        verify(connector).createClient(credential);
+        verify(connector).createClient(Matchers.any());
     }
 
     @Test

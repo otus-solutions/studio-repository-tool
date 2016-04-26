@@ -82,7 +82,7 @@ public class MongoRepositoryConfigurationTest {
 
     @Test
     public void an_instance_of_RepositoryConfiguration_should_has_a_db_user() {
-        assertThat(repositoryConfiguration.getUser(), equalTo(USER));
+        assertThat(repositoryConfiguration.getUserEmail(), equalTo(USER));
     }
 
     @Test

@@ -47,7 +47,7 @@ public class DefaultRepositoryDescriptor implements RepositoryDescriptor {
     }
 
     @Override
-    public String getUser() {
+    public String getUserEmail() {
         return user;
     }
 

@@ -32,7 +32,7 @@ public abstract class MetaDatabase implements Database {
 
 	@Override
 	public String getUser() {
-		return configuration.getUser();
+		return configuration.getUserEmail();
 	}
 
 	@Override

@@ -10,7 +10,7 @@ public interface RepositoryDescriptor {
     
     String getPort();
     
-    String getUser();
+    String getUserEmail();
     
     String getPassword();
     

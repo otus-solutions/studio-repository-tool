@@ -83,7 +83,7 @@ public class RepositoryConfigurationBuilderTest {
         builder.withUser(USER);
         RepositoryConfiguration configuration = builder.buildForMongo();
 
-        assertThat(configuration.getUser(), equalTo(USER));
+        assertThat(configuration.getUserEmail(), equalTo(USER));
     }
 
     @Test
@@ -106,7 +106,7 @@ public class RepositoryConfigurationBuilderTest {
         assertThat(configuration.getDatabaseName(), equalTo(DBNAME));
         assertThat(configuration.getHostName(), equalTo(HOST));
         assertThat(configuration.getPort(), equalTo(PORT));
-        assertThat(configuration.getUser(), equalTo(USER));
+        assertThat(configuration.getUserEmail(), equalTo(USER));
         assertThat(configuration.getPassword(), equalTo(PASSWORD));
     }
 

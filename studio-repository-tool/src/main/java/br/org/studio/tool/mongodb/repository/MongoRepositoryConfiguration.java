@@ -18,7 +18,7 @@ public class MongoRepositoryConfiguration extends RepositoryConfiguration {
         builder.withDatabaseName(descriptor.getDatabaseName());
         builder.withHost(descriptor.getHostName());
         builder.withPort(descriptor.getPort());
-        builder.withUser(descriptor.getUser());
+        builder.withUser(descriptor.getUserEmail());
         builder.withPassword(descriptor.getPassword());
         builder.withDescription(descriptor.getDescription());
         return builder.buildForMongo();

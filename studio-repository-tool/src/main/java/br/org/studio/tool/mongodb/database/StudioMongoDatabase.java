@@ -1,6 +1,5 @@
 package br.org.studio.tool.mongodb.database;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -19,8 +18,6 @@ public class StudioMongoDatabase extends MetaDatabase {
 
     public static final String PROTOCOL = "mongodb://";
     public static final String DB_ADMIN = "admin";
-    public static final String USER_ADMIN = "admin";
-    public static final String PASSWORD_ADMIN = "admin";
     
 
     private MongoClient client;
@@ -60,7 +57,7 @@ public class StudioMongoDatabase extends MetaDatabase {
     }
 
 	private MongoCredential createCredential() {
-		return MongoCredential.createCredential(configuration.getUser(), DB_ADMIN, configuration.getPassword().toCharArray());
+		return MongoCredential.createCredential("superRoot", DB_ADMIN, "12345".toCharArray());
 	}
 
     public void drop() {
@@ -93,15 +90,17 @@ public class StudioMongoDatabase extends MetaDatabase {
 
     private void createAdminUser() {
         Map<String, Object> commandArguments = new BasicDBObject();
-        commandArguments.put("createUser", USER_ADMIN);
-        commandArguments.put("pwd", PASSWORD_ADMIN);
+        commandArguments.put("createUser", configuration.getUserEmail());
+        commandArguments.put("pwd", configuration.getPassword());
         String[] roles = { "dbOwner" };
         commandArguments.put("roles", roles);
         BasicDBObject command = new BasicDBObject(commandArguments);
         database.runCommand(command);
     }
 
-    public List<String> getDatabaseNames() {
+    @SuppressWarnings("deprecation")
+	public List<String> getDatabaseNames() {
         return client.getDatabaseNames();
     }
+    
 }

@@ -50,7 +50,7 @@ public abstract class RepositoryConfiguration implements RepositoryDescriptor {
     }
 
     @Override
-    public String getUser() {
+    public String getUserEmail() {
         return user;
     }
 
