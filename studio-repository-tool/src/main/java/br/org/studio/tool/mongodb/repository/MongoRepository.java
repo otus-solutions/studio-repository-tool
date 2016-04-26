@@ -1,11 +1,10 @@
 package br.org.studio.tool.mongodb.repository;
 
+import java.util.List;
+
 import br.org.studio.tool.base.repository.Repository;
 import br.org.studio.tool.base.repository.configuration.RepositoryConfiguration;
 import br.org.studio.tool.mongodb.database.StudioMongoDatabase;
-import com.mongodb.client.MongoCursor;
-
-import java.util.List;
 
 public class MongoRepository implements Repository {
 

@@ -1,5 +1,6 @@
 package br.org.studio.tool.mongodb.database;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -84,8 +85,10 @@ public class StudioMongoDatabase extends MetaDatabase {
         document.append(MetaInformation.HOST.getValue(), getHost());
         document.append(MetaInformation.PORT.getValue(), getPort());
         document.append(MetaInformation.DESCRIPTION.getValue(), configuration.getDescription());
+        document.append(MetaInformation.CREATION_DATE.getValue(), new Date());
 
         info.insertOne(document);
+        
     }
 
     private void createAdminUser() {
