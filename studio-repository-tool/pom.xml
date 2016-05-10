@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>br.org.otus.rep-tool</groupId>
 		<artifactId>studio-repository-tool-root</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>0.12.9-SNAPSHOT</version>
 		<relativePath>../studio-repository-tool-root</relativePath>
 	</parent>
 
