@@ -7,7 +7,7 @@ public interface Repository {
 
     RepositoryConfiguration getDescriptor();
 
-    void initialize();
+    void create();
 
     void load();
 

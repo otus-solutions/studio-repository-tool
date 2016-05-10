@@ -4,6 +4,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import br.org.studio.tool.base.repository.configuration.RepositoryConfiguration;
@@ -13,11 +14,21 @@ public class RepositoryConfigurationBuilderTest {
 
     private static final String DBNAME = "dbname";
     private static final String HOST = "myHost";
-    private static final String LOCALHOST = "localhost";
     private static final String PORT = "1123";
-    private static final String DEFAULT_PORT = "27017";
     private static final String USER = "user";
     private static final String PASSWORD = "password";
+    
+    private RepositoryConnectionData repositoryConnectionData;
+    
+    @Before
+    public void setUp() {
+    	repositoryConnectionData = new RepositoryConnectionData();
+    	repositoryConnectionData.setHost(HOST);
+    	repositoryConnectionData.setPort(PORT);
+    	repositoryConnectionData.setPassword(PASSWORD);
+    	repositoryConnectionData.setUsername(USER);
+    	repositoryConnectionData.setDatabase(DBNAME);
+    }
 
     @Test
     public void build_method_should_return_an_instance_of_RepositoryDatabase() {
@@ -42,38 +53,20 @@ public class RepositoryConfigurationBuilderTest {
     public void build_method_should_return_an_instance_of_RepositoryConfiguration_with_host() {
         RepositoryConfigurationBuilder builder = new RepositoryConfigurationBuilder();
 
-        builder.withHost(HOST);
+        builder.withRepositoryConnectionData(repositoryConnectionData);
         RepositoryConfiguration configuration = builder.buildForMongo();
 
-        assertThat(configuration.getHostName(), equalTo(HOST));
-    }
-
-    @Test
-    public void build_method_should_return_an_instance_of_RepositoryConfiguration_with_default_host_when_host_is_not_defined() {
-        RepositoryConfigurationBuilder builder = new RepositoryConfigurationBuilder();
-
-        RepositoryConfiguration configuration = builder.buildForMongo();
-
-        assertThat(configuration.getHostName(), equalTo(LOCALHOST));
+        assertThat(configuration.getRepositoryConnectionDataDescriptor().getHost(), equalTo(HOST));
     }
 
     @Test
     public void build_method_should_return_an_instance_of_RepositoryConfiguration_with_port() {
         RepositoryConfigurationBuilder builder = new RepositoryConfigurationBuilder();
 
-        builder.withPort(PORT);
+        builder.withRepositoryConnectionData(repositoryConnectionData);
         RepositoryConfiguration configuration = builder.buildForMongo();
 
-        assertThat(configuration.getPort(), equalTo(PORT));
-    }
-
-    @Test
-    public void build_method_should_return_an_instance_of_RepositoryConfiguration_with_default_port_when_port_is_not_defined() {
-        RepositoryConfigurationBuilder builder = new RepositoryConfigurationBuilder();
-
-        RepositoryConfiguration configuration = builder.buildForMongo();
-
-        assertThat(configuration.getPort(), equalTo(DEFAULT_PORT));
+        assertThat(configuration.getRepositoryConnectionDataDescriptor().getPort(), equalTo(PORT));
     }
 
     @Test
@@ -83,7 +76,7 @@ public class RepositoryConfigurationBuilderTest {
         builder.withUser(USER);
         RepositoryConfiguration configuration = builder.buildForMongo();
 
-        assertThat(configuration.getUserEmail(), equalTo(USER));
+        assertThat(configuration.getUserName(), equalTo(USER));
     }
 
     @Test
@@ -100,26 +93,14 @@ public class RepositoryConfigurationBuilderTest {
     public void build_method_should_return_an_instance_of_RepositoryConfiguration_with_all_user_paramenters() {
         RepositoryConfigurationBuilder builder = new RepositoryConfigurationBuilder();
 
-        builder.withDatabaseName(DBNAME).withHost(HOST).withPort(PORT).withUser(USER).withPassword(PASSWORD);
+        builder.withDatabaseName(DBNAME).withUser(USER).withPassword(PASSWORD).withRepositoryConnectionData(repositoryConnectionData);
         RepositoryConfiguration configuration = builder.buildForMongo();
 
         assertThat(configuration.getDatabaseName(), equalTo(DBNAME));
-        assertThat(configuration.getHostName(), equalTo(HOST));
-        assertThat(configuration.getPort(), equalTo(PORT));
-        assertThat(configuration.getUserEmail(), equalTo(USER));
+        assertThat(configuration.getRepositoryConnectionDataDescriptor().getHost(), equalTo(HOST));
+        assertThat(configuration.getRepositoryConnectionDataDescriptor().getPort(), equalTo(PORT));
+        assertThat(configuration.getUserName(), equalTo(USER));
         assertThat(configuration.getPassword(), equalTo(PASSWORD));
-    }
-
-    @Test
-    public void build_method_should_return_an_instance_of_RepositoryConfiguration_with_all_default_paramenters() {
-        RepositoryConfigurationBuilder builder = new RepositoryConfigurationBuilder();
-
-        builder.withDatabaseName(DBNAME);
-        RepositoryConfiguration configuration = builder.buildForMongo();
-
-        assertThat(configuration.getDatabaseName(), equalTo(DBNAME));
-        assertThat(configuration.getHostName(), equalTo(LOCALHOST));
-        assertThat(configuration.getPort(), equalTo(DEFAULT_PORT));
     }
 
 }

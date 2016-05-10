@@ -15,7 +15,6 @@ public class MongoConnector {
 
 	private MongoDatabaseUrl databaseUrl;
 	private MongoClient client;
-	private static final String DB_ADMIN = "admin";
 
 	private MongoConnector(String host, String port) {
 		databaseUrl = new MongoDatabaseUrl();
@@ -60,9 +59,9 @@ public class MongoConnector {
 		}
 	}
 
-	public Boolean isValidCredentials(String userName, String password) {
+	public Boolean isValidCredentials(String userName, String db, String password) {
 		try {
-			client = createClient(MongoCredential.createCredential(userName, DB_ADMIN, password.toCharArray()));
+			client = createClient(MongoCredential.createCredential(userName, db, password.toCharArray()));
 			// Simple command that needs authentication
 			client.listDatabaseNames().first();
 			return Boolean.TRUE;

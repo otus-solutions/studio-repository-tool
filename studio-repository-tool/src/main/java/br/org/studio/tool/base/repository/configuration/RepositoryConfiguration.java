@@ -1,16 +1,16 @@
 package br.org.studio.tool.base.repository.configuration;
 
 import br.org.studio.tool.base.database.DatabaseUrl;
+import br.org.studio.tool.base.repository.RepositoryConnectionDataDescriptor;
 import br.org.studio.tool.base.repository.RepositoryDescriptor;
 import br.org.studio.tool.base.repository.RepositoryType;
 
 public abstract class RepositoryConfiguration implements RepositoryDescriptor {
 
-    private String repositoryName;
     private String user;
     private String password;
     private RepositoryType repositoryType;
-    private String description;
+    private RepositoryConnectionDataDescriptor repositoryConnectionDataDescriptor;
     protected DatabaseUrl databaseUrl;
 
     protected RepositoryConfiguration(RepositoryType repositoryType, DatabaseUrl databaseUrl) {
@@ -31,18 +31,8 @@ public abstract class RepositoryConfiguration implements RepositoryDescriptor {
         databaseUrl.setDatabaseName(name);
     }
 
-    @Override
-    public String getHostName() {
-        return databaseUrl.getHost();
-    }
-
     public void setHostName(String host) {
         databaseUrl.setHost(host);
-    }
-
-    @Override
-    public String getPort() {
-        return databaseUrl.getPort();
     }
 
     public void setPort(String port) {
@@ -50,7 +40,7 @@ public abstract class RepositoryConfiguration implements RepositoryDescriptor {
     }
 
     @Override
-    public String getUserEmail() {
+    public String getUserName() {
         return user;
     }
 
@@ -63,26 +53,18 @@ public abstract class RepositoryConfiguration implements RepositoryDescriptor {
         return password;
     }
 
-    public void setPassword(String password) {
+    @Override
+    public RepositoryConnectionDataDescriptor getRepositoryConnectionDataDescriptor() {
+    	return repositoryConnectionDataDescriptor;
+    }
+    
+    public void setRepositoryConnectionDataDescriptor(
+			RepositoryConnectionDataDescriptor repositoryConnectionDataDescriptor) {
+		this.repositoryConnectionDataDescriptor = repositoryConnectionDataDescriptor;
+	}
+
+	public void setPassword(String password) {
         this.password = password;
-    }
-
-    @Override
-    public String getRepositoryName() {
-        return repositoryName;
-    }
-
-    public void setRepositoryName(String name) {
-        repositoryName = name;
-    }
-
-    @Override
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public String getUrl() {

@@ -18,9 +18,6 @@ import br.org.studio.tool.base.repository.configuration.RepositoryConfiguration;
 public class StudioMongoDatabase extends MetaDatabase {
 
     public static final String PROTOCOL = "mongodb://";
-    public static final String DB_ADMIN = "admin";
-    
-
     private MongoClient client;
     private MongoConnector connector;
     private MongoDatabase database;
@@ -29,7 +26,7 @@ public class StudioMongoDatabase extends MetaDatabase {
     public StudioMongoDatabase(RepositoryConfiguration configuration) {
         super(configuration);
         this.configuration = configuration;
-        connector = MongoConnector.getConnector(configuration.getHostName(), configuration.getPort());
+        connector = MongoConnector.getConnector(getHost(), getPort());
     }
 
     @Override
@@ -58,7 +55,9 @@ public class StudioMongoDatabase extends MetaDatabase {
     }
 
 	private MongoCredential createCredential() {
-		return MongoCredential.createCredential("superRoot", DB_ADMIN, "12345".toCharArray());
+		return MongoCredential.createCredential(getConfiguration().getRepositoryConnectionDataDescriptor().getUsername()
+				, getConfiguration().getRepositoryConnectionDataDescriptor().getDatabase()
+				, getConfiguration().getRepositoryConnectionDataDescriptor().getPassword().toCharArray());
 	}
 
     public void drop() {
@@ -80,11 +79,9 @@ public class StudioMongoDatabase extends MetaDatabase {
         MongoCollection<Document> info = database.getCollection(MetaInformation.COLLECTION.getValue());
 
         Document document = new Document();
-        document.append(MetaInformation.REPOSITORY.getValue(), configuration.getRepositoryName());
         document.append(MetaInformation.DBNAME.getValue(), getName());
         document.append(MetaInformation.HOST.getValue(), getHost());
         document.append(MetaInformation.PORT.getValue(), getPort());
-        document.append(MetaInformation.DESCRIPTION.getValue(), configuration.getDescription());
         document.append(MetaInformation.CREATION_DATE.getValue(), new Date());
 
         info.insertOne(document);
@@ -93,7 +90,7 @@ public class StudioMongoDatabase extends MetaDatabase {
 
     private void createAdminUser() {
         Map<String, Object> commandArguments = new BasicDBObject();
-        commandArguments.put("createUser", configuration.getUserEmail());
+        commandArguments.put("createUser", configuration.getUserName());
         commandArguments.put("pwd", configuration.getPassword());
         String[] roles = { "dbOwner" };
         commandArguments.put("roles", roles);
@@ -105,5 +102,5 @@ public class StudioMongoDatabase extends MetaDatabase {
 	public List<String> getDatabaseNames() {
         return client.getDatabaseNames();
     }
-    
+
 }

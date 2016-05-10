@@ -51,7 +51,7 @@ public class MongoRepositoryTest {
 
     @Test
     public void initialize_method_should_call_create_method_from_StudioMongoDatabase() {
-        repository.initialize();
+        repository.create();
 
         verify(database).create();
     }
@@ -72,7 +72,7 @@ public class MongoRepositoryTest {
 
     @Test
     public void close_method_should_call_close_from_MongoDatabase() {
-        repository.initialize();
+        repository.create();
 
         repository.close();
 

@@ -14,13 +14,11 @@ public class MongoRepositoryConfiguration extends RepositoryConfiguration {
 
     public static RepositoryConfiguration create(RepositoryDescriptor descriptor) {
         RepositoryConfigurationBuilder builder = new RepositoryConfigurationBuilder();
-        builder.withRepositoryName(descriptor.getRepositoryName());
         builder.withDatabaseName(descriptor.getDatabaseName());
-        builder.withHost(descriptor.getHostName());
-        builder.withPort(descriptor.getPort());
-        builder.withUser(descriptor.getUserEmail());
+        builder.withUser(descriptor.getUserName());
         builder.withPassword(descriptor.getPassword());
-        builder.withDescription(descriptor.getDescription());
+        builder.withRepositoryConnectionData(descriptor.getRepositoryConnectionDataDescriptor());
+        
         return builder.buildForMongo();
     }
 

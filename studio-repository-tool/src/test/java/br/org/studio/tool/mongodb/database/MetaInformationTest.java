@@ -27,14 +27,4 @@ public class MetaInformationTest {
 		assertThat(MetaInformation.DBNAME.getValue(), equalTo("name"));
 	}
 	
-	@Test
-    public void the_MetaInformation_should_has_the_repository_name_property() {
-        assertThat(MetaInformation.REPOSITORY.getValue(), equalTo("repository_name"));
-    }
-	
-	@Test
-    public void the_MetaInformation_should_has_the_repository_description_property() {
-        assertThat(MetaInformation.DESCRIPTION.getValue(), equalTo("repository_description"));
-    }
-
 }

@@ -21,18 +21,8 @@ public abstract class MetaDatabase implements Database {
 	}
 
 	@Override
-	public String getHost() {
-		return configuration.getHostName();
-	}
-
-	@Override
-	public String getPort() {
-		return configuration.getPort();
-	}
-
-	@Override
 	public String getUser() {
-		return configuration.getUserEmail();
+		return configuration.getUserName();
 	}
 
 	@Override
@@ -47,6 +37,16 @@ public abstract class MetaDatabase implements Database {
 
 	protected void setError(Object error) {
 		warnings = error;
+	}
+	
+	@Override
+	public String getPort(){
+		return configuration.getRepositoryConnectionDataDescriptor().getPort();
+	}
+	
+	@Override
+	public String getHost(){
+		return configuration.getRepositoryConnectionDataDescriptor().getHost();
 	}
 
 	@Override

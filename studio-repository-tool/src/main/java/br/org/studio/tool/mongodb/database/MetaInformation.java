@@ -6,8 +6,6 @@ public enum MetaInformation {
 	HOST("host"), 
 	PORT("port"), 
 	DBNAME("name"), 
-	REPOSITORY("repository_name"), 
-	DESCRIPTION("repository_description"),
 	CREATION_DATE("creation_date");
 
 	private String value;

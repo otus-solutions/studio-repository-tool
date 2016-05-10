@@ -1,26 +1,14 @@
 package br.org.studio.tool;
 
-import br.org.studio.tool.base.repository.DefaultRepositoryDescriptor;
+import java.util.List;
+
 import br.org.studio.tool.base.repository.Repository;
 import br.org.studio.tool.base.repository.RepositoryDescriptor;
 import br.org.studio.tool.base.repository.configuration.RepositoryConfiguration;
 import br.org.studio.tool.mongodb.repository.MongoRepository;
-import br.org.studio.tool.mongodb.repository.MongoRepositoryConfiguration;
-
-import java.util.List;
 
 public class RepositoryManagerFacade {
 	
-	
-	public static void main(String[] args) {
-		
-		DefaultRepositoryDescriptor repo = new DefaultRepositoryDescriptor();
-		RepositoryDescriptor repository = MongoRepositoryConfiguration.create(repo);
-		System.out.println(repository.getHostName());	
-		System.out.println(repository.getPort());		
-	}
-	
-
     private Repository getRepository(RepositoryDescriptor configuration) {
         return new MongoRepository((RepositoryConfiguration) configuration);
     }
@@ -29,7 +17,7 @@ public class RepositoryManagerFacade {
         Repository repository = getRepository(configuration);
 
         if (repository.isAccessible()) {
-            repository.initialize();
+            repository.create();
             return repository;
         } else {
             return null;

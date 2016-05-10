@@ -22,7 +22,7 @@ public class MongoRepository implements Repository {
     }
 
     @Override
-    public void initialize() {
+    public void create() {
         database.create();
     }
 
