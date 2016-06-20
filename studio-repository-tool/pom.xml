@@ -4,7 +4,7 @@
 	<artifactId>studio-repository-tool</artifactId>
 
 	<parent>
-		<groupId>br.org.otus.rep-tool</groupId>
+		<groupId>org.ccem.rep-tool</groupId>
 		<artifactId>studio-repository-tool-root</artifactId>
 		<version>0.12.9-SNAPSHOT</version>
 		<relativePath>../studio-repository-tool-root</relativePath>
