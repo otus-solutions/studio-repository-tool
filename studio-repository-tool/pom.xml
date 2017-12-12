@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>studio-repository-tool</artifactId>
     <groupId>org.ccem.rep-tool</groupId>
-    <version>1.0</version>
+    <version>1.1-SNAPSHOT</version>
     <name>studio-repository-tool</name>
 
     <properties>
